@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-//cosas
 
 public class JavaFXMLApplication extends Application {
     
