@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 //hola
+//adios
 public class JavaFXMLApplication extends Application {
     
     @Override
