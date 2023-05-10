@@ -5,25 +5,32 @@
  */
 package javafxmlapplication;
 
+import java.util.HashMap;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-//hola
-//adios
 public class JavaFXMLApplication extends Application {
+    
+    private static HashMap<String,Parent> tabs = new HashMap<>();
+    
+    
+    public static Parent getTab(String clave){
+        return tabs.get(clave);
+    }
     
     @Override
     public void start(Stage stage) throws Exception {
         //======================================================================
         // 1- creación del grafo de escena a partir del fichero FXML
-        FXMLLoader loader= new  FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+        FXMLLoader loader = new  FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
         Parent root = loader.load();
-        //======================================================================
-        // 2- creación de la escena con el nodo raiz del grafo de escena
         Scene scene = new Scene(root);
+        
+        
+        
         //======================================================================
         // 3- asiganación de la escena al Stage que recibe el metodo 
         //     - configuracion del stage
@@ -40,7 +47,5 @@ public class JavaFXMLApplication extends Application {
         launch(args);
         
     }
-
-
     
 }
