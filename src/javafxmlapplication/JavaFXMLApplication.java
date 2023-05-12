@@ -23,7 +23,7 @@ public class JavaFXMLApplication extends Application {
         FXMLLoader loader = new  FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        System.out.println(Screen.getPrimary().getDpi());
+        //System.out.println(Screen.getPrimary().getDpi());
         //======================================================================
         // 3- asiganación de la escena al Stage que recibe el metodo 
         //     - configuracion del stage
@@ -31,7 +31,7 @@ public class JavaFXMLApplication extends Application {
         stage.setScene(scene);
         stage.setHeight(720);
         stage.setWidth(1280);
-        stage.setMinHeight(600);
+        stage.setMinHeight(620);
         stage.setMinWidth(349);
         stage.setTitle("GreenBall");
         stage.show();
