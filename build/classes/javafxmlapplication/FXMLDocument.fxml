@@ -22,11 +22,7 @@
                   <Label fx:id="nombreUsuarioReservas" alignment="CENTER" contentDisplay="CENTER" prefHeight="63.0" prefWidth="413.0" text="Label" BorderPane.alignment="CENTER" />
                </top>
                <center>
-                  <ScrollPane BorderPane.alignment="CENTER">
-                     <content>
-                        <VBox fx:id="misReservasContainer" prefHeight="200.0" prefWidth="100.0" />
-                     </content>
-                  </ScrollPane>
+                  <VBox fx:id="misReservasContainer" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
                </center></BorderPane>
          </content>
     </Tab>

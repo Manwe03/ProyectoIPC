@@ -26,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -237,6 +238,7 @@ public class FXMLDocumentController implements Initializable {
     private Tab buttonMisreservas;
     @FXML
     private VBox misReservasContainer;
+
     
     /**
      * Initializes the controller class.
@@ -356,10 +358,11 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    private void onButtonMisreservas(Event event) throws IOException {
-        HBox reservaHbox = FXMLLoader.load(getClass().getResource("/misReservas/FXMLReservas.fxml"));
+    private void onButtonMisreservas(Event event) throws IOException {                                          //funciona mas o menos
+        HBox reservaHbox = FXMLLoader.load(getClass().getResource("/misReservas/FXMLReservas.fxml"));   //funciona mas o menos
         
-        //misReservasContainer.setR
+        misReservasContainer.getChildren().add(reservaHbox);                                                  //funciona mas o menos
+        
     }
     
     /*
