@@ -44,19 +44,24 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
         tabPane.getSelectionModel().select(2);//pone la tab pistas como seleccion inicial
+        updateFlowPane();
         
         scrollPane.widthProperty().addListener((observable,oldVal,newVal)-> {//on withpropertie changed
-            double width = scrollPane.getWidth()-15;
-            double pistaWidth = vBoxPista1.getWidth();
-            
-            int columns = (int) Math.floor(width/pistaWidth);
-            if(columns < 6){
-                flowPane.setMaxWidth(columns*pistaWidth);
-                flowPane.setMinWidth(columns*pistaWidth);
-            }else{
-                flowPane.setMaxWidth(6*pistaWidth);
-                flowPane.setMinWidth(6*pistaWidth);
-            }
+            updateFlowPane();
         });
+    }
+    
+    private void updateFlowPane(){
+        double width = scrollPane.getWidth()-15;
+        double pistaWidth = vBoxPista1.getWidth();
+
+        int columns = (int) Math.floor(width/pistaWidth);
+        if(columns < 6){
+            flowPane.setMaxWidth(columns*pistaWidth+1);
+            flowPane.setMinWidth(columns*pistaWidth+1);
+        }else{
+            flowPane.setMaxWidth(6*pistaWidth+1);
+            flowPane.setMinWidth(6*pistaWidth+1);
+        }
     }
 }
