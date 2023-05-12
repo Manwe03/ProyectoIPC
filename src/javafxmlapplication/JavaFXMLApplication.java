@@ -27,9 +27,11 @@ public class JavaFXMLApplication extends Application {
         // 1- creación del grafo de escena a partir del fichero FXML
         FXMLLoader loader = new  FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root);
+        //Scene scene = new Scene(root);
         
+        final double rem = javafx.scene.text.Font.getDefault().getSize();
         
+        Scene scene = new Scene(root, 25 * rem, 33.33 * rem);
         
         //======================================================================
         // 3- asiganación de la escena al Stage que recibe el metodo 
