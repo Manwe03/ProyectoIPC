@@ -64,7 +64,7 @@
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                        </padding>
                                     </VBox>
-                                    <VBox maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
+                                    <VBox fx:id="vBoxPista2" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
                                        <children>
                                           <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
                                           <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
@@ -84,7 +84,7 @@
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                        </padding>
                                     </VBox>
-                                    <VBox maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
+                                    <VBox fx:id="vBoxPista3" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
                                        <children>
                                           <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
                                           <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
@@ -104,7 +104,7 @@
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                        </padding>
                                     </VBox>
-                                    <VBox maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
+                                    <VBox fx:id="vBoxPista4" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
                                        <children>
                                           <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
                                           <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
@@ -124,7 +124,7 @@
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                        </padding>
                                     </VBox>
-                                    <VBox maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
+                                    <VBox fx:id="vBoxPista5" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
                                        <children>
                                           <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
                                           <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
@@ -144,7 +144,7 @@
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                        </padding>
                                     </VBox>
-                                    <VBox maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
+                                    <VBox fx:id="vBoxPista6" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
                                        <children>
                                           <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
                                           <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
