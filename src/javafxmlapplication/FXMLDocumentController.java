@@ -15,6 +15,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 
 
 /**
@@ -37,18 +38,50 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private VBox vBoxPista1;
  
+    double dpi;
+    @FXML
+    private VBox vBoxPista2;
+    @FXML
+    private VBox vBoxPista3;
+    @FXML
+    private VBox vBoxPista4;
+    @FXML
+    private VBox vBoxPista5;
+    @FXML
+    private VBox vBoxPista6;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        dpi = Screen.getPrimary().getDpi();
         scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
         tabPane.getSelectionModel().select(2);//pone la tab pistas como seleccion inicial
+        
         updateFlowPane();
+        setvBoxPistaInitialSize();
+        
         
         scrollPane.widthProperty().addListener((observable,oldVal,newVal)-> {//on withpropertie changed
             updateFlowPane();
         });
+    }
+    
+    private void setvBoxPistaInitialSize(){
+        vBoxPista1.setMaxWidth(dpi * 2.5);
+        vBoxPista1.setMinWidth(dpi * 2.5);
+        
+        vBoxPista2.setMaxWidth(dpi * 2.5);
+        vBoxPista2.setMinWidth(dpi * 2.5);
+        vBoxPista3.setMaxWidth(dpi * 2.5);
+        vBoxPista3.setMinWidth(dpi * 2.5);
+        vBoxPista4.setMaxWidth(dpi * 2.5);
+        vBoxPista4.setMinWidth(dpi * 2.5);
+        vBoxPista5.setMaxWidth(dpi * 2.5);
+        vBoxPista5.setMinWidth(dpi * 2.5);
+        vBoxPista6.setMaxWidth(dpi * 2.5);
+        vBoxPista6.setMinWidth(dpi * 2.5);
+
     }
     
     private void updateFlowPane(){
