@@ -36,6 +36,8 @@ public class JavaFXMLApplication extends Application {
         //     - configuracion del stage
         //     - se muestra el stage de manera no modal mediante el metodo show()
         stage.setScene(scene);
+        stage.setHeight(720);
+        stage.setWidth(1280);
         stage.setMinHeight(840);
         stage.setMinWidth(349);
         stage.setTitle("GreenBall");
