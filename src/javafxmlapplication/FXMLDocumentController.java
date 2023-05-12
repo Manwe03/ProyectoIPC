@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -32,20 +33,18 @@ import model.ClubDAOException;
  */
 public class FXMLDocumentController implements Initializable {
 
+    double dpi;
+    
     @FXML
     private ScrollPane scrollPane;
     @FXML
     private FlowPane flowPane;
     @FXML
     private TabPane tabPane;
-    @FXML
-    private Pane calendarioRightPane;
-    @FXML
-    private Pane calendarioLeftPane;
+    
     @FXML
     private VBox vBoxPista1;
  
-    double dpi;
     @FXML
     private VBox vBoxPista2;
     @FXML
@@ -233,16 +232,18 @@ public class FXMLDocumentController implements Initializable {
         });
         
         //DEFINICIÓN DEL CLUB GREENBALL
-               
+        
         try {
-            Club greenBall = Club.getInstance();            
+            Club greenBall = Club.getInstance();    
+            
+            
+            System.out.println(Club.getInstance().getCourts().get(0).getName());
+            
         } catch (ClubDAOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
     }
     
     private void setvBoxPistaInitialSize(){
@@ -273,5 +274,10 @@ public class FXMLDocumentController implements Initializable {
             flowPane.setMaxWidth(6*pistaWidth+1);
             flowPane.setMinWidth(6*pistaWidth+1);
         }
+    }
+
+    @FXML
+    private void Pb1_9(ActionEvent event) {
+        event.getSource();
     }
 }

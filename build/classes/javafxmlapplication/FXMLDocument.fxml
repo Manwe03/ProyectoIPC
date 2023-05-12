@@ -46,8 +46,8 @@
                                  <children>
                                     <VBox fx:id="vBoxPista1" alignment="CENTER" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
                                        <children>
-                                          <Button fx:id="b1_9" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_10" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
+                                          <Button fx:id="b1_9" mnemonicParsing="false" onAction="#Pb1_9" prefHeight="50.0" prefWidth="300.0" text="Button" />
+                                          <Button fx:id="b1_10" mnemonicParsing="false" onAction="#Pb1_9" prefHeight="50.0" prefWidth="300.0" text="Button" />
                                           <Button fx:id="b1_11" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
                                           <Button fx:id="b1_12" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
                                           <Button fx:id="b1_13" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
