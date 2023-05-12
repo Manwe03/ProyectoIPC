@@ -44,7 +44,7 @@
                               <Pane fx:id="calendarioRightPane" prefHeight="200.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
                               <FlowPane fx:id="flowPane" columnHalignment="CENTER" prefWidth="1915.0" style="-fx-background-color: #000000;" HBox.hgrow="SOMETIMES">
                                  <children>
-                                    <VBox alignment="CENTER" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
+                                    <VBox fx:id="vBoxPista1" alignment="CENTER" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
                                        <children>
                                           <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />
                                           <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" text="Button" />

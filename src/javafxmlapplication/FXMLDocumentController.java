@@ -14,6 +14,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 
 /**
@@ -33,6 +34,8 @@ public class FXMLDocumentController implements Initializable {
     private Pane calendarioRightPane;
     @FXML
     private Pane calendarioLeftPane;
+    @FXML
+    private VBox vBoxPista1;
  
     /**
      * Initializes the controller class.
@@ -43,15 +46,16 @@ public class FXMLDocumentController implements Initializable {
         tabPane.getSelectionModel().select(2);//pone la tab pistas como seleccion inicial
         
         scrollPane.widthProperty().addListener((observable,oldVal,newVal)-> {//on withpropertie changed
-            double with = scrollPane.getWidth()-15;
+            double width = scrollPane.getWidth()-15;
+            double pistaWidth = vBoxPista1.getWidth();
             
-            int colums = (int) Math.floor(with/317);
-            if(colums < 6){
-                flowPane.setMaxWidth(colums*317);
-                flowPane.setMinWidth(colums*317);
+            int columns = (int) Math.floor(width/pistaWidth);
+            if(columns < 6){
+                flowPane.setMaxWidth(columns*pistaWidth);
+                flowPane.setMinWidth(columns*pistaWidth);
             }else{
-                flowPane.setMaxWidth(6*317);
-                flowPane.setMinWidth(6*317);
+                flowPane.setMaxWidth(6*pistaWidth);
+                flowPane.setMinWidth(6*pistaWidth);
             }
         });
     }
