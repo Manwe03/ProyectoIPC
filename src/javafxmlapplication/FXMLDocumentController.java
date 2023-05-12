@@ -18,7 +18,9 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -59,7 +61,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TabPane tabPane;
     
-    
+    @FXML
+    private Label nombreUsuarioReservas;
     
     @FXML
     private VBox vBoxPista1;
@@ -74,6 +77,8 @@ public class FXMLDocumentController implements Initializable {
     private VBox vBoxPista5;
     @FXML
     private VBox vBoxPista6;
+    @FXML
+    private Button b1_09;
     @FXML
     private Button b1_10;
     @FXML
@@ -98,129 +103,8 @@ public class FXMLDocumentController implements Initializable {
     private Button b1_20;
     @FXML
     private Button b1_21;
-    
     @FXML
-    private HBox r1;
-    @FXML
-    private HBox r2;
-    @FXML
-    private HBox r3;
-    @FXML
-    private HBox r4;
-    @FXML
-    private HBox r5;
-    @FXML
-    private HBox r6;
-    @FXML
-    private HBox r7;
-    @FXML
-    private HBox r8;
-    @FXML
-    private HBox r9;
-    @FXML
-    private HBox r10;
-    @FXML
-    private Label nombreUsuarioReservas;
-    @FXML
-    private Label f1;
-    @FXML
-    private Label h1;
-    @FXML
-    private Label pi1;
-    @FXML
-    private Button p1;
-    @FXML
-    private Button c1;
-    @FXML
-    private Label f2;
-    @FXML
-    private Label h2;
-    @FXML
-    private Label pi2;
-    @FXML
-    private Button p2;
-    @FXML
-    private Button c2;
-    @FXML
-    private Label f3;
-    @FXML
-    private Label h3;
-    @FXML
-    private Label pi3;
-    @FXML
-    private Button p3;
-    @FXML
-    private Button c3;
-    @FXML
-    private Label f4;
-    @FXML
-    private Label h4;
-    @FXML
-    private Label pi4;
-    @FXML
-    private Button p4;
-    @FXML
-    private Button c4;
-    @FXML
-    private Label f5;
-    @FXML
-    private Label h5;
-    @FXML
-    private Label pi5;
-    @FXML
-    private Button p5;
-    @FXML
-    private Button c5;
-    @FXML
-    private Label f6;
-    @FXML
-    private Label h6;
-    @FXML
-    private Label pi6;
-    @FXML
-    private Button p6;
-    @FXML
-    private Button c6;
-    @FXML
-    private Label f7;
-    @FXML
-    private Label h7;
-    @FXML
-    private Label pi7;
-    @FXML
-    private Button p7;
-    @FXML
-    private Button c7;
-    @FXML
-    private Label f8;
-    @FXML
-    private Label h8;
-    @FXML
-    private Label pi8;
-    @FXML
-    private Button p8;
-    @FXML
-    private Button c8;
-    @FXML
-    private Label f9;
-    @FXML
-    private Label h9;
-    @FXML
-    private Label pi9;
-    @FXML
-    private Button p9;
-    @FXML
-    private Button c9;
-    @FXML
-    private Label f10;
-    @FXML
-    private Label h10;
-    @FXML
-    private Label pi10;
-    @FXML
-    private Button p10;
-    @FXML
-    private Button c10;
+    private Button b2_09;
     @FXML
     private Button b2_10;
     @FXML
@@ -246,6 +130,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button b2_21;
     @FXML
+    private Button b3_09;
+    @FXML
     private Button b3_10;
     @FXML
     private Button b3_11;
@@ -269,6 +155,8 @@ public class FXMLDocumentController implements Initializable {
     private Button b3_20;
     @FXML
     private Button b3_21;
+    @FXML
+    private Button b4_09;
     @FXML
     private Button b4_10;
     @FXML
@@ -294,6 +182,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button b4_21;
     @FXML
+    private Button b5_09;
+    @FXML
     private Button b5_10;
     @FXML
     private Button b5_11;
@@ -317,6 +207,8 @@ public class FXMLDocumentController implements Initializable {
     private Button b5_20;
     @FXML
     private Button b5_21;
+    @FXML
+    private Button b6_09;
     @FXML
     private Button b6_10;
     @FXML
@@ -342,19 +234,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button b6_21;
     @FXML
-    private Button b1_09;
-    @FXML
-    private Button b2_09;
-    @FXML
-    private Button b3_09;
-    @FXML
-    private Button b4_09;
-    @FXML
-    private Button b5_09;
-    @FXML
-    private Button b6_09;
-    @FXML
     private Tab buttonMisreservas;
+    @FXML
+    private VBox misReservasContainer;
     
     /**
      * Initializes the controller class.
@@ -474,17 +356,21 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    private void onButtonMisreservas(Event event) {
-        updateMisReservas();
+    private void onButtonMisreservas(Event event) throws IOException {
+        HBox reservaHbox = FXMLLoader.load(getClass().getResource("/misReservas/FXMLReservas.fxml"));
+        
+        //misReservasContainer.setR
     }
     
+    /*
     public void updateMisReservas() { //llamar a este método cada vez que se entra a Mis Reservas
         try {
             List<Booking> reservasUsuario = Club.getInstance().getUserBookings("pepe");
             int reservasTotales = reservasUsuario.size();
             System.out.println(reservasTotales);
             nombreUsuarioReservas.setText(login);
-
+            
+            
             r1.setVisible(false); //Opacidad de las reservas a 0
             
             r2.setVisible(false); //Poner la opacidad a 100 si el
@@ -530,7 +416,7 @@ public class FXMLDocumentController implements Initializable {
             }
          
                 
-           /*
+           
             if (reservasTotales >= 1) {
                 r1.setVisible(true);
                 fecha = reservasUsuario.get(0).getMadeForDay();
@@ -632,13 +518,13 @@ public class FXMLDocumentController implements Initializable {
                 h10.setText(horaString);
                 pi10.setText(reservasUsuario.get(9).getCourt().getName());  
             }          
-            */
+            
         } catch (ClubDAOException | IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             
         }
     }
 
-    
+    */
     
 }
