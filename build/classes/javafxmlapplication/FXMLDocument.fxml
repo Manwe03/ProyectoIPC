@@ -24,7 +24,7 @@
                <center>
                   <ScrollPane fx:id="misReservasScrollPane" BorderPane.alignment="CENTER">
                      <content>
-                        <VBox fx:id="misReservasContainer" alignment="CENTER" prefHeight="300.0" prefWidth="300.0" />
+                        <VBox fx:id="misReservasContainer" alignment="TOP_CENTER" prefHeight="300.0" prefWidth="300.0" />
                      </content>
                   </ScrollPane>
                </center></BorderPane>

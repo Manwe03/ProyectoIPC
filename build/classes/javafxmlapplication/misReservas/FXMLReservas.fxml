@@ -8,7 +8,7 @@
    <children>
       <Label fx:id="fechaL" text="Fecha" />
       <Label fx:id="horaL" text="Hora" />
-      <Label fx:id="pistaL" text="Pista" />
+      <Label fx:id="pista" text="Pista" />
       <Button fx:id="pagarB" mnemonicParsing="false" onAction="#onPagar" text="Pagar" />
       <Button fx:id="cancelarB" mnemonicParsing="false" onAction="#onCancelar" text="Cancelar" />
    </children>
