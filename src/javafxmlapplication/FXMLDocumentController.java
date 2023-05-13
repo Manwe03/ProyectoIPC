@@ -19,6 +19,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -28,6 +29,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
+import javafxmlapplication.misReservas.FXMLReservasController;
 import model.Booking;
 import model.Club;
 import model.ClubDAOException;
@@ -41,12 +43,6 @@ import model.Member;
  * @author manub
  */
 public class FXMLDocumentController implements Initializable {
-
-    double dpi;
-    
-    String login;
-    
-    String password;
     
     DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/mm/yyyy");
     DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("hh:mm:ss");
@@ -245,8 +241,8 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         //INICIALIZACIÓN DE LA PRIMERA PANTALLA
+        UtilData.getInstance().setDpi(Screen.getPrimary().getDpi());
         
-        dpi = Screen.getPrimary().getDpi();
         scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
         tabPane.getSelectionModel().select(2);//pone la tab pistas como seleccion inicial
         
@@ -264,9 +260,9 @@ public class FXMLDocumentController implements Initializable {
             Club.getInstance().setInitialData(); //Resetea la base de datos al iniciar
             //Club.getInstance().addSimpleData();
             
-            Club.getInstance().registerMember("pepe", "pipo", "9999999", "pepe", "pipo", "999", 000, null); //registra un miembro de prueba
-        
-            
+            Club.getInstance().registerMember("Fernando", "Alonso", "000000", "pepe", "pipo", "0000000", 000, null); //registra un miembro de prueba
+            UtilData.getInstance().setLogin("pepe");
+            UtilData.getInstance().setPassword("pipo");
             
         } catch (ClubDAOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -276,6 +272,7 @@ public class FXMLDocumentController implements Initializable {
     }
     
     private void setvBoxPistaInitialSize(){
+        double dpi = UtilData.getInstance().getDpi();
         vBoxPista1.setMaxWidth(dpi * 2.5);
         vBoxPista1.setMinWidth(dpi * 2.5);        
         vBoxPista2.setMaxWidth(dpi * 2.5);
@@ -348,7 +345,7 @@ public class FXMLDocumentController implements Initializable {
             Court court = Club.getInstance().getCourt("Pista " + boton.getId().substring(1, 2));//Pista sobre la que se a hecho click
             //System.out.println(boton.getId().substring(3, 5));
             int horaSeleccionada = Integer.valueOf(boton.getId().substring(3, 5));
-            Member usuario = Club.getInstance().getMemberByCredentials("pepe", "pipo");
+            Member usuario = Club.getInstance().getMemberByCredentials(UtilData.getInstance().getLogin(), UtilData.getInstance().getPassword());
             
             
             if(Club.getInstance().hasCreditCard(usuario.getNickName())){//si tiene tarjeta de credito
@@ -365,11 +362,18 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void onButtonMisreservas(Event event) throws IOException, ClubDAOException {
         misReservasContainer.getChildren().clear();
-        List<Booking> misReservas = Club.getInstance().getUserBookings("pepe");
+        List<Booking> misReservas = Club.getInstance().getUserBookings(UtilData.getInstance().getLogin());
         
-        for(int i = 0; i < misReservas.size();i++){
-            HBox reservaHbox = FXMLLoader.load(getClass().getResource("/misReservas/FXMLReservas.fxml"));   //funciona mas o menos
-            misReservasContainer.getChildren().add(reservaHbox);                                                  //funciona mas o menos
+        for(int i = 0; i < misReservas.size() && i < 10; i++){
+            
+            FXMLLoader loader = new  FXMLLoader(getClass().getResource("misReservas/FXMLReservas.fxml")); //Gracias a chat gpt porque el path estaba mal
+            Parent reservaBox = loader.load();
+            System.out.println("FXML file location: " + loader.getLocation());
+            FXMLReservasController controler = loader.getController();
+            controler.setData(misReservas.get(i));
+            
+            misReservasContainer.getChildren().add(reservaBox);  
+            
         }
         //TODO
     }
@@ -400,34 +404,6 @@ public class FXMLDocumentController implements Initializable {
             String horaString;
             LocalDate fecha;
             LocalTime hora;
-            
-            switch(reservasTotales){
-                case 1:
-                    r1.setVisible(true);
-                    break;
-                case 2:
-                    r2.setVisible(true);
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
-                    break;
-                case 10:
-                    break;
-                        
-            }
-         
-                
            
             if (reservasTotales >= 1) {
                 r1.setVisible(true);

@@ -5,28 +5,33 @@
 package javafxmlapplication;
 
 import java.io.IOException;
-import java.util.HashMap;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 
 /**
  * No se usa de momento
  * @author manub
  */
-public class SceneMap {
-    private static SceneMap INSTANCE = null;
-    public static HashMap<String,Parent> tabs = new HashMap<>();
+public class UtilData {
+    private static UtilData INSTANCE = null;
     
-    private SceneMap(){}//Nada
+    private double dpi;
     
-    static synchronized SceneMap getInstance() {
+    private String login;
+    
+    private String password;
+    
+    
+    private UtilData(){}//Nada
+    
+    public static synchronized UtilData getInstance() {
         if (INSTANCE == null) { 
-            INSTANCE = new SceneMap();
+            INSTANCE = new UtilData();
         }
         return INSTANCE;
     }
     
     public void initialize() throws IOException{
+        
+        /*
         Parent view;
     
         view = FXMLLoader.load(getClass().getResource("FXMLReservas.fxml"));
@@ -37,5 +42,16 @@ public class SceneMap {
         
         view = FXMLLoader.load(getClass().getResource("FXMLPerfil.fxml"));
         tabs.put("Perfil", view);
+        */
     }
+    
+    //GET
+    public double getDpi(){return this.dpi;}
+    public String getLogin(){return this.login;}
+    public String getPassword(){return this.password;}
+    //SET
+    public void setDpi(double dpi){this.dpi = dpi;}
+    public void setLogin(String login){this.login = login;}
+    public void setPassword(String password){this.password = password;}
+   
 }
