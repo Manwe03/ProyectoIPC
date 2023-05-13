@@ -2,10 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package misReservas;
+package javafxmlapplication.misReservas;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -22,15 +23,15 @@ public class FXMLReservasController implements Initializable {
     @FXML
     private HBox r1;
     @FXML
-    private Label f1;
+    private Label fechaL;
     @FXML
-    private Label h1;
+    private Label horaL;
     @FXML
-    private Label pi1;
+    private Label pistaL;
     @FXML
-    private Button p1;
+    private Button pagarB;
     @FXML
-    private Button c1;
+    private Button cancelarB;
 
     /**
      * Initializes the controller class.
@@ -39,5 +40,15 @@ public class FXMLReservasController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void onPagar(ActionEvent event) {
+        System.out.println("pagado");
+    }
+
+    @FXML
+    private void onCancelar(ActionEvent event) {
+        System.out.println("cancelado");
+    }
     
 }

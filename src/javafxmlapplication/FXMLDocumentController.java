@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -20,16 +19,13 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TitledPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import model.Booking;
@@ -238,6 +234,8 @@ public class FXMLDocumentController implements Initializable {
     private Tab buttonMisreservas;
     @FXML
     private VBox misReservasContainer;
+    @FXML
+    private ScrollPane misReservasScrollPane;
 
     
     /**
@@ -258,6 +256,7 @@ public class FXMLDocumentController implements Initializable {
         
         scrollPane.widthProperty().addListener((observable,oldVal,newVal)-> {//on withpropertie changed
             updateFlowPane();
+            updateMisReservasVbox();
         });
         
   
@@ -289,7 +288,13 @@ public class FXMLDocumentController implements Initializable {
         vBoxPista5.setMinWidth(dpi * 2.5);
         vBoxPista6.setMaxWidth(dpi * 2.5);
         vBoxPista6.setMinWidth(dpi * 2.5);
-
+    }
+    
+    private void updateMisReservasVbox(){
+        misReservasContainer.setMaxWidth(misReservasScrollPane.getWidth()-31);
+        misReservasContainer.setMinWidth(misReservasScrollPane.getWidth()-31);
+        misReservasContainer.setMaxHeight(1000/*Multiplo de la cantidad de reservas*/);
+        misReservasContainer.setMinHeight(1000/*Multiplo de la cantidad de reservas*/);
     }
     
     private void updateFlowPane(){
@@ -358,11 +363,15 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    private void onButtonMisreservas(Event event) throws IOException {                                          //funciona mas o menos
-        HBox reservaHbox = FXMLLoader.load(getClass().getResource("/misReservas/FXMLReservas.fxml"));   //funciona mas o menos
+    private void onButtonMisreservas(Event event) throws IOException, ClubDAOException {
+        misReservasContainer.getChildren().clear();
+        List<Booking> misReservas = Club.getInstance().getUserBookings("pepe");
         
-        misReservasContainer.getChildren().add(reservaHbox);                                                  //funciona mas o menos
-        
+        for(int i = 0; i < misReservas.size();i++){
+            HBox reservaHbox = FXMLLoader.load(getClass().getResource("/misReservas/FXMLReservas.fxml"));   //funciona mas o menos
+            misReservasContainer.getChildren().add(reservaHbox);                                                  //funciona mas o menos
+        }
+        //TODO
     }
     
     /*
