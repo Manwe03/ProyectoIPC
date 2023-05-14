@@ -23,6 +23,9 @@ public class JavaFXMLApplication extends Application {
         FXMLLoader loader = new  FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
+        
+        String css = this.getClass().getResource("BaseStyleSheet.css").toExternalForm();
+        scene.getStylesheets().add(css);
         //System.out.println(Screen.getPrimary().getDpi());
         //======================================================================
         // 3- asiganación de la escena al Stage que recibe el metodo 
