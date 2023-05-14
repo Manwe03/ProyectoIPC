@@ -5,6 +5,7 @@
 package javafxmlapplication;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 /**
  * No se usa de momento
@@ -19,6 +20,7 @@ public class UtilData {
     
     private String password;
     
+    private LocalDate selectedDate;
     
     private UtilData(){}//Nada
     
@@ -31,27 +33,17 @@ public class UtilData {
     
     public void initialize() throws IOException{
         
-        /*
-        Parent view;
-    
-        view = FXMLLoader.load(getClass().getResource("FXMLReservas.fxml"));
-        tabs.put("Reservas", view);
-        
-        view = FXMLLoader.load(getClass().getResource("FXMLPistas.fxml"));
-        tabs.put("Pistas", view);
-        
-        view = FXMLLoader.load(getClass().getResource("FXMLPerfil.fxml"));
-        tabs.put("Perfil", view);
-        */
     }
     
     //GET
     public double getDpi(){return this.dpi;}
     public String getLogin(){return this.login;}
     public String getPassword(){return this.password;}
+    public LocalDate getSelectedDate(){return this.selectedDate;}
     //SET
     public void setDpi(double dpi){this.dpi = dpi;}
     public void setLogin(String login){this.login = login;}
     public void setPassword(String password){this.password = password;}
+    public void setSelectedDate(LocalDate selectedDate){this.selectedDate = selectedDate;}
    
 }
