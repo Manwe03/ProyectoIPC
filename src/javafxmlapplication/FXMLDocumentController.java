@@ -21,6 +21,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -232,6 +234,10 @@ public class FXMLDocumentController implements Initializable {
     private VBox misReservasContainer;
     @FXML
     private ScrollPane misReservasScrollPane;
+    @FXML
+    private DatePicker dpBookingDay;
+    @FXML
+    private Tab buttonPistas;
 
     
     /**
@@ -349,8 +355,13 @@ public class FXMLDocumentController implements Initializable {
             
             
             if(Club.getInstance().hasCreditCard(usuario.getNickName())){//si tiene tarjeta de credito
-                safeRegisterBooking(LocalDateTime.now(), LocalDate.of(2023, 1, 1), LocalTime.of(horaSeleccionada, 0), true, court, usuario);
-                
+                boolean reservado = safeRegisterBooking(LocalDateTime.now(), dpBookingDay.valueProperty().getValue() /*Dia selecionado en datepicker*/
+                                    , LocalTime.of(horaSeleccionada, 0), true, court, usuario);
+                if(reservado){
+                    
+                }else{
+                    
+                }
             }
             else{//si no tiene 
                 
@@ -377,142 +388,21 @@ public class FXMLDocumentController implements Initializable {
         }
         //TODO
     }
-    
-    /*
-    public void updateMisReservas() { //llamar a este método cada vez que se entra a Mis Reservas
-        try {
-            List<Booking> reservasUsuario = Club.getInstance().getUserBookings("pepe");
-            int reservasTotales = reservasUsuario.size();
-            System.out.println(reservasTotales);
-            nombreUsuarioReservas.setText(login);
-            
-            
-            r1.setVisible(false); //Opacidad de las reservas a 0
-            
-            r2.setVisible(false); //Poner la opacidad a 100 si el
-            r3.setVisible(false); //usuario ha hecho al menos ese
-            r4.setVisible(false); //número de reservas y modificar
-            r5.setVisible(false); //el texto según las últimas reservas
-            r6.setVisible(false);
-            r7.setVisible(false);
-            r8.setVisible(false);
-            r9.setVisible(false);
-            r10.setVisible(false);  
-            
-            //Collections.reverse(reservasUsuario); 
-            String fechaString;
-            String horaString;
-            LocalDate fecha;
-            LocalTime hora;
-           
-            if (reservasTotales >= 1) {
-                r1.setVisible(true);
-                fecha = reservasUsuario.get(0).getMadeForDay();
-                fechaString = fecha.format(formatoFecha);
-                f1.setText(fechaString);
-                hora = reservasUsuario.get(0).getFromTime();
-                horaString = hora.format(formatoHora);
-                h1.setText(horaString);
-                pi1.setText(reservasUsuario.get(0).getCourt().getName());                
-            }
-            
-            if (reservasTotales >= 2) {
-                r2.setVisible(true);
-                fecha = reservasUsuario.get(1).getMadeForDay();
-                fechaString = fecha.format(formatoFecha);
-                f2.setText(fechaString);
-                hora = reservasUsuario.get(1).getFromTime();
-                horaString = hora.format(formatoHora);
-                h2.setText(horaString);
-                pi2.setText(reservasUsuario.get(1).getCourt().getName());
-            }
-            if (reservasTotales >= 3) {
-                r3.setVisible(true);
-                fecha = reservasUsuario.get(2).getMadeForDay();
-                fechaString = fecha.format(formatoFecha);
-                f3.setText(fechaString);
-                hora = reservasUsuario.get(2).getFromTime();
-                horaString = hora.format(formatoHora);
-                h3.setText(horaString);
-                pi3.setText(reservasUsuario.get(2).getCourt().getName());  
-            }
-            if (reservasTotales >= 4) {
-                r4.setVisible(true);
-                fecha = reservasUsuario.get(3).getMadeForDay();
-                fechaString = fecha.format(formatoFecha);
-                f4.setText(fechaString);
-                hora = reservasUsuario.get(3).getFromTime();
-                horaString = hora.format(formatoHora);
-                h4.setText(horaString);
-                pi4.setText(reservasUsuario.get(3).getCourt().getName());  
-            }
-            if (reservasTotales >= 5) {
-                r5.setVisible(true);
-                fecha = reservasUsuario.get(4).getMadeForDay();
-                fechaString = fecha.format(formatoFecha);
-                f5.setText(fechaString);
-                hora = reservasUsuario.get(4).getFromTime();
-                horaString = hora.format(formatoHora);
-                h5.setText(horaString);
-                pi5.setText(reservasUsuario.get(4).getCourt().getName());  
-            }
-            if (reservasTotales >= 6) { 
-                r6.setVisible(true);
-                fecha = reservasUsuario.get(5).getMadeForDay();
-                fechaString = fecha.format(formatoFecha);
-                f6.setText(fechaString);
-                hora = reservasUsuario.get(5).getFromTime();
-                horaString = hora.format(formatoHora);
-                h6.setText(horaString);
-                pi6.setText(reservasUsuario.get(5).getCourt().getName());
-            }
-            if (reservasTotales >= 7) {
-                r7.setVisible(true);
-                fecha = reservasUsuario.get(6).getMadeForDay();
-                fechaString = fecha.format(formatoFecha);
-                f7.setText(fechaString);
-                hora = reservasUsuario.get(6).getFromTime();
-                horaString = hora.format(formatoHora);
-                h7.setText(horaString);
-                pi7.setText(reservasUsuario.get(6).getCourt().getName());  
-            }
-            if (reservasTotales >= 8) {
-                r8.setVisible(true);
-                fecha = reservasUsuario.get(7).getMadeForDay();
-                fechaString = fecha.format(formatoFecha);
-                f8.setText(fechaString);
-                hora = reservasUsuario.get(7).getFromTime();
-                horaString = hora.format(formatoHora);
-                h8.setText(horaString);
-                pi8.setText(reservasUsuario.get(7).getCourt().getName());  
-            }
-            if (reservasTotales >= 9) {
-                r9.setVisible(true);
-                fecha = reservasUsuario.get(8).getMadeForDay();
-                fechaString = fecha.format(formatoFecha);
-                f9.setText(fechaString);
-                hora = reservasUsuario.get(8).getFromTime();
-                horaString = hora.format(formatoHora);
-                h9.setText(horaString);
-                pi9.setText(reservasUsuario.get(8).getCourt().getName());  
-            }
-            if (reservasTotales >= 10) {
-                r10.setVisible(true);
-                fecha = reservasUsuario.get(9).getMadeForDay();
-                fechaString = fecha.format(formatoFecha);
-                f10.setText(fechaString);
-                hora = reservasUsuario.get(9).getFromTime();
-                horaString = hora.format(formatoHora);
-                h10.setText(horaString);
-                pi10.setText(reservasUsuario.get(9).getCourt().getName());  
-            }          
-            
-        } catch (ClubDAOException | IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            
-        }
-    }
 
-    */
+    @FXML
+    private void onButtonPistas(Event event) {
+        dpBookingDay.setDayCellFactory((DatePicker picker) -> {//Desabilita los dias en el pasado en el datPicker
+            return new DateCell() {
+                @Override
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    LocalDate today = LocalDate.now();
+                    setDisable(empty || date.compareTo(today) < 0 );
+                }
+            };
+        });
+        
+        //FALTA Actualizar la vista de las reservas del dia
+    }
     
 }

@@ -49,8 +49,8 @@ public class FXMLReservasController implements Initializable {
     
     public void setData(Booking MIreserva){
         this.reserva = MIreserva;
-        //fechaL.setText(reserva.getMadeForDay().format(DateTimeFormatter.ISO_DATE)); //de momento dan error
-        //horaL.setText(reserva.getFromTime().format(DateTimeFormatter.ISO_DATE));
+        fechaL.setText(reserva.getMadeForDay().toString());
+        horaL.setText(reserva.getFromTime().toString());
         pista.setText(reserva.getCourt().getName());
     }
     
