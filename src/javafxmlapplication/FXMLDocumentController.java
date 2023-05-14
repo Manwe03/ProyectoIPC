@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -32,6 +33,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafxmlapplication.misReservas.FXMLReservasController;
+import javafxmlapplication.pistaCalendario.FXMLpistaCController;
 import model.Booking;
 import model.Club;
 import model.ClubDAOException;
@@ -50,217 +52,53 @@ public class FXMLDocumentController implements Initializable {
     DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("hh:mm:ss");
     
     @FXML
-    private ScrollPane scrollPane;
-    @FXML
-    private FlowPane flowPane;
-    @FXML
     private TabPane tabPane;
-    
-    @FXML
-    private Label nombreUsuarioReservas;
-    
-    @FXML
-    private VBox vBoxPista1;
- 
-    @FXML
-    private VBox vBoxPista2;
-    @FXML
-    private VBox vBoxPista3;
-    @FXML
-    private VBox vBoxPista4;
-    @FXML
-    private VBox vBoxPista5;
-    @FXML
-    private VBox vBoxPista6;
-    @FXML
-    private Button b1_09;
-    @FXML
-    private Button b1_10;
-    @FXML
-    private Button b1_11;
-    @FXML
-    private Button b1_12;
-    @FXML
-    private Button b1_13;
-    @FXML
-    private Button b1_14;
-    @FXML
-    private Button b1_15;
-    @FXML
-    private Button b1_16;
-    @FXML
-    private Button b1_17;
-    @FXML
-    private Button b1_18;
-    @FXML
-    private Button b1_19;
-    @FXML
-    private Button b1_20;
-    @FXML
-    private Button b1_21;
-    @FXML
-    private Button b2_09;
-    @FXML
-    private Button b2_10;
-    @FXML
-    private Button b2_11;
-    @FXML
-    private Button b2_12;
-    @FXML
-    private Button b2_13;
-    @FXML
-    private Button b2_14;
-    @FXML
-    private Button b2_15;
-    @FXML
-    private Button b2_16;
-    @FXML
-    private Button b2_17;
-    @FXML
-    private Button b2_18;
-    @FXML
-    private Button b2_19;
-    @FXML
-    private Button b2_20;
-    @FXML
-    private Button b2_21;
-    @FXML
-    private Button b3_09;
-    @FXML
-    private Button b3_10;
-    @FXML
-    private Button b3_11;
-    @FXML
-    private Button b3_12;
-    @FXML
-    private Button b3_13;
-    @FXML
-    private Button b3_14;
-    @FXML
-    private Button b3_15;
-    @FXML
-    private Button b3_16;
-    @FXML
-    private Button b3_17;
-    @FXML
-    private Button b3_18;
-    @FXML
-    private Button b3_19;
-    @FXML
-    private Button b3_20;
-    @FXML
-    private Button b3_21;
-    @FXML
-    private Button b4_09;
-    @FXML
-    private Button b4_10;
-    @FXML
-    private Button b4_11;
-    @FXML
-    private Button b4_12;
-    @FXML
-    private Button b4_13;
-    @FXML
-    private Button b4_14;
-    @FXML
-    private Button b4_15;
-    @FXML
-    private Button b4_16;
-    @FXML
-    private Button b4_17;
-    @FXML
-    private Button b4_18;
-    @FXML
-    private Button b4_19;
-    @FXML
-    private Button b4_20;
-    @FXML
-    private Button b4_21;
-    @FXML
-    private Button b5_09;
-    @FXML
-    private Button b5_10;
-    @FXML
-    private Button b5_11;
-    @FXML
-    private Button b5_12;
-    @FXML
-    private Button b5_13;
-    @FXML
-    private Button b5_14;
-    @FXML
-    private Button b5_15;
-    @FXML
-    private Button b5_16;
-    @FXML
-    private Button b5_17;
-    @FXML
-    private Button b5_18;
-    @FXML
-    private Button b5_19;
-    @FXML
-    private Button b5_20;
-    @FXML
-    private Button b5_21;
-    @FXML
-    private Button b6_09;
-    @FXML
-    private Button b6_10;
-    @FXML
-    private Button b6_11;
-    @FXML
-    private Button b6_12;
-    @FXML
-    private Button b6_13;
-    @FXML
-    private Button b6_14;
-    @FXML
-    private Button b6_15;
-    @FXML
-    private Button b6_16;
-    @FXML
-    private Button b6_17;
-    @FXML
-    private Button b6_18;
-    @FXML
-    private Button b6_19;
-    @FXML
-    private Button b6_20;
-    @FXML
-    private Button b6_21;
     @FXML
     private Tab buttonMisreservas;
     @FXML
-    private VBox misReservasContainer;
+    private Label nombreUsuarioReservas;
     @FXML
     private ScrollPane misReservasScrollPane;
     @FXML
-    private DatePicker dpBookingDay;
+    private VBox misReservasContainer;
     @FXML
     private Tab buttonPistas;
-
+    @FXML
+    private DatePicker dpBookingDay;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private FlowPane flowPane;
     
+    private int numReservas = 0;
+
+   
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        //INICIALIZACIÓN DE LA PRIMERA PANTALLA
+        //INICIALIZACIÓN DE LA PRIMERA PANTALLA || Estes orden es muy importante
+        dpBookingDay.setValue(LocalDate.now());
+        
         UtilData.getInstance().setDpi(Screen.getPrimary().getDpi());
         
         scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
         tabPane.getSelectionModel().select(2);//pone la tab pistas como seleccion inicial
+                
+        UtilData.getInstance().setSelectedDate(dpBookingDay.getValue());
         
         updateFlowPane();
-        setvBoxPistaInitialSize();    
-        
-        
+
         scrollPane.widthProperty().addListener((observable,oldVal,newVal)-> {//on withpropertie changed
             updateFlowPane();
             updateMisReservasVbox();
         });
         
+        dpBookingDay.valueProperty().addListener((observable,oldVal,newVal)-> {//on valueProperty changed
+            UtilData.getInstance().setSelectedDate(newVal);//actualiza el dia selecionado en UtilData
+        });
   
         try {
             Club.getInstance().setInitialData(); //Resetea la base de datos al iniciar
@@ -277,32 +115,17 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
-    private void setvBoxPistaInitialSize(){
-        double dpi = UtilData.getInstance().getDpi();
-        vBoxPista1.setMaxWidth(dpi * 2.5);
-        vBoxPista1.setMinWidth(dpi * 2.5);        
-        vBoxPista2.setMaxWidth(dpi * 2.5);
-        vBoxPista2.setMinWidth(dpi * 2.5);
-        vBoxPista3.setMaxWidth(dpi * 2.5);
-        vBoxPista3.setMinWidth(dpi * 2.5);
-        vBoxPista4.setMaxWidth(dpi * 2.5);
-        vBoxPista4.setMinWidth(dpi * 2.5);
-        vBoxPista5.setMaxWidth(dpi * 2.5);
-        vBoxPista5.setMinWidth(dpi * 2.5);
-        vBoxPista6.setMaxWidth(dpi * 2.5);
-        vBoxPista6.setMinWidth(dpi * 2.5);
-    }
     
     private void updateMisReservasVbox(){
         misReservasContainer.setMaxWidth(misReservasScrollPane.getWidth()-31);
         misReservasContainer.setMinWidth(misReservasScrollPane.getWidth()-31);
-        misReservasContainer.setMaxHeight(1000/*Multiplo de la cantidad de reservas*/);
-        misReservasContainer.setMinHeight(1000/*Multiplo de la cantidad de reservas*/);
+        misReservasContainer.setMaxHeight(100 * Math.min(numReservas, 10)/*Multiplo de la cantidad de reservas*/);
+        misReservasContainer.setMinHeight(100 * Math.min(numReservas, 10)/*Multiplo de la cantidad de reservas*/);
     }
     
     private void updateFlowPane(){
         double width = scrollPane.getWidth()-15;
-        double pistaWidth = vBoxPista1.getWidth();
+        double pistaWidth = UtilData.getInstance().getDpi() * 2.5;
   
         int columns = (int) Math.floor(width/pistaWidth);
         if(columns < 6){
@@ -314,72 +137,19 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
-    /**Hace la reserva. Devuelve true si se puede hacer la reserva false si no.*/
-    private boolean safeRegisterBooking(LocalDateTime bookingDate, LocalDate madeForDay, LocalTime fromHour, boolean paid, Court court, Member member){
-        try {
-            List<Booking> reservasDelDia = Club.getInstance().getCourtBookings(court.getName(), madeForDay);
-            Boolean reservaDuplicada = false;
-            for(Booking reserva: reservasDelDia){
-                if(reserva.getFromTime().equals(fromHour)){
-                    reservaDuplicada = true;
-                }
-            }
-            
-            if(!reservaDuplicada){ //si se puede reservar a esa hora es dicir no hay una reserva a la misma hora, hace la reserva
-                Club.getInstance().registerBooking(bookingDate, madeForDay, fromHour, paid, court, member);
-                System.out.println("Reserva Exitosa");
-                return true;//exito
-            }
-            else{   //si no se puede hacer la reserva
-                //FALTA avisar al usuario
-                System.out.println("Reserva Fallida");
-                return false;//fallo
-            }
-        } catch (ClubDAOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;//fallo
-    }
-
-    @FXML
-    private void onCalendarButton(ActionEvent event) throws ClubDAOException, IOException {
-        Object testBoton = event.getSource();
-        if(testBoton instanceof Button){
-            Button boton = (Button) testBoton;
-            Court court = Club.getInstance().getCourt("Pista " + boton.getId().substring(1, 2));//Pista sobre la que se a hecho click
-            //System.out.println(boton.getId().substring(3, 5));
-            int horaSeleccionada = Integer.valueOf(boton.getId().substring(3, 5));
-            Member usuario = Club.getInstance().getMemberByCredentials(UtilData.getInstance().getLogin(), UtilData.getInstance().getPassword());
-            
-            
-            if(Club.getInstance().hasCreditCard(usuario.getNickName())){//si tiene tarjeta de credito
-                boolean reservado = safeRegisterBooking(LocalDateTime.now(), dpBookingDay.valueProperty().getValue() /*Dia selecionado en datepicker*/
-                                    , LocalTime.of(horaSeleccionada, 0), true, court, usuario);
-                if(reservado){
-                    
-                }else{
-                    
-                }
-            }
-            else{//si no tiene 
-                
-            }
-        }
-        
-    }
-    
     @FXML
     private void onButtonMisreservas(Event event) throws IOException, ClubDAOException {
         misReservasContainer.getChildren().clear();
         List<Booking> misReservas = Club.getInstance().getUserBookings(UtilData.getInstance().getLogin());
         
-        for(int i = 0; i < misReservas.size() && i < 10; i++){
+        this.numReservas = misReservas.size();
+        updateMisReservasVbox();
+        
+        for(int i = 0; i < numReservas && i < 10; i++){
             
             FXMLLoader loader = new  FXMLLoader(getClass().getResource("misReservas/FXMLReservas.fxml")); //Gracias a chat gpt porque el path estaba mal
             Parent reservaBox = loader.load();
-            System.out.println("FXML file location: " + loader.getLocation());
+            //System.out.println("FXML file location: " + loader.getLocation());
             FXMLReservasController controler = loader.getController();
             controler.setData(misReservas.get(i));
             
@@ -388,9 +158,8 @@ public class FXMLDocumentController implements Initializable {
         }
         //TODO
     }
-
     @FXML
-    private void onButtonPistas(Event event) {
+    private void onButtonPistas(Event event) throws IOException, ClubDAOException{
         dpBookingDay.setDayCellFactory((DatePicker picker) -> {//Desabilita los dias en el pasado en el datPicker
             return new DateCell() {
                 @Override
@@ -402,7 +171,23 @@ public class FXMLDocumentController implements Initializable {
             };
         });
         
-        //FALTA Actualizar la vista de las reservas del dia
+        updatePistasView(); //se encarga de actualizar la vista
     }
+    
+    private void updatePistasView() throws IOException, ClubDAOException{
+        UtilData.getInstance().setSelectedDate(dpBookingDay.getValue());//Actualiza el dia seleccionado en el datePicker
+        //Elimina y actualiza los pistaBox
+        flowPane.getChildren().clear();
+        
+        for(int i = 1; i <= 6; i++){
+            FXMLLoader loader = new  FXMLLoader(getClass().getResource("pistaCalendario/FXMLpistaC.fxml"));
+            Parent pistaBox = loader.load();
+            FXMLpistaCController controler = loader.getController();
+            controler.setData(Club.getInstance().getCourt("Pista " + i),dpBookingDay.getValue());
+            flowPane.getChildren().add(pistaBox);  
+        }
+        
+    }
+
     
 }

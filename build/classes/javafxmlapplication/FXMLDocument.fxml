@@ -25,7 +25,7 @@
                <center>
                   <ScrollPane fx:id="misReservasScrollPane" BorderPane.alignment="CENTER">
                      <content>
-                        <VBox fx:id="misReservasContainer" alignment="TOP_CENTER" prefHeight="300.0" prefWidth="300.0" />
+                        <VBox fx:id="misReservasContainer" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="1000.0" />
                      </content>
                   </ScrollPane>
                </center></BorderPane>
@@ -54,128 +54,6 @@
                         <HBox alignment="CENTER">
                            <children>
                               <FlowPane fx:id="flowPane" columnHalignment="CENTER" prefWidth="1915.0" style="-fx-background-color: #000000;" HBox.hgrow="SOMETIMES">
-                                 <children>
-                                    <VBox fx:id="vBoxPista1" alignment="CENTER" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
-                                       <children>
-                                          <Button fx:id="b1_09" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_10" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_11" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_12" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_13" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_14" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_15" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_16" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_17" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_18" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_19" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_20" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b1_21" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </VBox>
-                                    <VBox fx:id="vBoxPista2" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
-                                       <children>
-                                          <Button fx:id="b2_09" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b2_10" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b2_11" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b2_12" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b2_13" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b2_14" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b2_15" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b2_16" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b2_17" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b2_18" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b2_19" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b2_20" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b2_21" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </VBox>
-                                    <VBox fx:id="vBoxPista3" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
-                                       <children>
-                                          <Button fx:id="b3_09" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b3_10" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b3_11" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b3_12" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b3_13" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b3_14" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b3_15" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b3_16" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b3_17" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b3_18" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b3_19" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b3_20" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b3_21" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </VBox>
-                                    <VBox fx:id="vBoxPista4" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
-                                       <children>
-                                          <Button fx:id="b4_09" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b4_10" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b4_11" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b4_12" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b4_13" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b4_14" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b4_15" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b4_16" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b4_17" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b4_18" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b4_19" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b4_20" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b4_21" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </VBox>
-                                    <VBox fx:id="vBoxPista5" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
-                                       <children>
-                                          <Button fx:id="b5_09" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b5_10" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b5_11" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b5_12" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b5_13" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b5_14" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b5_15" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b5_16" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b5_17" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b5_18" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b5_19" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b5_20" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b5_21" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </VBox>
-                                    <VBox fx:id="vBoxPista6" maxWidth="317.0" minWidth="317.0" prefWidth="317.0">
-                                       <children>
-                                          <Button fx:id="b6_09" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b6_10" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b6_11" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b6_12" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b6_13" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b6_14" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b6_15" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b6_16" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b6_17" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b6_18" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b6_19" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b6_20" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                          <Button fx:id="b6_21" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </VBox>
-                                 </children>
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
