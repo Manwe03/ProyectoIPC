@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class JavaFXMLApplication extends Application {
@@ -29,11 +30,12 @@ public class JavaFXMLApplication extends Application {
         // 3- asiganación de la escena al Stage que recibe el metodo 
         //     - configuracion del stage
         //     - se muestra el stage de manera no modal mediante el metodo show()
+        double dpi = Screen.getPrimary().getDpi();
         stage.setScene(scene);
         stage.setHeight(720);
         stage.setWidth(1280);
-        stage.setMinHeight(620);
-        stage.setMinWidth(349);
+        stage.setMinHeight(dpi*7);
+        stage.setMinWidth(dpi*7);
         stage.setTitle("GreenBall");
         stage.show();
     }

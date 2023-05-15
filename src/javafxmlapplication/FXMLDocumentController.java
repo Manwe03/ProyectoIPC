@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -22,10 +23,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafxmlapplication.misReservas.FXMLReservasController;
@@ -33,6 +37,7 @@ import javafxmlapplication.pistaCalendario.FXMLpistaCController;
 import model.Booking;
 import model.Club;
 import model.ClubDAOException;
+import model.Member;
 
 
 
@@ -70,6 +75,64 @@ public class FXMLDocumentController implements Initializable {
     private Button antButton;
     @FXML
     private Button posButton;
+    @FXML
+    private Tab buttonMiPerfil;
+    @FXML
+    private HBox perfilTopPane;
+    @FXML
+    private HBox perfilBottomPane;
+    @FXML
+    private Button perfilEditarButton;
+    @FXML
+    private Button guardarCambiosButton;
+    @FXML
+    private Button cancelarCambiosButton;
+    @FXML
+    private TextField nombreField;
+    @FXML
+    private TextField apellidosField;
+    @FXML
+    private TextField telefonoField;
+    @FXML
+    private TextField nickField;
+    @FXML
+    private PasswordField contraseñaField;
+    @FXML
+    private PasswordField repetirContraseñaField;
+    @FXML
+    private TextField numTarjetaField;
+    @FXML
+    private TextField svcField;
+    @FXML
+    private Label repetirContraseñaLabel;
+    @FXML
+    private Label numTarjetaLabel;
+    @FXML
+    private Label svcLabel;
+    @FXML
+    private Label nombreErrorLabel;
+    @FXML
+    private Label nombreFielLabel;
+    @FXML
+    private Label apellidosFieldLavel;
+    @FXML
+    private Label telefonoFieldLabel;
+    @FXML
+    private Label nickFieldLabel;
+    @FXML
+    private Label contraseñaFieldLabel;
+    @FXML
+    private Label apellidosErrorLabel;
+    @FXML
+    private Label telefonoErrorLabel;
+    @FXML
+    private Label nickErrorLabel;
+    @FXML
+    private Label contraseñaErrorLabel;
+    @FXML
+    private Label repetirContraseñaErrorLabel;
+    @FXML
+    private Label numTarjetaErrorLabel;
 
    
     /**
@@ -96,7 +159,7 @@ public class FXMLDocumentController implements Initializable {
             Club.getInstance().setInitialData(); //Resetea la base de datos al iniciar
             //Club.getInstance().addSimpleData();
             
-            Club.getInstance().registerMember("Fernando", "Alonso", "000000", "pepe", "pipo", "0000000", 000, null); //registra un miembro de prueba
+            Club.getInstance().registerMember("Fernando", "Alonso", "99999999", "pepe", "pipo", "0000000000000000", 000, null); //registra un miembro de prueba
             UtilData.getInstance().setLogin("pepe");
             UtilData.getInstance().setPassword("pipo");
             
@@ -118,9 +181,16 @@ public class FXMLDocumentController implements Initializable {
         UtilData.getInstance().setSelectedDate(dpBookingDay.getValue());
         
         updateFlowPane();
-             
+        iniMiPerfilTab();
     }
     
+    private void iniMiPerfilTab(){//ajusta el tamaño con respecto al dpi
+        double dpi = UtilData.getInstance().getDpi();
+        perfilBottomPane.setMaxHeight(dpi);
+        perfilBottomPane.setMinHeight(dpi);
+        perfilTopPane.setMaxHeight(dpi);
+        perfilTopPane.setMinHeight(dpi);
+    }
     
     private void updateMisReservasVbox(){
         misReservasContainer.setMaxWidth(misReservasScrollPane.getWidth()-31);
@@ -203,6 +273,7 @@ public class FXMLDocumentController implements Initializable {
         
         antButton.setDisable(dpBookingDay.getValue().isEqual(LocalDate.now()));//desabilita el boton de ir al dia anterior si estas en el dia actual
     }
+    
 
     @FXML
     private void onAntButton(ActionEvent event) {
@@ -214,5 +285,121 @@ public class FXMLDocumentController implements Initializable {
         dpBookingDay.setValue(dpBookingDay.getValue().plusDays(1));
     }
 
+    @FXML
+    private void onButtonMiPerfil(Event event) {
+        updateMiPerfilLabelsInfo();
+        hideErrorLabels();
+        perfilEditMode(false);
+        
+        perfilEditarButton.setDisable(false);
+        guardarCambiosButton.setVisible(false);
+        cancelarCambiosButton.setVisible(false);        
+    }
+
+    @FXML
+    private void onPerfilEditarButton(ActionEvent event) {
+        hideErrorLabels();
+        perfilEditMode(true);
+        
+        clearPerfilFields();
+        
+        guardarCambiosButton.setVisible(true);
+        cancelarCambiosButton.setVisible(true);
+        perfilEditarButton.setDisable(true);
+    }
+
+    @FXML
+    private void onGuardarCambiosButton(ActionEvent event) {
+        guardarCambiosButton.setVisible(false);
+        cancelarCambiosButton.setVisible(false);
+        perfilEditarButton.setDisable(false);
+        perfilEditMode(false);
+    }
+
+    @FXML
+    private void onCancelarCambiosButton(ActionEvent event) {
+        guardarCambiosButton.setVisible(false);
+        cancelarCambiosButton.setVisible(false);
+        perfilEditarButton.setDisable(false);
+        perfilEditMode(false);
+    }
     
+    /**Obtiene y pone la informacion en las labels de mi perfil*/
+    private void updateMiPerfilLabelsInfo() {
+        try {
+            if(UtilData.getInstance().getLogin() == null || UtilData.getInstance().getPassword() == null){//Si no estas logueado
+                nombreFielLabel.setText("");
+                apellidosFieldLavel.setText("");
+                telefonoFieldLabel.setText("");
+                nickFieldLabel.setText("");
+                contraseñaFieldLabel.setText("");
+            }else {
+                Member member = Club.getInstance().getMemberByCredentials(UtilData.getInstance().getLogin(), UtilData.getInstance().getPassword());
+                nombreFielLabel.setText(member.getName());
+                apellidosFieldLavel.setText(member.getSurname());
+                telefonoFieldLabel.setText(member.getTelephone());
+                nickFieldLabel.setText(member.getNickName());
+                contraseñaFieldLabel.setText(member.getPassword());
+                
+                nombreField.setPromptText(member.getName());
+                apellidosField.setPromptText(member.getSurname());
+                telefonoField.setPromptText(member.getTelephone());
+                nickField.setPromptText(member.getNickName());
+                contraseñaField.setPromptText(member.getPassword());
+                if(member.checkHasCreditInfo()){
+                    String creditcard = member.getCreditCard();
+                    numTarjetaField.setPromptText("------------" + creditcard.substring(creditcard.length()-4,creditcard.length()));
+                    svcField.setPromptText("###");
+                }
+            }
+
+        } catch (ClubDAOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**cambia entre modo edición y modo vista normal*/
+    private void perfilEditMode(boolean edit){
+        repetirContraseñaLabel.setVisible(edit);
+        numTarjetaLabel.setVisible(edit);
+        svcLabel.setVisible(edit);
+                
+        nombreField.setVisible(edit);
+        apellidosField.setVisible(edit);
+        telefonoField.setVisible(edit);
+        nickField.setVisible(edit);
+        contraseñaField.setVisible(edit);
+        repetirContraseñaField.setVisible(edit);
+        numTarjetaField.setVisible(edit);
+        svcField.setVisible(edit);
+                
+        nombreFielLabel.setVisible(!edit);
+        apellidosFieldLavel.setVisible(!edit);
+        telefonoFieldLabel.setVisible(!edit);
+        nickFieldLabel.setVisible(!edit);
+        contraseñaFieldLabel.setVisible(!edit);
+    }
+    /**Oculta las labels de error*/
+    private void hideErrorLabels(){
+        nombreErrorLabel.setVisible(false);
+        apellidosErrorLabel.setVisible(false);
+        telefonoErrorLabel.setVisible(false);
+        nickErrorLabel.setVisible(false);
+        contraseñaErrorLabel.setVisible(false);
+        repetirContraseñaErrorLabel.setVisible(false);
+        numTarjetaErrorLabel.setVisible(false);
+    }
+    /**Elimina los datos de los campos de edición de mi prefil*/
+    private void clearPerfilFields(){
+        nombreField.setText("");
+        apellidosField.setText("");
+        telefonoField.setText("");
+        nickField.setText("");
+        contraseñaField.setText("");
+        repetirContraseñaField.setText("");
+        numTarjetaField.setText("");
+        svcField.setText("");
+    }
 }
