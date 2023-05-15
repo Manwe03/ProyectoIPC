@@ -9,7 +9,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -19,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.util.converter.LocalDateTimeStringConverter;
 import javafxmlapplication.FXMLDocumentController;
 import javafxmlapplication.UtilData;
 import model.Booking;
@@ -70,7 +68,7 @@ public class FXMLpistaCController implements Initializable {
     @FXML
     private Button b_21;
     
-    List<Booking> reservasDelDia;
+    private static int[] buttonState = {0,0,0,0,0,0,0,0,0,0,0,0,0};
     
     /**
      * Initializes the controller class.
@@ -81,21 +79,64 @@ public class FXMLpistaCController implements Initializable {
         double dpi = UtilData.getInstance().getDpi();
         vBoxPista.setMaxWidth(dpi * 2.5);
         vBoxPista.setMinWidth(dpi * 2.5);
-
+        
     }    
 
     public void setData(Court court,LocalDate madeForDay){
         this.court = court;             //Pista
         this.madeForDay = madeForDay;
+        updateButtonState();
+    }
+    
+    private void updateButtonState(){ 
         try {
-            this.reservasDelDia = Club.getInstance().getCourtBookings(court.getName(),madeForDay);
+            //0 = no reservado || 1 = reservado || 2 = reservado por mi
+            List<Booking> reservasDelDia = Club.getInstance().getCourtBookings(court.getName(), madeForDay); //obtiene las reservas del dia
+            for(int i = 0; i < 13; i++){buttonState[i] = 0;}//todas a 0
+            for(Booking reserva: reservasDelDia){ //recorre las reservas
+                System.out.println(reserva.toString());
+                if(reserva.getMember().equals(Club.getInstance().getMemberByCredentials(UtilData.getInstance().getLogin(), UtilData.getInstance().getPassword()))){
+                    buttonState[reserva.getFromTime().getHour()-9] = 2;
+                }else{
+                    buttonState[reserva.getFromTime().getHour()-9] = 1;
+                }
+            }
+            updateDisplay();
         } catch (ClubDAOException ex) {
             Logger.getLogger(FXMLpistaCController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(FXMLpistaCController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+    }
+    
+    private void updateDisplay(){
+        updateButton(b_09,buttonState[0]);
+        updateButton(b_10,buttonState[1]);
+        updateButton(b_11,buttonState[2]);
+        updateButton(b_12,buttonState[3]);
+        updateButton(b_13,buttonState[4]);
+        updateButton(b_14,buttonState[5]);
+        updateButton(b_15,buttonState[6]);
+        updateButton(b_16,buttonState[7]);
+        updateButton(b_17,buttonState[8]);
+        updateButton(b_18,buttonState[9]);
+        updateButton(b_19,buttonState[10]);
+        updateButton(b_20,buttonState[11]);
+        updateButton(b_21,buttonState[12]);
+    }
+    
+    private void updateButton(Button boton, int state){
+        switch(state){
+            case 0:
+                boton.setText("Libre");
+                break;
+            case 1:
+                boton.setText("Reservado");
+                break;
+            case 2:      
+                boton.setText("Reservado por mi");
+                break;
+        }
     }
     
     /**Hace la reserva. Devuelve true si se puede hacer la reserva false si no.*/
@@ -112,6 +153,7 @@ public class FXMLpistaCController implements Initializable {
             if(!reservaDuplicada){ //si se puede reservar a esa hora es dicir no hay una reserva a la misma hora, hace la reserva
                 Club.getInstance().registerBooking(bookingDate, madeForDay, fromHour, paid, court, member);
                 System.out.println("Reserva Exitosa");
+                updateButtonState();
                 return true;//exito
             }
             else{   //si no se puede hacer la reserva
