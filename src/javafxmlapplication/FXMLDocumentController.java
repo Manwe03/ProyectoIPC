@@ -7,10 +7,7 @@ package javafxmlapplication;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -29,7 +26,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafxmlapplication.misReservas.FXMLReservasController;
@@ -37,8 +33,7 @@ import javafxmlapplication.pistaCalendario.FXMLpistaCController;
 import model.Booking;
 import model.Club;
 import model.ClubDAOException;
-import model.Court;
-import model.Member;
+
 
 
 /**
@@ -71,6 +66,10 @@ public class FXMLDocumentController implements Initializable {
     private FlowPane flowPane;
     
     private int numReservas = 0;
+    @FXML
+    private Button antButton;
+    @FXML
+    private Button posButton;
 
    
     /**
@@ -79,17 +78,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        //INICIALIZACIÓN DE LA PRIMERA PANTALLA || Estes orden es muy importante
-        dpBookingDay.setValue(LocalDate.now());
-        
-        UtilData.getInstance().setDpi(Screen.getPrimary().getDpi());
-        
-        scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
-        tabPane.getSelectionModel().select(2);//pone la tab pistas como seleccion inicial
-                
-        UtilData.getInstance().setSelectedDate(dpBookingDay.getValue());
-        
-        updateFlowPane();
+
 
         scrollPane.widthProperty().addListener((observable,oldVal,newVal)-> {//on withpropertie changed
             updateFlowPane();
@@ -98,8 +87,11 @@ public class FXMLDocumentController implements Initializable {
         
         dpBookingDay.valueProperty().addListener((observable,oldVal,newVal)-> {//on valueProperty changed
             UtilData.getInstance().setSelectedDate(newVal);//actualiza el dia selecionado en UtilData
+            updatePistasView();
         });
-  
+        
+                        //INICIALIZACIÓN PARA TESTING//
+        ////////////////////////////////////////////////////////////////////////
         try {
             Club.getInstance().setInitialData(); //Resetea la base de datos al iniciar
             //Club.getInstance().addSimpleData();
@@ -113,6 +105,20 @@ public class FXMLDocumentController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        ////////////////////////////////////////////////////////////////////////
+        
+        //INICIALIZACIÓN DE LA PRIMERA PANTALLA || Estes orden es muy importante
+        dpBookingDay.setValue(LocalDate.now());
+        
+        UtilData.getInstance().setDpi(Screen.getPrimary().getDpi());
+        
+        scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
+        tabPane.getSelectionModel().select(2);//pone la tab pistas como seleccion inicial
+                
+        UtilData.getInstance().setSelectedDate(dpBookingDay.getValue());
+        
+        updateFlowPane();
+             
     }
     
     
@@ -174,19 +180,38 @@ public class FXMLDocumentController implements Initializable {
         updatePistasView(); //se encarga de actualizar la vista
     }
     
-    private void updatePistasView() throws IOException, ClubDAOException{
+    private void updatePistasView(){
         UtilData.getInstance().setSelectedDate(dpBookingDay.getValue());//Actualiza el dia seleccionado en el datePicker
         //Elimina y actualiza los pistaBox
         flowPane.getChildren().clear();
         
         for(int i = 1; i <= 6; i++){
-            FXMLLoader loader = new  FXMLLoader(getClass().getResource("pistaCalendario/FXMLpistaC.fxml"));
-            Parent pistaBox = loader.load();
-            FXMLpistaCController controler = loader.getController();
-            controler.setData(Club.getInstance().getCourt("Pista " + i),dpBookingDay.getValue());
-            flowPane.getChildren().add(pistaBox);  
+            try {
+                
+                FXMLLoader loader = new  FXMLLoader(getClass().getResource("pistaCalendario/FXMLpistaC.fxml"));
+                Parent pistaBox = loader.load();
+                FXMLpistaCController controler = loader.getController();
+                controler.setData(Club.getInstance().getCourt("Pista " + i),dpBookingDay.getValue());  
+                flowPane.getChildren().add(pistaBox);
+                
+            } catch (ClubDAOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
+        antButton.setDisable(dpBookingDay.getValue().isEqual(LocalDate.now()));//desabilita el boton de ir al dia anterior si estas en el dia actual
+    }
+
+    @FXML
+    private void onAntButton(ActionEvent event) {
+        dpBookingDay.setValue(dpBookingDay.getValue().minusDays(1));
+    }
+
+    @FXML
+    private void onPosButton(ActionEvent event) {
+        dpBookingDay.setValue(dpBookingDay.getValue().plusDays(1));
     }
 
     

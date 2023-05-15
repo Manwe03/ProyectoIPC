@@ -37,11 +37,11 @@
                <top>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" text="Button" HBox.hgrow="NEVER" />
+                        <Button fx:id="antButton" mnemonicParsing="false" onAction="#onAntButton" text="Anterior" HBox.hgrow="NEVER" />
                         <Pane prefHeight="200.0" HBox.hgrow="ALWAYS" />
                         <DatePicker fx:id="dpBookingDay" />
                         <Pane prefHeight="200.0" HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" text="Button" HBox.hgrow="NEVER" />
+                        <Button fx:id="posButton" mnemonicParsing="false" onAction="#onPosButton" text="Siguiente" HBox.hgrow="NEVER" />
                      </children>
                      <BorderPane.margin>
                         <Insets />
