@@ -20,7 +20,8 @@ public class JavaFXMLApplication extends Application {
     public void start(Stage stage) throws Exception {
         //======================================================================
         // 1- creación del grafo de escena a partir del fichero FXML
-        FXMLLoader loader = new  FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+        //FXMLLoader loader = new  FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+        FXMLLoader loader = new  FXMLLoader(getClass().getResource("register/register.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         //System.out.println(Screen.getPrimary().getDpi());

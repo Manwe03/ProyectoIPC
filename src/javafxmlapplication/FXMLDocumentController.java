@@ -279,6 +279,117 @@ public class FXMLDocumentController implements Initializable {
     
     public void inicializarMisReservas() { //llamar a este método cada vez que se entra a Mis Reservas
         
+<<<<<<< Updated upstream
+=======
+        this.numReservas = misReservas.size();
+        updateMisReservasVbox();
+        
+        for(int i = 0; i < numReservas && i < 10; i++){
+            
+            FXMLLoader loader = new  FXMLLoader(getClass().getResource("misReservas/FXMLReservas.fxml"));
+            Parent reservaBox = loader.load();
+            //System.out.println("FXML file location: " + loader.getLocation());
+            FXMLReservasController controler = loader.getController();
+            controler.setData(misReservas.get(i));
+            
+            misReservasContainer.getChildren().add(reservaBox);  
+            
+        }
+        //TODO
+    }
+    @FXML
+    private void onButtonPistas(Event event) throws IOException, ClubDAOException{
+        dpBookingDay.setDayCellFactory((DatePicker picker) -> {//Desabilita los dias en el pasado en el datPicker
+            return new DateCell() {
+                @Override
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    LocalDate today = LocalDate.now();
+                    setDisable(empty || date.compareTo(today) < 0 );
+                }
+            };
+        });
+        
+        updatePistasView(); //se encarga de actualizar la vista
+    }
+    
+    private void updatePistasView(){
+        UtilData.getInstance().setSelectedDate(dpBookingDay.getValue());//Actualiza el dia seleccionado en el datePicker
+        //Elimina y actualiza los pistaBox
+        flowPane.getChildren().clear();
+        
+        for(int i = 1; i <= 6; i++){
+            try {
+                
+                FXMLLoader loader = new  FXMLLoader(getClass().getResource("pistaCalendario/FXMLpistaC.fxml"));
+                Parent pistaBox = loader.load();
+                FXMLpistaCController controler = loader.getController();
+                controler.setData(Club.getInstance().getCourt("Pista " + i),dpBookingDay.getValue());  
+                flowPane.getChildren().add(pistaBox);
+                
+            } catch (ClubDAOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        antButton.setDisable(dpBookingDay.getValue().isEqual(LocalDate.now()));//desabilita el boton de ir al dia anterior si estas en el dia actual
+    }
+    
+
+    @FXML
+    private void onAntButton(ActionEvent event) {
+        dpBookingDay.setValue(dpBookingDay.getValue().minusDays(1));
+    }
+
+    @FXML
+    private void onPosButton(ActionEvent event) {
+        dpBookingDay.setValue(dpBookingDay.getValue().plusDays(1));
+    }
+
+    @FXML
+    private void onButtonMiPerfil(Event event) {
+        updateMiPerfilLabelsInfo();
+        hideErrorLabels();
+        perfilEditMode(false);
+        
+        perfilEditarButton.setDisable(false);
+        guardarCambiosButton.setVisible(false);
+        cancelarCambiosButton.setVisible(false);        
+    }
+
+    @FXML
+    private void onPerfilEditarButton(ActionEvent event) {
+        hideErrorLabels();
+        perfilEditMode(true);
+        
+        clearPerfilFields();
+        
+        guardarCambiosButton.setVisible(true);
+        cancelarCambiosButton.setVisible(true);
+        perfilEditarButton.setDisable(true);
+    }
+
+    @FXML
+    private void onGuardarCambiosButton(ActionEvent event) {
+        guardarCambiosButton.setVisible(false);
+        cancelarCambiosButton.setVisible(false);
+        perfilEditarButton.setDisable(false);
+        perfilEditMode(false);
+    }
+
+    @FXML
+    private void onCancelarCambiosButton(ActionEvent event) {
+        guardarCambiosButton.setVisible(false);
+        cancelarCambiosButton.setVisible(false);
+        perfilEditarButton.setDisable(false);
+        perfilEditMode(false);
+    }
+    
+    /**Obtiene y pone la informacion en las labels de mi perfil*/
+    private void updateMiPerfilLabelsInfo() {
+>>>>>>> Stashed changes
         try {
             Club club = Club.getInstance();
             List<Booking> reservasUsuario = club.getUserBookings("user1");
