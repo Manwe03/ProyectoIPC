@@ -6,4 +6,39 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Created on : 14 may 2023, 17:09:15
     Author     : manub
 */
-
+.button{
+    -fx-text-fill: #222222;
+}
+.separator:horizontal{
+    -fx-border-color: #aaaaaa;
+    -fx-background-color: #aaaaaa;
+    -fx-border-radius: 3;
+    -fx-border-width: 3;
+}
+#defaultInputBox{
+    -fx-background-color: #cccccc;
+    -fx-background-radius: 3;
+    -fx-border-color: #aaaaaa;
+    -fx-border-radius: 3;
+}
+#defaultInputBox:hover{
+    -fx-border-color: #222222;
+}
+#defaultInputBox:disabled{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-inner-color: #222222;
+    -fx-opacity: 100%;
+}
+#defaultInputBox:focused{
+    -fx-background-color: #aaaaaa;
+    -fx-border-color: #21a115;
+}
+#opcionalLabel{
+    -fx-translate-y: 10px;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 5;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 0;
+    -fx-border-insets: 3;
+}
