@@ -218,7 +218,7 @@
                   </HBox>
                </center>
                <bottom>
-                  <HBox fx:id="perfilBottomPane" alignment="CENTER_RIGHT" fillHeight="false" BorderPane.alignment="CENTER_RIGHT">
+                  <HBox fx:id="perfilBottomPane" alignment="CENTER_RIGHT" fillHeight="false" maxHeight="71.0" minHeight="71.0" prefHeight="71.0" BorderPane.alignment="CENTER_RIGHT">
                      <children>
                         <Button fx:id="guardarCambiosButton" mnemonicParsing="false" onAction="#onGuardarCambiosButton" prefHeight="31.0" prefWidth="117.0" text="Guardar cambios">
                            <HBox.margin>
@@ -251,13 +251,16 @@
                   </HBox>
                </bottom>
                <top>
-                  <HBox fx:id="perfilTopPane" alignment="TOP_RIGHT" fillHeight="false" BorderPane.alignment="CENTER">
+                  <HBox fx:id="perfilTopPane" alignment="CENTER_RIGHT" fillHeight="false" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" BorderPane.alignment="CENTER">
                      <children>
                         <Label alignment="TOP_RIGHT" text="*Campo obligatorio" textFill="RED">
                            <HBox.margin>
-                              <Insets right="20.0" top="17.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin></Label>
                      </children>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
                   </HBox>
                </top>
             </BorderPane>

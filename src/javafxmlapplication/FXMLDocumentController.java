@@ -256,7 +256,7 @@ public class FXMLDocumentController implements Initializable {
         UtilData.getInstance().setSelectedDate(dpBookingDay.getValue());//Actualiza el dia seleccionado en el datePicker
         //Elimina y actualiza los pistaBox
         flowPane.getChildren().clear();
-        String styles = "-fx-background-color: #444349;" + "-fx-border-color: #ff0000;";
+        String styles = "-fx-background-color: #999999;" + "-fx-border-color: #ff0000;";
         for(int i = 1; i <= 6; i++){
             try {
                 
@@ -346,11 +346,11 @@ public class FXMLDocumentController implements Initializable {
                 nickFieldLabel.setText(member.getNickName());
                 contraseñaFieldLabel.setText(member.getPassword());
                 
-                nombreField.setPromptText(member.getName());
-                apellidosField.setPromptText(member.getSurname());
-                telefonoField.setPromptText(member.getTelephone());
-                nickField.setPromptText(member.getNickName());
-                contraseñaField.setPromptText(member.getPassword());
+                nombreField.setText(member.getName());
+                apellidosField.setText(member.getSurname());
+                telefonoField.setText(member.getTelephone());
+                nickField.setText(member.getNickName());
+                contraseñaField.setText(member.getPassword());
                 if(member.checkHasCreditInfo()){
                     String creditcard = member.getCreditCard();
                     numTarjetaField.setPromptText("------------" + creditcard.substring(creditcard.length()-4,creditcard.length()));

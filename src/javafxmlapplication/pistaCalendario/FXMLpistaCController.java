@@ -19,8 +19,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafxmlapplication.FXMLDocumentController;
 import javafxmlapplication.UtilData;
 import model.Booking;
@@ -70,6 +74,8 @@ public class FXMLpistaCController implements Initializable {
     private Button b_20;
     @FXML
     private Button b_21;
+    @FXML
+    private Label pistaLabel;
     
     private static int[] buttonState = {0,0,0,0,0,0,0,0,0,0,0,0,0};
     
@@ -80,8 +86,12 @@ public class FXMLpistaCController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //Pone el tamaño de los botones con respecto a los puntos por pulgada
         UtilData util = UtilData.getInstance();
-        util.setSize_DPI(vBoxPista,2.2+0.3,0.35*13+0.4);
+        util.setSize_DPI(vBoxPista,2.2+0.3,0.35*13+0.7);
         
+        //inicia el tamaño del label con respecto a la escala
+        pistaLabel.setFont(Font.font("system", FontWeight.NORMAL, FontPosture.REGULAR, util.getDpi()*0.2));
+        
+        util.setSize_DPI(pistaLabel, 2.2, 0.35);
         util.setSize_DPI(b_09, 2.2, 0.35);
         util.setSize_DPI(b_10, 2.2, 0.35);
         util.setSize_DPI(b_11, 2.2, 0.35);
@@ -101,6 +111,7 @@ public class FXMLpistaCController implements Initializable {
         this.court = court;             //Pista
         this.madeForDay = madeForDay;
         updateButtonState();
+        pistaLabel.setText(court.getName());
     }
     
     private void updateButtonState(){ 
