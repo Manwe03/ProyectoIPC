@@ -28,6 +28,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -145,7 +146,7 @@ public class FXMLDocumentController implements Initializable {
 
         scrollPane.widthProperty().addListener((observable,oldVal,newVal)-> {//on withpropertie changed
             updateFlowPane();
-            updateMisReservasVbox();
+            updateMisReservasVboxView();
         });
         
         dpBookingDay.valueProperty().addListener((observable,oldVal,newVal)-> {//on valueProperty changed
@@ -192,48 +193,49 @@ public class FXMLDocumentController implements Initializable {
         perfilTopPane.setMinHeight(dpi);
     }
     
-    private void updateMisReservasVbox(){
+    private void updateMisReservasVboxView(){
         misReservasContainer.setMaxWidth(misReservasScrollPane.getWidth()-31);
         misReservasContainer.setMinWidth(misReservasScrollPane.getWidth()-31);
         misReservasContainer.setMaxHeight(100 * Math.min(numReservas, 10)/*Multiplo de la cantidad de reservas*/);
         misReservasContainer.setMinHeight(100 * Math.min(numReservas, 10)/*Multiplo de la cantidad de reservas*/);
     }
     
+    public void updateMisReservas() throws ClubDAOException, IOException{
+        misReservasContainer.getChildren().clear();
+        List<Booking> misReservas = Club.getInstance().getUserBookings(UtilData.getInstance().getLogin());
+        this.numReservas = misReservas.size();
+        updateMisReservasVboxView();
+        for(int i = 0; i < numReservas && i < 10; i++){
+            FXMLLoader loader = new  FXMLLoader(getClass().getResource("misReservas/FXMLReservas.fxml")); //Gracias a chat gpt porque el path estaba mal
+            Parent reservaBox = loader.load();
+            FXMLReservasController controler = loader.getController();
+            controler.setData(misReservas.get(i),this);
+            misReservasContainer.getChildren().add(reservaBox);     
+        }
+    }
+    
     private void updateFlowPane(){
-        double width = scrollPane.getWidth()-15;
-        double pistaWidth = UtilData.getInstance().getDpi() * 2.5;
-  
-        int columns = (int) Math.floor(width/pistaWidth);
+        double dpi = UtilData.getInstance().getDpi();
+        
+        double width = scrollPane.getWidth()- dpi * 0.15;
+        
+        double vBoxWidth = ((2.2+0.3)*dpi);
+        
+        int columns = (int) Math.floor(width/vBoxWidth);
         if(columns < 6){
-            flowPane.setMaxWidth(columns*pistaWidth+1);
-            flowPane.setMinWidth(columns*pistaWidth+1);
+            flowPane.setMaxWidth(columns*vBoxWidth+2);
+            flowPane.setMinWidth(columns*vBoxWidth+2);
         }else{
-            flowPane.setMaxWidth(6*pistaWidth+1);
-            flowPane.setMinWidth(6*pistaWidth+1);
+            flowPane.setMaxWidth(6*vBoxWidth+1);
+            flowPane.setMinWidth(6*vBoxWidth+1);
         }
     }
     
     @FXML
     private void onButtonMisreservas(Event event) throws IOException, ClubDAOException {
-        misReservasContainer.getChildren().clear();
-        List<Booking> misReservas = Club.getInstance().getUserBookings(UtilData.getInstance().getLogin());
-        
-        this.numReservas = misReservas.size();
-        updateMisReservasVbox();
-        
-        for(int i = 0; i < numReservas && i < 10; i++){
-            
-            FXMLLoader loader = new  FXMLLoader(getClass().getResource("misReservas/FXMLReservas.fxml")); //Gracias a chat gpt porque el path estaba mal
-            Parent reservaBox = loader.load();
-            //System.out.println("FXML file location: " + loader.getLocation());
-            FXMLReservasController controler = loader.getController();
-            controler.setData(misReservas.get(i));
-            
-            misReservasContainer.getChildren().add(reservaBox);  
-            
-        }
-        //TODO
+        updateMisReservas();
     }
+    
     @FXML
     private void onButtonPistas(Event event) throws IOException, ClubDAOException{
         dpBookingDay.setDayCellFactory((DatePicker picker) -> {//Desabilita los dias en el pasado en el datPicker
@@ -254,7 +256,7 @@ public class FXMLDocumentController implements Initializable {
         UtilData.getInstance().setSelectedDate(dpBookingDay.getValue());//Actualiza el dia seleccionado en el datePicker
         //Elimina y actualiza los pistaBox
         flowPane.getChildren().clear();
-        
+        String styles = "-fx-background-color: #444349;" + "-fx-border-color: #ff0000;";
         for(int i = 1; i <= 6; i++){
             try {
                 
@@ -262,6 +264,9 @@ public class FXMLDocumentController implements Initializable {
                 Parent pistaBox = loader.load();
                 FXMLpistaCController controler = loader.getController();
                 controler.setData(Club.getInstance().getCourt("Pista " + i),dpBookingDay.getValue());  
+               
+                pistaBox.setStyle(styles);
+                
                 flowPane.getChildren().add(pistaBox);
                 
             } catch (ClubDAOException ex) {

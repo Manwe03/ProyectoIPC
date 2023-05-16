@@ -16,7 +16,10 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafxmlapplication.FXMLDocumentController;
 import javafxmlapplication.UtilData;
@@ -76,10 +79,22 @@ public class FXMLpistaCController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Pone el tamaño de los botones con respecto a los puntos por pulgada
-        double dpi = UtilData.getInstance().getDpi();
-        vBoxPista.setMaxWidth(dpi * 2.5);
-        vBoxPista.setMinWidth(dpi * 2.5);
+        UtilData util = UtilData.getInstance();
+        util.setSize_DPI(vBoxPista,2.2+0.3,0.35*13+0.4);
         
+        util.setSize_DPI(b_09, 2.2, 0.35);
+        util.setSize_DPI(b_10, 2.2, 0.35);
+        util.setSize_DPI(b_11, 2.2, 0.35);
+        util.setSize_DPI(b_12, 2.2, 0.35);
+        util.setSize_DPI(b_13, 2.2, 0.35);
+        util.setSize_DPI(b_14, 2.2, 0.35);
+        util.setSize_DPI(b_15, 2.2, 0.35);
+        util.setSize_DPI(b_16, 2.2, 0.35);
+        util.setSize_DPI(b_17, 2.2, 0.35);
+        util.setSize_DPI(b_18, 2.2, 0.35);
+        util.setSize_DPI(b_19, 2.2, 0.35);
+        util.setSize_DPI(b_20, 2.2, 0.35);
+        util.setSize_DPI(b_21, 2.2, 0.35);
     }    
 
     public void setData(Court court,LocalDate madeForDay){

@@ -7,13 +7,20 @@ package javafxmlapplication.misReservas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafxmlapplication.FXMLDocumentController;
 import model.Booking;
+import model.Club;
 import model.ClubDAOException;
 
 /**
@@ -24,6 +31,8 @@ import model.ClubDAOException;
 public class FXMLReservasController implements Initializable {
 
     Booking reserva;
+    
+    FXMLDocumentController parentController;
     
     @FXML
     private HBox r1;
@@ -46,8 +55,9 @@ public class FXMLReservasController implements Initializable {
         
     }    
     
-    public void setData(Booking MIreserva){
+    public void setData(Booking MIreserva, FXMLDocumentController parentController){
         this.reserva = MIreserva;
+        this.parentController = parentController;
         fechaL.setText(reserva.getMadeForDay().toString());
         horaL.setText(reserva.getFromTime().toString());
         pista.setText(reserva.getCourt().getName());
@@ -60,7 +70,15 @@ public class FXMLReservasController implements Initializable {
 
     @FXML
     private void onCancelar(ActionEvent event) {
-        System.out.println("cancelado");
+        try {
+            System.out.println("cancelado");
+            parentController.updateMisReservas();
+            Club.getInstance().removeBooking(this.reserva);
+        } catch (ClubDAOException ex) {
+            Logger.getLogger(FXMLReservasController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLReservasController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

@@ -6,6 +6,7 @@ package javafxmlapplication;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import javafx.scene.layout.Region;
 
 /**
  * No se usa de momento
@@ -33,6 +34,13 @@ public class UtilData {
     
     public void initialize() throws IOException{
         
+    }
+    
+    public void setSize_DPI(Region nodo,double width,double height){
+        nodo.setMaxWidth(dpi*width);
+        nodo.setMinWidth(dpi*width);
+        nodo.setMaxHeight(dpi*height);
+        nodo.setMinHeight(dpi*height);
     }
     
     //GET

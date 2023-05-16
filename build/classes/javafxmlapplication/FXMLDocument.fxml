@@ -297,13 +297,9 @@
                <center>
                   <ScrollPane fx:id="scrollPane" BorderPane.alignment="CENTER">
                      <content>
-                        <HBox alignment="CENTER">
+                        <HBox alignment="TOP_CENTER">
                            <children>
-                              <FlowPane fx:id="flowPane" columnHalignment="CENTER" prefWidth="1915.0" style="-fx-background-color: #000000;" HBox.hgrow="SOMETIMES">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </FlowPane>
+                              <FlowPane fx:id="flowPane" columnHalignment="CENTER" prefWidth="1915.0" style="-fx-background-color: #000000;" />
                            </children>
                         </HBox>
                      </content>
