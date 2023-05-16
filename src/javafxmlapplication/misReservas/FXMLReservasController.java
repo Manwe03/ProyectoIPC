@@ -10,14 +10,11 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafxmlapplication.FXMLDocumentController;
 import model.Booking;
 import model.Club;
@@ -72,8 +69,8 @@ public class FXMLReservasController implements Initializable {
     private void onCancelar(ActionEvent event) {
         try {
             System.out.println("cancelado");
-            parentController.updateMisReservas();
             Club.getInstance().removeBooking(this.reserva);
+            parentController.updateMisReservas();
         } catch (ClubDAOException ex) {
             Logger.getLogger(FXMLReservasController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
