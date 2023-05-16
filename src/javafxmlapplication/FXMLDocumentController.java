@@ -256,7 +256,7 @@ public class FXMLDocumentController implements Initializable {
         UtilData.getInstance().setSelectedDate(dpBookingDay.getValue());//Actualiza el dia seleccionado en el datePicker
         //Elimina y actualiza los pistaBox
         flowPane.getChildren().clear();
-        String styles = "-fx-background-color: #444349;" + "-fx-border-color: #ff0000;";
+        String styles = "-fx-background-color: #999999;" + "-fx-border-color: #ff0000;";
         for(int i = 1; i <= 6; i++){
             try {
                 

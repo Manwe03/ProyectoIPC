@@ -2,10 +2,20 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox fx:id="vBoxPista" alignment="CENTER" fillWidth="false" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.pistaCalendario.FXMLpistaCController">
    <children>
+      <Label fx:id="pistaLabel" alignment="CENTER" text="Pista x">
+         <font>
+            <Font size="26.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </Label>
       <Button fx:id="b_09" mnemonicParsing="false" onAction="#onCalendarButton" prefHeight="50.0" prefWidth="300.0" text="Button">
          <VBox.margin>
             <Insets />
