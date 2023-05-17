@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -149,10 +150,15 @@ public class FXMLDocumentController implements Initializable {
     private boolean repetirContraseñaLabelUp = false;
     private boolean numTarjetaLabelUp = false;
     private boolean svcLabelUp = false;
+    
+    private UtilData utilData;
+    
     @FXML
     private Separator miPerfilSeparator;
     @FXML
     private Label svcErrorLabel;
+    @FXML
+    private Button buttonPistasButton;
     
     
     
@@ -162,14 +168,16 @@ public class FXMLDocumentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
+        utilData = UtilData.getInstance();
+                
         scrollPane.widthProperty().addListener((observable,oldVal,newVal)-> {//on withpropertie changed
             updateFlowPane();
             updateMisReservasVboxView();
         });
         
         dpBookingDay.valueProperty().addListener((observable,oldVal,newVal)-> {//on valueProperty changed
-            UtilData.getInstance().setSelectedDate(newVal);//actualiza el dia selecionado en UtilData
+            utilData.setSelectedDate(newVal);//actualiza el dia selecionado en UtilData
             updatePistasView();
         });
         
@@ -195,8 +203,8 @@ public class FXMLDocumentController implements Initializable {
             //Club.getInstance().addSimpleData();
             
             Club.getInstance().registerMember("Fernando", "Alonso", "99999999", "pepe", "pipo", "0000000000000000", 000, null); //registra un miembro de prueba
-            UtilData.getInstance().setLogin("pepe");
-            UtilData.getInstance().setPassword("pipo");
+            utilData.setLogin("pepe");
+            utilData.setPassword("pipo");
             
         } catch (ClubDAOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,19 +216,25 @@ public class FXMLDocumentController implements Initializable {
         //INICIALIZACIÓN DE LA PRIMERA PANTALLA || Estes orden es muy importante
         dpBookingDay.setValue(LocalDate.now());
         
-        UtilData.getInstance().setDpi(Screen.getPrimary().getDpi());
+        utilData.setDpi(Screen.getPrimary().getDpi());
         
         scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
         tabPane.getSelectionModel().select(2);//pone la tab pistas como seleccion inicial
-                
-        UtilData.getInstance().setSelectedDate(dpBookingDay.getValue());
+        try {
+            onButtonPistas(new Event(EventType.ROOT));
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClubDAOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        utilData.setSelectedDate(dpBookingDay.getValue());
         
         updateFlowPane();
         iniMiPerfilTab();
     }
     
     private void iniMiPerfilTab(){//ajusta el tamaño con respecto al dpi
-        double dpi = UtilData.getInstance().getDpi();
+        double dpi = utilData.getDpi();
         perfilBottomPane.setMaxHeight(dpi);
         perfilBottomPane.setMinHeight(dpi);
         perfilTopPane.setMaxHeight(dpi);
@@ -237,7 +251,7 @@ public class FXMLDocumentController implements Initializable {
     
     public void updateMisReservas() throws ClubDAOException, IOException{
         misReservasContainer.getChildren().clear();
-        List<Booking> misReservas = Club.getInstance().getUserBookings(UtilData.getInstance().getLogin());
+        List<Booking> misReservas = Club.getInstance().getUserBookings(utilData.getLogin());
         this.numReservas = misReservas.size();
         updateMisReservasVboxView();
         for(int i = 0; i < numReservas && i < 10; i++){
@@ -250,7 +264,7 @@ public class FXMLDocumentController implements Initializable {
     }
     
     private void updateFlowPane(){
-        double dpi = UtilData.getInstance().getDpi();
+        double dpi = utilData.getDpi();
         
         double width = scrollPane.getWidth()- dpi * 0.15;
         
@@ -268,11 +282,13 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private void onButtonMisreservas(Event event) throws IOException, ClubDAOException {
+        tabPane.getSelectionModel().select(1);
         updateMisReservas();
     }
     
     @FXML
     private void onButtonPistas(Event event) throws IOException, ClubDAOException{
+        tabPane.getSelectionModel().select(2);
         dpBookingDay.setDayCellFactory((DatePicker picker) -> {//Desabilita los dias en el pasado en el datPicker
             return new DateCell() {
                 @Override
@@ -288,7 +304,7 @@ public class FXMLDocumentController implements Initializable {
     }
     
     private void updatePistasView(){
-        UtilData.getInstance().setSelectedDate(dpBookingDay.getValue());//Actualiza el dia seleccionado en el datePicker
+        utilData.setSelectedDate(dpBookingDay.getValue());//Actualiza el dia seleccionado en el datePicker
         //Elimina y actualiza los pistaBox
         flowPane.getChildren().clear();
         String styles = "-fx-background-color: #999999;" + "-fx-border-color: #ff0000;";
@@ -327,18 +343,19 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void onButtonMiPerfil(Event event) {
-        UtilData util = UtilData.getInstance();
-        //Member member = Club.getInstance().getMemberByCredentials(util.getLogin(), util.getLogin());
-        //if(member == null){
-        //    util.getStage().setScene(util.escenas.get("Login"));
-        //}
+        tabPane.getSelectionModel().select(0);
+        
+        if(!utilData.isLogged()){
+            utilData.showScene("Login");
+        }
+        
         updateMiPerfilLabelsInfo();
         hideErrorLabels();
         perfilEditMode(false);
-
         perfilEditarButton.setDisable(false);
         guardarCambiosButton.setVisible(false);
         cancelarCambiosButton.setVisible(false);
+        
     }
 
     @FXML
@@ -371,10 +388,8 @@ public class FXMLDocumentController implements Initializable {
     /**Obtiene y pone la informacion en las labels de mi perfil*/
     private void updateMiPerfilLabelsInfo() {
         try {
-            if(UtilData.getInstance().getLogin() == null || UtilData.getInstance().getPassword() == null){//Si no estas logueado
-            }else {
-                Member member = Club.getInstance().getMemberByCredentials(UtilData.getInstance().getLogin(), UtilData.getInstance().getPassword());
-                
+            if(utilData.isLogged()){//Si estas logueado
+                Member member = Club.getInstance().getMemberByCredentials(utilData.getLogin(), utilData.getPassword());
                 nombreField.setText(member.getName());
                 apellidosField.setText(member.getSurname());
                 telefonoField.setText(member.getTelephone());
@@ -385,10 +400,7 @@ public class FXMLDocumentController implements Initializable {
                     svcField.setPromptText("###");
                 }
             }
-
-        } catch (ClubDAOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (ClubDAOException | IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

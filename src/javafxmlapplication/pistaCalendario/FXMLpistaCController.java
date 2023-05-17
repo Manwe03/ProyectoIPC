@@ -79,32 +79,33 @@ public class FXMLpistaCController implements Initializable {
     
     private static int[] buttonState = {0,0,0,0,0,0,0,0,0,0,0,0,0};
     
+    UtilData utilData;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Pone el tamaño de los botones con respecto a los puntos por pulgada
-        UtilData util = UtilData.getInstance();
-        util.setSize_DPI(vBoxPista,2.2+0.3,0.35*13+0.7);
+        utilData = UtilData.getInstance();
+        utilData.setSize_DPI(vBoxPista,2.2+0.3,0.35*13+0.7);
         
         //inicia el tamaño del label con respecto a la escala
-        pistaLabel.setFont(Font.font("system", FontWeight.NORMAL, FontPosture.REGULAR, util.getDpi()*0.2));
+        pistaLabel.setFont(Font.font("system", FontWeight.NORMAL, FontPosture.REGULAR, utilData.getDpi()*0.2));
         
-        util.setSize_DPI(pistaLabel, 2.2, 0.35);
-        util.setSize_DPI(b_09, 2.2, 0.35);
-        util.setSize_DPI(b_10, 2.2, 0.35);
-        util.setSize_DPI(b_11, 2.2, 0.35);
-        util.setSize_DPI(b_12, 2.2, 0.35);
-        util.setSize_DPI(b_13, 2.2, 0.35);
-        util.setSize_DPI(b_14, 2.2, 0.35);
-        util.setSize_DPI(b_15, 2.2, 0.35);
-        util.setSize_DPI(b_16, 2.2, 0.35);
-        util.setSize_DPI(b_17, 2.2, 0.35);
-        util.setSize_DPI(b_18, 2.2, 0.35);
-        util.setSize_DPI(b_19, 2.2, 0.35);
-        util.setSize_DPI(b_20, 2.2, 0.35);
-        util.setSize_DPI(b_21, 2.2, 0.35);
+        utilData.setSize_DPI(pistaLabel, 2.2, 0.35);
+        utilData.setSize_DPI(b_09, 2.2, 0.35);
+        utilData.setSize_DPI(b_10, 2.2, 0.35);
+        utilData.setSize_DPI(b_11, 2.2, 0.35);
+        utilData.setSize_DPI(b_12, 2.2, 0.35);
+        utilData.setSize_DPI(b_13, 2.2, 0.35);
+        utilData.setSize_DPI(b_14, 2.2, 0.35);
+        utilData.setSize_DPI(b_15, 2.2, 0.35);
+        utilData.setSize_DPI(b_16, 2.2, 0.35);
+        utilData.setSize_DPI(b_17, 2.2, 0.35);
+        utilData.setSize_DPI(b_18, 2.2, 0.35);
+        utilData.setSize_DPI(b_19, 2.2, 0.35);
+        utilData.setSize_DPI(b_20, 2.2, 0.35);
+        utilData.setSize_DPI(b_21, 2.2, 0.35);
     }    
 
     public void setData(Court court,LocalDate madeForDay){
@@ -120,17 +121,14 @@ public class FXMLpistaCController implements Initializable {
             List<Booking> reservasDelDia = Club.getInstance().getCourtBookings(court.getName(), madeForDay); //obtiene las reservas del dia
             for(int i = 0; i < 13; i++){buttonState[i] = 0;}//todas a 0
             for(Booking reserva: reservasDelDia){ //recorre las reservas
-                System.out.println(reserva.toString());
-                if(reserva.getMember().equals(Club.getInstance().getMemberByCredentials(UtilData.getInstance().getLogin(), UtilData.getInstance().getPassword()))){
+                if(reserva.getMember().equals(Club.getInstance().getMemberByCredentials(utilData.getLogin(), utilData.getPassword()))){
                     buttonState[reserva.getFromTime().getHour()-9] = 2;
                 }else{
                     buttonState[reserva.getFromTime().getHour()-9] = 1;
                 }
             }
             updateDisplay();
-        } catch (ClubDAOException ex) {
-            Logger.getLogger(FXMLpistaCController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (ClubDAOException | IOException ex) {
             Logger.getLogger(FXMLpistaCController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -187,9 +185,7 @@ public class FXMLpistaCController implements Initializable {
                 System.out.println("Reserva Fallida");
                 return false;//fallo
             }
-        } catch (ClubDAOException ex) { //mitico catch
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (ClubDAOException | IOException ex) { //mitico catch
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;//fallo
@@ -198,10 +194,31 @@ public class FXMLpistaCController implements Initializable {
     @FXML
     private void onCalendarButton(ActionEvent event) throws ClubDAOException, IOException {
         Button button = (Button) event.getSource();//obtiene el boton sobre el que se a realizado el evento
+        int numButton = Integer.parseInt( button.getId().substring(2, 4));
+        Member member;
         
-        Member member = Club.getInstance().getMemberByCredentials(UtilData.getInstance().getLogin(), UtilData.getInstance().getPassword());//obtiene el miembro logeado actualmente
-        LocalTime fromtime = LocalTime.of(Integer.parseInt( button.getId().substring(2, 4)),0);//obtiene la hora de la reserva
+        switch (buttonState[numButton-9]) {
+            case 0: //si no esta reservada
+                if(utilData.isLogged()){//si estas loggeado -> Reservar
+                    member = Club.getInstance().getMemberByCredentials(utilData.getLogin(), utilData.getPassword());//obtiene el miembro logeado actualmente
+                    LocalTime fromtime = LocalTime.of(numButton,0);//obtiene la hora de la reserva
+                    safeRegisterBooking(LocalDateTime.now(), utilData.getSelectedDate(), fromtime , member.checkHasCreditInfo(), court, member);//intenta registrar una reserva
+                }else{//si no estas loggeado -> Notificar
+                    
+                }
+                break;
+            case 1: //si esta reservada por otro
+                
+                
+                break;
+            case 2: //si esta reservada por ti
+                
+                
+                break;
+        }
         
-        safeRegisterBooking(LocalDateTime.now(), UtilData.getInstance().getSelectedDate(), fromtime , member.checkHasCreditInfo(), court, member);//intenta registrar una reserva
+        
+        //Si
+        
     }
 }
