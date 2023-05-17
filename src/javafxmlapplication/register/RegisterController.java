@@ -61,6 +61,10 @@ public class RegisterController implements Initializable {
     private TextField fieldTarjeta;
     @FXML
     private TextField fieldCVC;
+    @FXML
+    private TextField fieldTelefono;
+    @FXML
+    private Label errorTelefono;
 
     /**
      * Initializes the controller class.
@@ -90,8 +94,16 @@ public class RegisterController implements Initializable {
             || (fieldTarjeta.getText().length() != 16 || fieldCVC.getText().length() != 3) &&
             ((fieldTarjeta.getText().length() != 0 || fieldCVC.getText().length() != 0))) {            
                 errorTarjeta.setVisible(true);
-        } else { errorTarjeta.setVisible(false); }
-        
+        } else { errorTarjeta.setVisible(false); }  
+        if(fieldTelefono.getText().length() != 9) {
+            errorTelefono.setText("Número incorrecto");
+            errorTelefono.setVisible(true);}        
+        //Compruebo que no hay errores
+        if(!errorNombre.isVisible() && !errorApellido.isVisible() &&  !errorUsuario.isVisible()
+           && !errorContraseña.isVisible() && !errorTarjeta.isVisible() && !errorTelefono.isVisible()) {
+            //Crear nuevo usuario
+            //Club.getInstance().registerMember(fieldNombre.getText(), fieldApellido.getText(), );
+        } 
     }    
 
     @FXML
@@ -127,6 +139,7 @@ public class RegisterController implements Initializable {
     private void manejaClick(MouseEvent event) {
         int lNombre = fieldNombre.getText().length();
         int lApellido = fieldApellido.getText().length();
+        int lTelefono = fieldTelefono.getText().length();
         int lUsuario = fieldUsuario.getText().length();
         int lContraseña = fieldContraseña.getText().length();
         int lTarjeta = fieldTarjeta.getText().length();
@@ -135,18 +148,25 @@ public class RegisterController implements Initializable {
         if(lApellido > 0) {
             if(lNombre == 0) {errorNombre.setVisible(true);}
         }
-        if(lUsuario > 0) {
+        if(lTelefono > 0) {
             if(lNombre == 0) {errorNombre.setVisible(true);}
             if(lApellido == 0) {errorApellido.setVisible(true);}            
+        }
+        if(lUsuario > 0) {
+            if(lNombre == 0) {errorNombre.setVisible(true);}
+            if(lApellido == 0) {errorApellido.setVisible(true);}
+            if(lTelefono == 0) {errorTelefono.setVisible(true);}            
         }
         if(lContraseña > 0) {
             if(lNombre == 0) {errorNombre.setVisible(true);}
             if(lApellido == 0) {errorApellido.setVisible(true);}
+            if(lTelefono == 0) {errorTelefono.setVisible(true);}
             if(lUsuario == 0) {errorUsuario.setVisible(true);}
         }
         if(lTarjeta > 0 || lCVC > 0) {
             if(lNombre == 0) {errorNombre.setVisible(true);}
             if(lApellido == 0) {errorApellido.setVisible(true);}
+            if(lTelefono == 0) {errorTelefono.setVisible(true);}
             if(lUsuario == 0) {errorUsuario.setVisible(true);}
             if(lContraseña == 0) {errorContraseña.setVisible(true);}
         }
@@ -156,10 +176,18 @@ public class RegisterController implements Initializable {
     private void manejaType(KeyEvent event) throws ClubDAOException, IOException {
         if(fieldNombre.getText().length() > 0) {errorNombre.setVisible(false);}
         if(fieldApellido.getText().length() > 0) {errorApellido.setVisible(false);}
+        if(fieldTelefono.getText().length() > 0) {errorTelefono.setVisible(false); errorTelefono.setText("Campo obligatorio");}
         if(fieldUsuario.getText().length() > 0) {errorUsuario.setVisible(false);}
         if(fieldContraseña.getText().length() > 0) {errorContraseña.setVisible(false);}
         if(fieldTarjeta.getText().length() > 0) {errorTarjeta.setVisible(false);}
         if(fieldCVC.getText().length() > 0) {errorTarjeta.setVisible(false);}
+        if(!soloNumeros(fieldTelefono.getText())) {
+            errorTelefono.setText("Número incorrecto");
+            errorTelefono.setVisible(true);
+        } else { 
+            errorTelefono.setVisible(false);
+            errorTelefono.setText("Campo obligatorio");
+        }
         if (Club.getInstance().existsLogin(fieldUsuario.getText())) {
             errorUsuario.setText("Usuario ya existente");
             errorApellido.setVisible(true);
@@ -172,6 +200,8 @@ public class RegisterController implements Initializable {
                
         
 }
+
+   
 
     
 
