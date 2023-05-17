@@ -97,12 +97,29 @@ public class RegisterController implements Initializable {
         } else { errorTarjeta.setVisible(false); }  
         if(fieldTelefono.getText().length() != 9) {
             errorTelefono.setText("Número incorrecto");
-            errorTelefono.setVisible(true);}        
+            errorTelefono.setVisible(true);}
+        
         //Compruebo que no hay errores
         if(!errorNombre.isVisible() && !errorApellido.isVisible() &&  !errorUsuario.isVisible()
            && !errorContraseña.isVisible() && !errorTarjeta.isVisible() && !errorTelefono.isVisible()) {
-            //Crear nuevo usuario
-            //Club.getInstance().registerMember(fieldNombre.getText(), fieldApellido.getText(), );
+            
+            String tarjeta = "";
+            String cvc = "";
+            int cvcInt = 0;
+            if(fieldTarjeta.getText().length() > 0) {
+                tarjeta = fieldTarjeta.getText();
+                cvc = fieldCVC.getText();
+                cvcInt = Integer.parseInt(cvc);
+            }
+            
+            //Crear nuevo usuario            
+            Club.getInstance().registerMember(fieldNombre.getText(), fieldApellido.getText(), fieldTelefono.getText(),
+            fieldUsuario.getText(), fieldContraseña.getText(), tarjeta, cvcInt, imagenPerfilRegistro.getImage());
+            UtilData.getInstance().setLogin(fieldUsuario.getText());
+            UtilData.getInstance().setPassword(fieldContraseña.getText());
+            
+            //Informar que se ha creado la cuenta
+           UtilData.getInstance().showScene("CuentaCreada");
         } 
     }    
 
@@ -190,7 +207,7 @@ public class RegisterController implements Initializable {
         }
         if (Club.getInstance().existsLogin(fieldUsuario.getText())) {
             errorUsuario.setText("Usuario ya existente");
-            errorApellido.setVisible(true);
+            errorUsuario.setVisible(true);
         } else {
             errorUsuario.setText("Campo obligatorio");
         }   

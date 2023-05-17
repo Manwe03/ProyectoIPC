@@ -52,6 +52,9 @@ public class UtilData {
         
         scene = new Scene(FXMLLoader.load(getClass().getResource("register/register.fxml")));
         escenas.put("Register", scene);
+        
+        scene = new Scene(FXMLLoader.load(getClass().getResource("cuentaCreada/cuentaCreada.fxml")));
+        escenas.put("CuentaCreada", scene);
     }
     
     public void showScene(String nombre){

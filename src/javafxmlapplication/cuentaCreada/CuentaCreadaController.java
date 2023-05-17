@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package javafxmlapplication.login;
+package javafxmlapplication.cuentaCreada;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,33 +18,32 @@ import javafxmlapplication.UtilData;
  *
  * @author Miquel
  */
-public class LoginController  implements Initializable{
+public class CuentaCreadaController implements Initializable {
 
     @FXML
-    private Button register;
+    private Label labelFelicidades;
     @FXML
-    private Label loginFailed;
+    private Button iniciarSesion;
     @FXML
-    private Button login;
-    
+    private Button menuPrincipal;
+
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // TODO
         
+    }    
+
+    @FXML
+    private void aIniciarSesion(ActionEvent event) {
+        UtilData.getInstance().showScene("Login");
     }
 
     @FXML
-    private void irARegistro(ActionEvent event) {
-        UtilData.getInstance().showScene("Register");
-    }
-
-    @FXML
-    private void atras(ActionEvent event) {
+    private void aMenuPrincipal(ActionEvent event) {
         UtilData.getInstance().showScene("Main");
     }
-
-    @FXML
-    private void intentoIniciarSesion(ActionEvent event) {
-        //falta por implementar
-    }
-
+    
 }
