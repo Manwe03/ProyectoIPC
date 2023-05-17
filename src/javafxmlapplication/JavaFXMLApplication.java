@@ -19,25 +19,28 @@ public class JavaFXMLApplication extends Application {
     public void start(Stage stage) throws Exception {
         //======================================================================
         // 1- creación del grafo de escena a partir del fichero FXML
-        FXMLLoader loader = new  FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
+        UtilData.getInstance().initialize(stage);
+        //FXMLLoader loader = new  FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+        //Parent root = loader.load();
         
-        String css = this.getClass().getResource("BaseStyleSheet.css").toExternalForm();
-        scene.getStylesheets().add(css);
+        //Scene scene = new Scene(UtilData.getInstance().escenas.get("Main"));
+        
+        
         //System.out.println(Screen.getPrimary().getDpi());
         //======================================================================
         // 3- asiganación de la escena al Stage que recibe el metodo 
         //     - configuracion del stage
         //     - se muestra el stage de manera no modal mediante el metodo show()
         double dpi = Screen.getPrimary().getDpi();
-        stage.setScene(scene);
-        stage.setHeight(dpi*7);
-        stage.setWidth(dpi*10);
-        stage.setMinHeight(dpi*6);
-        stage.setMinWidth(dpi*7);
-        stage.setTitle("GreenBall");
-        stage.show();
+        
+        UtilData.getInstance().showScene("Main");
+        //stage.setScene(scene);
+        //stage.setHeight(dpi*7);
+        //stage.setWidth(dpi*10);
+        //stage.setMinHeight(dpi*6);
+        //stage.setMinWidth(dpi*7);
+        //stage.setTitle("GreenBall");
+        //stage.show();
     }
 
     /**
