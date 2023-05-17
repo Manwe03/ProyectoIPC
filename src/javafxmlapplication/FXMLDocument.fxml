@@ -24,7 +24,7 @@
 
 <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.FXMLDocumentController">
   <tabs>
-        <Tab fx:id="buttonMiPerfil" closable="false" onSelectionChanged="#onButtonMiPerfil" text="Mi Perfil">
+        <Tab fx:id="buttonMiPerfil" closable="false">
          <content>
             <BorderPane>
                <center>
@@ -274,8 +274,11 @@
                   </HBox>
                </top>
             </BorderPane>
-         </content></Tab>
-    <Tab fx:id="buttonMisreservas" closable="false" onSelectionChanged="#onButtonMisreservas" text="Mis Reservas">
+         </content>
+         <graphic>
+            <Button mnemonicParsing="false" onMouseClicked="#onButtonMiPerfil" text="Mi Perfil" />
+         </graphic></Tab>
+    <Tab fx:id="buttonMisreservas" closable="false">
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <top>
@@ -289,8 +292,11 @@
                   </ScrollPane>
                </center></BorderPane>
          </content>
+         <graphic>
+            <Button mnemonicParsing="false" onMouseClicked="#onButtonMisreservas" text="Mis Reservas" />
+         </graphic>
     </Tab>
-      <Tab fx:id="buttonPistas" closable="false" onSelectionChanged="#onButtonPistas" text="Pistas">
+      <Tab fx:id="buttonPistas" closable="false">
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <top>
@@ -322,6 +328,9 @@
                   </ScrollPane>
                </center></BorderPane>
          </content>
+         <graphic>
+            <Button fx:id="buttonPistasButton" mnemonicParsing="false" onMouseClicked="#onButtonPistas" text="Pistas" />
+         </graphic>
       </Tab>
   </tabs>
 </TabPane>

@@ -7,10 +7,14 @@ package javafxmlapplication;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import model.Club;
+import model.ClubDAOException;
 
 /**
  * No se usa de momento
@@ -66,6 +70,18 @@ public class UtilData {
         stage.setMinWidth(dpi*7);
         stage.setTitle("GreenBall");
         stage.show();
+    }
+    
+    public boolean isLogged(){
+        try {
+            Club.getInstance().getMemberByCredentials(this.login, this.password);
+            return true;
+        } catch (NullPointerException elBicho){
+            return false;
+        } catch (ClubDAOException | IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
     
     public void setSize_DPI(Region nodo,double width,double height){
