@@ -35,6 +35,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafxmlapplication.misReservas.FXMLReservasController;
 import javafxmlapplication.pistaCalendario.FXMLpistaCController;
@@ -326,13 +327,18 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void onButtonMiPerfil(Event event) {
+        UtilData util = UtilData.getInstance();
+        //Member member = Club.getInstance().getMemberByCredentials(util.getLogin(), util.getLogin());
+        //if(member == null){
+        //    util.getStage().setScene(util.escenas.get("Login"));
+        //}
         updateMiPerfilLabelsInfo();
         hideErrorLabels();
         perfilEditMode(false);
-        
+
         perfilEditarButton.setDisable(false);
         guardarCambiosButton.setVisible(false);
-        cancelarCambiosButton.setVisible(false);        
+        cancelarCambiosButton.setVisible(false);
     }
 
     @FXML
