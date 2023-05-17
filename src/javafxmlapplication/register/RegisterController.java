@@ -18,9 +18,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafxmlapplication.UtilData;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -70,15 +72,25 @@ public class RegisterController implements Initializable {
 
     @FXML
     private void volverAInicioSesion(ActionEvent event) {
+        UtilData.getInstance().showScene("Login");
+    }
         
+    @FXML
+    private void volverAMenuPrincipal(ActionEvent event) {
+        UtilData.getInstance().showScene("Main");
     }
 
     @FXML
     private void registrarCuenta(ActionEvent event) throws ClubDAOException, IOException {
         if(fieldNombre.getText().equals("")) { errorNombre.setVisible(true); }
         if(fieldApellido.getText().equals("")) { errorApellido.setVisible(true); }
-        if(fieldUsuario.getText().equals("")) { errorUsuario.setText("Campo obligatorio"); errorUsuario.setVisible(true); }
-        if(fieldContraseña.getText().equals("")) { errorContraseña.setVisible(true); }        
+        if(fieldUsuario.getText().equals("")) { errorUsuario.setVisible(true); }
+        if(fieldContraseña.getText().equals("")) { errorContraseña.setVisible(true); }
+        if (!soloNumeros(fieldTarjeta.getText()) || !soloNumeros(fieldCVC.getText()) 
+            || (fieldTarjeta.getText().length() != 16 || fieldCVC.getText().length() != 3) &&
+            ((fieldTarjeta.getText().length() != 0 || fieldCVC.getText().length() != 0))) {            
+                errorTarjeta.setVisible(true);
+        } else { errorTarjeta.setVisible(false); }
         
     }    
 
@@ -101,43 +113,70 @@ public class RegisterController implements Initializable {
             }
         }        
     }
-
-    @FXML
-    private void volverAMenuPrincipal(ActionEvent event) {
-        
+    
+    public boolean soloNumeros(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            if (!Character.isDigit(s.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @FXML
-    private void compruebaErrores(KeyEvent event) throws ClubDAOException, IOException {
-        if (Club.getInstance().existsLogin(fieldUsuario.getText())) {
-            errorUsuario.setText("Usuario ya existente");
-        } else { errorUsuario.setVisible(false);}
-        if (
-                fieldTarjeta.getText().length() == 0 && fieldCVC.getText().length() != 0 ||
-                fieldTarjeta.getText().length() != 0 && fieldCVC.getText().length() == 0 ||
-                fieldTarjeta.getText().length() != 16 || fieldCVC.getText().length() != 3                
-            ) { errorTarjeta.setVisible(true);
-        } else { errorTarjeta.setVisible(false); }
+    private void manejaClick(MouseEvent event) {
+        int lNombre = fieldNombre.getText().length();
+        int lApellido = fieldApellido.getText().length();
+        int lUsuario = fieldUsuario.getText().length();
+        int lContraseña = fieldContraseña.getText().length();
+        int lTarjeta = fieldTarjeta.getText().length();
+        int lCVC = fieldCVC.getText().length();
+        
+        if(lApellido > 0) {
+            if(lNombre == 0) {errorNombre.setVisible(true);}
+        }
+        if(lUsuario > 0) {
+            if(lNombre == 0) {errorNombre.setVisible(true);}
+            if(lApellido == 0) {errorApellido.setVisible(true);}            
+        }
+        if(lContraseña > 0) {
+            if(lNombre == 0) {errorNombre.setVisible(true);}
+            if(lApellido == 0) {errorApellido.setVisible(true);}
+            if(lUsuario == 0) {errorUsuario.setVisible(true);}
+        }
+        if(lTarjeta > 0 || lCVC > 0) {
+            if(lNombre == 0) {errorNombre.setVisible(true);}
+            if(lApellido == 0) {errorApellido.setVisible(true);}
+            if(lUsuario == 0) {errorUsuario.setVisible(true);}
+            if(lContraseña == 0) {errorContraseña.setVisible(true);}
+        }
     }
-        
-            
-            
-        
-
-    /*@FXML
-    private void compruebaErrores(MouseEvent event) throws ClubDAOException, IOException {
+    
+    @FXML
+    private void manejaType(KeyEvent event) throws ClubDAOException, IOException {
+        if(fieldNombre.getText().length() > 0) {errorNombre.setVisible(false);}
+        if(fieldApellido.getText().length() > 0) {errorApellido.setVisible(false);}
+        if(fieldUsuario.getText().length() > 0) {errorUsuario.setVisible(false);}
+        if(fieldContraseña.getText().length() > 0) {errorContraseña.setVisible(false);}
+        if(fieldTarjeta.getText().length() > 0) {errorTarjeta.setVisible(false);}
+        if(fieldCVC.getText().length() > 0) {errorTarjeta.setVisible(false);}
         if (Club.getInstance().existsLogin(fieldUsuario.getText())) {
             errorUsuario.setText("Usuario ya existente");
-        } else { errorUsuario.setVisible(false);}
-        if (
-                fieldTarjeta.getText().length() == 0 && fieldCVC.getText().length() != 0 ||
-                fieldTarjeta.getText().length() != 0 && fieldCVC.getText().length() == 0 ||
-                fieldTarjeta.getText().length() != 16 || fieldCVC.getText().length() != 3                
-            ) { errorTarjeta.setVisible(true);
-        } else { errorTarjeta.setVisible(false); }
-        } 
-    } */ 
-
+            errorApellido.setVisible(true);
+        } else {
+            errorUsuario.setText("Campo obligatorio");
+        }   
+        
+    }
     
-    
+               
+        
 }
+
+    
+
+    
+
+    
+    
+

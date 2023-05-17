@@ -40,11 +40,11 @@
             <Insets left="20.0" top="20.0" />
          </padding>
       </HBox>
-      <TextField fx:id="fieldNombre" onKeyReleased="#compruebaErrores" onMouseReleased="#compruebaErrores" prefWidth="132.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField fx:id="fieldApellido" onKeyReleased="#compruebaErrores" onMouseReleased="#compruebaErrores" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <TextField fx:id="fieldUsuario" onKeyReleased="#compruebaErrores" onMouseReleased="#compruebaErrores" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <TextField fx:id="fieldContraseña" onKeyReleased="#compruebaErrores" onMouseReleased="#compruebaErrores" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <TextField fx:id="fieldTarjeta" onKeyReleased="#compruebaErrores" onMouseReleased="#compruebaErrores" promptText="1234-1234-1234-1234" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <TextField fx:id="fieldNombre" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" prefWidth="132.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="fieldApellido" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="fieldUsuario" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="fieldContraseña" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <TextField fx:id="fieldTarjeta" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" promptText="1234-1234-1234-1234" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
          <children>
             <Label text="Nombre: *" />
@@ -157,7 +157,7 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
          <children>
-            <Label fx:id="errorUsuario" text="Usuario ya registrado" textFill="RED" visible="false" />
+            <Label fx:id="errorUsuario" text="Campo obligatorio" textFill="RED" visible="false" />
          </children>
          <opaqueInsets>
             <Insets />
@@ -187,7 +187,7 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
          <children>
-            <TextField fx:id="fieldCVC" onKeyReleased="#compruebaErrores" onMouseReleased="#compruebaErrores" prefHeight="26.0" prefWidth="37.0" promptText="123" />
+            <TextField fx:id="fieldCVC" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" prefHeight="26.0" prefWidth="37.0" promptText="123" />
          </children>
       </HBox>
    </children>

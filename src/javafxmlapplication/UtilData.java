@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 /**
  * No se usa de momento
  * @author manub
+ * Para cambiar de escena: UtilData.getInstance().showScene("Main");
  */
 public class UtilData {
     private static UtilData INSTANCE = null;
