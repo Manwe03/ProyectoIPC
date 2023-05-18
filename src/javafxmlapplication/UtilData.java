@@ -29,7 +29,9 @@ public class UtilData {
     
     private String password;
     
-    private LocalDate selectedDate;
+    private LocalDate selectedDate; //guarda el dia que estas viendo en la vista de pistas
+    
+    private boolean registrarse;    //un boolean de si el usuario quiere o no registrarse, se utiliza para saber si hay que mandarlo a login o a register cuando se pulsa MiPerfil
     
     private FXMLDocumentController mainController;
     
@@ -69,8 +71,11 @@ public class UtilData {
         }
         stage.setScene(escena);
         
-        String css = this.getClass().getResource("BaseStyleSheet.css").toExternalForm();
-        escena.getStylesheets().add(css);
+        //String css = this.getClass().getResource("resources/BaseStyleSheet.css").toExternalForm();
+        //String cssError = this.getClass().getResource("resources/ErrorFieldStyleSheet.css").toExternalForm();
+        
+        //escena.getStylesheets().add(css);
+        //escena.getStylesheets().addAll(css);
         
         stage.setHeight(dpi*7);
         stage.setWidth(dpi*10);
@@ -106,10 +111,12 @@ public class UtilData {
     public LocalDate getSelectedDate(){return this.selectedDate;}
     public Stage getStage() {return this.stage;}
     public FXMLDocumentController getMainController(){return this.mainController;}
+    public boolean getRegistrarse(){return this.registrarse;}
     //SET
     public void setDpi(double dpi){this.dpi = dpi;}
     public void setLogin(String login){this.login = login;}
     public void setPassword(String password){this.password = password;}
     public void setSelectedDate(LocalDate selectedDate){this.selectedDate = selectedDate;}
     public void setMainController(FXMLDocumentController mainController){this.mainController = mainController;}
+    public void setRegistrarse(boolean registrarse){this.registrarse = registrarse;}
 }

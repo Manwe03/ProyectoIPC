@@ -117,6 +117,9 @@ public class FXMLDocumentController implements Initializable {
     private TextField numTarjetaField;
     @FXML
     private TextField svcField;
+    
+    private TextField[] formularioFieldArray = new TextField[6];
+    
     @FXML
     private Label repetirContraseñaLabel;
     @FXML
@@ -137,6 +140,9 @@ public class FXMLDocumentController implements Initializable {
     private Label repetirContraseñaErrorLabel;
     @FXML
     private Label numTarjetaErrorLabel;
+    
+    private Label[] formularioErrordArray = new Label[6]; //{nombreErrorLabel,apellidosErrorLabel,telefonoErrorLabel,nickErrorLabel,contraseñaErrorLabel,repetirContraseñaErrorLabel};
+    
     @FXML
     private Label nombreLabel;
     @FXML
@@ -159,6 +165,7 @@ public class FXMLDocumentController implements Initializable {
     private boolean numTarjetaLabelUp = false;
     private boolean svcLabelUp = false;
     
+    private Club club;
     private UtilData utilData;
 
     @FXML
@@ -169,19 +176,30 @@ public class FXMLDocumentController implements Initializable {
     private Button subirImagen;
     @FXML
     private ImageView imagenPerfilRegistro;
-    
-    
-    
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        try {club = Club.getInstance();} catch (ClubDAOException | IOException ex) {}
         utilData = UtilData.getInstance();
         utilData.setMainController(this);
         
+        formularioFieldArray[0] = nombreField;
+        formularioFieldArray[1] = apellidosField;
+        formularioFieldArray[2] = telefonoField;
+        formularioFieldArray[3] = nickField;
+        formularioFieldArray[4] = contraseñaField;
+        formularioFieldArray[5] = repetirContraseñaField;
+        
+        formularioErrordArray[0] = nombreErrorLabel;
+        formularioErrordArray[1] = apellidosErrorLabel;
+        formularioErrordArray[2] = telefonoErrorLabel;
+        formularioErrordArray[3] = nickErrorLabel;
+        formularioErrordArray[4] = contraseñaErrorLabel;
+        formularioErrordArray[5] = repetirContraseñaErrorLabel;
+                
         scrollPane.widthProperty().addListener((observable,oldVal,newVal)-> {//on withpropertie changed
             updateFlowPane();
             updateMisReservasVboxView();
@@ -194,32 +212,124 @@ public class FXMLDocumentController implements Initializable {
         
         
         //LISTENERS para las animaciones de las labels en MiPerfil
-        nombreField.focusedProperty().addListener((observable,oldVal,newVal)-> { nombreLabelUp = moveLabelIntoBorder(nombreLabel,nombreLabelUp); });
-        apellidosField.focusedProperty().addListener((observable,oldVal,newVal)-> { apellidosLabelUp = moveLabelIntoBorder(apellidosLabel,apellidosLabelUp); });
-        telefonoField.focusedProperty().addListener((observable,oldVal,newVal)-> { telefonoLabelUp = moveLabelIntoBorder(telefonoLabel,telefonoLabelUp); });
-        nickField.focusedProperty().addListener((observable,oldVal,newVal)-> { nickLabelUp = moveLabelIntoBorder(nickLabel,nickLabelUp); });
-        contraseñaField.focusedProperty().addListener((observable,oldVal,newVal)-> { 
-            contraseñaLabelUp = moveLabelIntoBorder(contraseñaLabel,contraseñaLabelUp); 
+        nombreField.focusedProperty().addListener((observable,oldVal,newVal)-> { nombreLabelUp = moveLabelIntoBorder(nombreLabel,nombreLabelUp);});
+        apellidosField.focusedProperty().addListener((observable,oldVal,newVal)-> { apellidosLabelUp = moveLabelIntoBorder(apellidosLabel,apellidosLabelUp);});
+        telefonoField.focusedProperty().addListener((observable,oldVal,newVal)-> { telefonoLabelUp = moveLabelIntoBorder(telefonoLabel,telefonoLabelUp);});
+        nickField.focusedProperty().addListener((observable,oldVal,newVal)-> { nickLabelUp = moveLabelIntoBorder(nickLabel,nickLabelUp);});
+        contraseñaField.focusedProperty().addListener((observable,oldVal,newVal)-> {
+            contraseñaLabelUp = moveLabelIntoBorder(contraseñaLabel,contraseñaLabelUp);
             contraseñaField.setAccessibleRole(AccessibleRole.TEXT_FIELD);
         });
-        repetirContraseñaField.focusedProperty().addListener((observable,oldVal,newVal)-> { repetirContraseñaLabelUp = moveLabelIntoBorder(repetirContraseñaLabel,repetirContraseñaLabelUp); });
-        numTarjetaField.focusedProperty().addListener((observable,oldVal,newVal)-> { numTarjetaLabelUp = moveLabelIntoBorder(numTarjetaLabel,numTarjetaLabelUp); });
+        repetirContraseñaField.focusedProperty().addListener((observable,oldVal,newVal)-> { 
+            repetirContraseñaLabelUp = moveLabelIntoBorder(repetirContraseñaLabel,repetirContraseñaLabelUp);
+        });
+        numTarjetaField.focusedProperty().addListener((observable,oldVal,newVal)-> { 
+            numTarjetaLabelUp = moveLabelIntoBorder(numTarjetaLabel,numTarjetaLabelUp); 
+            comprobarTarjetaField();
+        });
         svcField.focusedProperty().addListener((observable,oldVal,newVal)-> { svcLabelUp = moveLabelIntoBorder(svcLabel,svcLabelUp); });
+        
+        //LISTENERS para las comprobaciones de los textfields de mi perfil
+        nombreField.textProperty().addListener((observable,oldVal,newVal)-> { 
+            nombreErrorLabel.setVisible(false);
+            clearErrorLabels(0);
+        });
+        apellidosField.textProperty().addListener((observable,oldVal,newVal)-> {
+            apellidosErrorLabel.setVisible(false);
+            comprobarFieldsVacios(1);
+            clearErrorLabels(1);
+        });
+        telefonoField.textProperty().addListener((observable,oldVal,newVal)-> { 
+            telefonoErrorLabel.setVisible(false);
+            if(newVal != ""){
+                String lastInput = newVal.substring(newVal.length()-1);
+                if(!lastInput.equals("+") && !lastInput.equals(" ")){
+                    try{
+                        Integer.parseInt(lastInput);
+                    }catch(NumberFormatException e){
+                        telefonoField.setText(oldVal);
+                    }
+                }
+            }
+            comprobarFieldsVacios(2);
+            clearErrorLabels(2);
+        });
+        nickField.textProperty().addListener((observable,oldVal,newVal)-> {
+            nickErrorLabel.setVisible(false);
+            if(newVal != ""){
+                String lastInput = newVal.substring(newVal.length()-1);
+                if(lastInput.equals(" ")){
+                    nickField.setText(oldVal);   
+                }
+            }
+            if(club.existsLogin(newVal)){
+                nickErrorLabel.setText("Este usuario ya existe");
+                nickErrorLabel.setVisible(true);
+            }
+            comprobarFieldsVacios(3);
+            clearErrorLabels(3);
+        });
+        contraseñaField.textProperty().addListener((observable,oldVal,newVal)-> {
+            contraseñaErrorLabel.setVisible(false);
+            comprobarFieldsVacios(4);
+            clearErrorLabels(4);
+        });
+        repetirContraseñaField.textProperty().addListener((observable,oldVal,newVal)-> {
+            repetirContraseñaErrorLabel.setVisible(false);
+            if(!contraseñaField.getText().equals(repetirContraseñaField.getText())){
+                repetirContraseñaErrorLabel.setText("Contraseña diferente a la anterior");
+                repetirContraseñaErrorLabel.setVisible(true);
+            }
+            if(repetirContraseñaField.getText() == ""){
+                repetirContraseñaErrorLabel.setText("Campo vacío");
+                repetirContraseñaErrorLabel.setVisible(false);
+            }
+            comprobarFieldsVacios(5);
+            clearErrorLabels(5);
+        });
+        numTarjetaField.textProperty().addListener((observable,oldVal,newVal)-> { 
+            //Solo permite introducir numeros
+            numTarjetaErrorLabel.setVisible(false);
+                
+            if(newVal != ""){
+                try{
+                    Integer.parseInt(newVal.substring(newVal.length()-1));
+                }catch(NumberFormatException e){
+                    numTarjetaField.setText(oldVal);
+                }
+            }
+            
+            
+        });
+        svcField.textProperty().addListener((observable,oldVal,newVal)-> {
+
+            if(newVal.length() < 3 && newVal.length() != 0){
+                svcErrorLabel.setVisible(true);
+            }else{
+                svcErrorLabel.setVisible(false);
+            }
+            //Solo permite introducir numeros
+            if(newVal != ""){
+                try{
+                    Integer.parseInt(newVal.substring(newVal.length()-1));
+                }catch(NumberFormatException e){
+                    svcField.setText(oldVal);
+                }
+            }
+        });
         
         
                         //INICIALIZACIÓN PARA TESTING//
         ////////////////////////////////////////////////////////////////////////
         try {
-            Club.getInstance().setInitialData(); //Resetea la base de datos al iniciar
+            club.setInitialData(); //Resetea la base de datos al iniciar
             //Club.getInstance().addSimpleData();
             
-            Club.getInstance().registerMember("Fernando", "Alonso", "99999999", "pepe", "pipo", "0000000000000000", 000, null); //registra un miembro de prueba
-            utilData.setLogin("pepe");
-            utilData.setPassword("pipo");
+            club.registerMember("Fernando", "Alonso", "99999999", "0", "0", "0000000000000000", 000, null); //registra un miembro de prueba
+            //utilData.setLogin("pepe");
+            //utilData.setPassword("pipo");
             
         } catch (ClubDAOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         ////////////////////////////////////////////////////////////////////////
@@ -231,7 +341,10 @@ public class FXMLDocumentController implements Initializable {
         
         scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
         tabPane.getSelectionModel().select(2);//pone la tab pistas como seleccion inicial
+        
+        //Limitadores de tamaño
         addTextLimiter(svcField,3);
+        addTextLimiter(numTarjetaField,16);
         
         triggerOnButtonPistas();
         
@@ -258,7 +371,7 @@ public class FXMLDocumentController implements Initializable {
     
     public void updateMisReservas() throws ClubDAOException, IOException{
         misReservasContainer.getChildren().clear();
-        List<Booking> misReservas = Club.getInstance().getUserBookings(utilData.getLogin());
+        List<Booking> misReservas = club.getUserBookings(utilData.getLogin());
         this.numReservas = misReservas.size();
         updateMisReservasVboxView();
         for(int i = 0; i < numReservas && i < 10; i++){
@@ -290,6 +403,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void onButtonMisreservas(Event event) throws IOException, ClubDAOException {
         tabPane.getSelectionModel().select(1);
+        utilData.setRegistrarse(false);//Siempre que salga de MiPerfil poner registrarse a false
         updateMisReservas();
     }
     
@@ -314,7 +428,7 @@ public class FXMLDocumentController implements Initializable {
                 }
             };
         });
-        
+        utilData.setRegistrarse(false);//Siempre que salga de MiPerfil poner registrarse a false
         updatePistasView(); //se encarga de actualizar la vista
     }
     
@@ -329,14 +443,11 @@ public class FXMLDocumentController implements Initializable {
                 FXMLLoader loader = new  FXMLLoader(getClass().getResource("pistaCalendario/FXMLpistaC.fxml"));
                 Parent pistaBox = loader.load();
                 FXMLpistaCController controler = loader.getController();
-                controler.setData(Club.getInstance().getCourt("Pista " + i),dpBookingDay.getValue());  
+                controler.setData(club.getCourt("Pista " + i),dpBookingDay.getValue());  
                
                 pistaBox.setStyle(styles);
                 
                 flowPane.getChildren().add(pistaBox);
-                
-            } catch (ClubDAOException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -355,22 +466,36 @@ public class FXMLDocumentController implements Initializable {
     private void onPosButton(ActionEvent event) {
         dpBookingDay.setValue(dpBookingDay.getValue().plusDays(1));
     }
-
+    
+    /**Metodo para activar onButtonPistas que es como si se pulsara el boton*/
+    public void triggerOnMiPerfil(){
+        onButtonMiPerfil(new Event(EventType.ROOT));
+    }
     @FXML
     private void onButtonMiPerfil(Event event) {
         tabPane.getSelectionModel().select(0);
         
-        if(!utilData.isLogged()){
-            utilData.showScene("Login");
+        if(!utilData.isLogged()){//si no esta logueado
+            if(utilData.getRegistrarse()){//si quiere registrarse es decir a pasado por la pantalla de login
+                hideErrorLabels();
+                perfilEditMode(true);
+                perfilEditarButton.setDisable(true);
+                guardarCambiosButton.setVisible(true);
+                cancelarCambiosButton.setVisible(true);
+                cancelarCambiosButton.setDisable(true);
+                nickField.setDisable(false);
+            }else{
+                utilData.showScene("Login");
+            }
+        }else{//si esta logueado
+            updateMiPerfilLabelsInfo();
+            hideErrorLabels();
+            perfilEditMode(false);
+            perfilEditarButton.setDisable(false);
+            guardarCambiosButton.setVisible(false);
+            cancelarCambiosButton.setVisible(false);
+            nickField.setDisable(true);
         }
-        
-        updateMiPerfilLabelsInfo();
-        hideErrorLabels();
-        perfilEditMode(false);
-        perfilEditarButton.setDisable(false);
-        guardarCambiosButton.setVisible(false);
-        cancelarCambiosButton.setVisible(false);
-        
     }
 
     @FXML
@@ -386,60 +511,84 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void onGuardarCambiosButton(ActionEvent event) {
-        
-        if(nombreField.getText().equals("")) { nombreErrorLabel.setVisible(true); }
-        if(apellidosField.getText().equals("")) { apellidosErrorLabel.setVisible(true); }
-        if(telefonoField.getText().length() != 9) {
-            telefonoErrorLabel.setText("Número incorrecto");
-            telefonoErrorLabel.setVisible(true);
+        if(utilData.isLogged()){    //si esta loguedo, quiere editar
+            comprobarFieldsVacios(6);
+            editarDatos();
+        }else{                      //si NO esta loguedo, quiere registrarse
+            comprobarFieldsVacios(6);//comprueba si te has dejado algo, en el caso de que todo este vacio esto es en seguro
+            registrarse();
+        }  
+    }
+    private void comprobarTarjetaField(){
+        if(numTarjetaField.getText().length() == 0 || numTarjetaField.getText().length() == 16){
+            numTarjetaErrorLabel.setVisible(false);
+        }else{
+            numTarjetaErrorLabel.setVisible(true);
         }
-        if(nickField.getText().equals("")) { nickErrorLabel.setVisible(true); }
-        if(contraseñaField.getText().equals("")) { contraseñaErrorLabel.setVisible(true); }
-        if(numTarjetaField.getText().equals("")){}
-        if(svcField.getText().equals("")){}
-        /* hummmmmmmmm
-        if (!soloNumeros(numTarjetaField.getText()) || !soloNumeros(fieldCVC.getText()) 
-            || (fieldTarjeta.getText().length() != 16 || fieldCVC.getText().length() != 3) &&
-            ((fieldTarjeta.getText().length() != 0 || fieldCVC.getText().length() != 0))) {            
-                errorTarjeta.setVisible(true);
-        } else { errorTarjeta.setVisible(false); }  
-        */
-        
-        //Compruebo que no hay errores
+    }            
+    /**Comprueba se hay algun field vacio por encima de la posicion i, si lo hay muestra el error*/
+    private void comprobarFieldsVacios(int i){
+        for(int j = i-1;j >= 0;j--){
+            if(formularioFieldArray[j].getText().isBlank()){
+                formularioErrordArray[j].setText("Campo Obligatorio");
+                formularioErrordArray[j].setVisible(true);
+            }
+        }
+    }
+    
+    /**Elimina los mensajes de error por campo vacio por debajo de i*/
+
+    private void clearErrorLabels(int i){
+        for(int j = i+1;j < 6;j++){
+            if(formularioErrordArray[j].getText().contains("Campo Obligatorio")){
+                formularioErrordArray[j].setText("Campo vacío");
+                formularioErrordArray[j].setVisible(false);
+            }
+        }
+    }
+    
+    private void registrarse(){
         if(!nombreErrorLabel.isVisible() && !apellidosErrorLabel.isVisible() && !telefonoErrorLabel.isVisible() 
             && !nickErrorLabel.isVisible() && !contraseñaErrorLabel.isVisible() && !repetirContraseñaErrorLabel.isVisible() 
-            && !numTarjetaErrorLabel.isVisible() && !svcErrorLabel.isVisible() ) {
-            
-            String tarjeta = "";
-            String cvc = "";
-            int cvcInt = 0;
-            if(numTarjetaField.getText().length() > 0) {
-                tarjeta = numTarjetaField.getText();
-                cvc = svcField.getText();
-                cvcInt = Integer.parseInt(cvc);
-            }
+            && !numTarjetaErrorLabel.isVisible() && !svcErrorLabel.isVisible()){    //comprueba si hay errores
             
             try {
                 //Crear nuevo usuario
-                Club.getInstance().registerMember(nombreField.getText(), apellidosField.getText(), telefonoField.getText(),nickField.getText(), contraseñaField.getText(), tarjeta, cvcInt, imagenPerfilRegistro.getImage());
+                club.registerMember(nombreField.getText(), apellidosField.getText(), telefonoField.getText(),nickField.getText(), contraseñaField.getText(), numTarjetaField.getText(), Integer.parseInt(svcField.getText()), imagenPerfilRegistro.getImage());
+                guardarCambiosButton.setVisible(false);
+                cancelarCambiosButton.setVisible(false);
+                perfilEditarButton.setDisable(false);
+                utilData.setRegistrarse(false);
+                perfilEditMode(false);
+                triggerOnMiPerfil();
             } catch (ClubDAOException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+                //Cosas chungas no se puede crear
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            UtilData.getInstance().setLogin(nickField.getText());
-            UtilData.getInstance().setPassword(contraseñaField.getText());
-            
-            //Informar que se ha creado la cuenta
-            //UtilData.getInstance().showScene("CuentaCreada");
+        }else{
+            //no se puede registrar
+        }
+    }
+    private void editarDatos(){
+        if(!nombreErrorLabel.isVisible() && !apellidosErrorLabel.isVisible() && !telefonoErrorLabel.isVisible() 
+            && !nickErrorLabel.isVisible() && !contraseñaErrorLabel.isVisible() && !repetirContraseñaErrorLabel.isVisible() 
+            && !numTarjetaErrorLabel.isVisible() && !svcErrorLabel.isVisible()){    //comprueba si hay errores
+            //obtiene el miembro
+            Member miembro = club.getMemberByCredentials( utilData.getLogin(), utilData.getPassword());
+            //Modifica los datos
+            miembro.setName(nombreField.getText());
+            miembro.setSurname(apellidosField.getText());
+            miembro.setTelephone(telefonoField.getText());
+            miembro.setPassword(contraseñaField.getText());
+            miembro.setCreditCard(numTarjetaField.getText());
+            if(svcField.getText() != ""){
+                miembro.setSvc(Integer.parseInt(svcField.getText()));
+            }
             guardarCambiosButton.setVisible(false);
             cancelarCambiosButton.setVisible(false);
             perfilEditarButton.setDisable(false);
             perfilEditMode(false);
-        } 
-        
-        
+        }
     }
     
     @FXML
@@ -473,28 +622,24 @@ public class FXMLDocumentController implements Initializable {
     
     /**Obtiene y pone la informacion en las labels de mi perfil*/
     private void updateMiPerfilLabelsInfo() {
-        try {
-            if(utilData.isLogged()){//Si estas logueado
-                Member member = Club.getInstance().getMemberByCredentials(utilData.getLogin(), utilData.getPassword());
-                nombreField.setText(member.getName());
-                apellidosField.setText(member.getSurname());
-                telefonoField.setText(member.getTelephone());
-                nickField.setText(member.getNickName());
-                if(member.checkHasCreditInfo()){
-                    String creditcard = member.getCreditCard();
-                    numTarjetaField.setPromptText("------------" + creditcard.substring(creditcard.length()-4,creditcard.length()));
-                    svcField.setPromptText("###");
-                }else{
-                    numTarjetaField.setPromptText("");
-                    svcField.setPromptText("");
-                }
-                contraseñaField.setText("");
-                repetirContraseñaField.setText("");
-                numTarjetaField.setText("");
-                svcField.setText("");      
+        if(utilData.isLogged()){//Si estas logueado
+            Member member = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword());
+            nombreField.setText(member.getName());
+            apellidosField.setText(member.getSurname());
+            telefonoField.setText(member.getTelephone());
+            nickField.setText(member.getNickName());
+            if(member.checkHasCreditInfo()){
+                String creditcard = member.getCreditCard();
+                numTarjetaField.setPromptText("------------" + creditcard.substring(creditcard.length()-4,creditcard.length()));
+                svcField.setPromptText("###");
+            }else{
+                numTarjetaField.setPromptText("");
+                svcField.setPromptText("");
             }
-        } catch (ClubDAOException | IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            contraseñaField.setText("");
+            repetirContraseñaField.setText("");
+            numTarjetaField.setText("");
+            svcField.setText("");      
         }
     }
     
@@ -507,7 +652,7 @@ public class FXMLDocumentController implements Initializable {
         nombreField.setDisable(!edit);
         apellidosField.setDisable(!edit);
         telefonoField.setDisable(!edit);
-        nickField.setDisable(!edit);
+        //nickField.setDisable(!edit); quitar seguramente
         contraseñaField.setDisable(!edit);
         repetirContraseñaField.setVisible(edit);
         numTarjetaField.setVisible(edit);
@@ -560,6 +705,5 @@ public class FXMLDocumentController implements Initializable {
             }
         });
     }
+}    
 
-    
-}
