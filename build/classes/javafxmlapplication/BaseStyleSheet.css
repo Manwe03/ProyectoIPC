@@ -34,6 +34,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: #aaaaaa;
     -fx-border-color: #21a115;
 }
+#defaultInputBoxError{
+    -fx-background-color: #cccccc;
+    -fx-background-radius: 3;
+    -fx-border-color: #ff0000;
+    -fx-border-radius: 3;
+}
 #opcionalLabel{
     -fx-translate-y: 10px;
     -fx-background-color: #ffffff;

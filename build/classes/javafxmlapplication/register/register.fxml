@@ -6,189 +6,168 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.register.RegisterController">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="200.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="175.0" prefWidth="175.0" />
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="200.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="66.6" prefHeight="66.6" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="10.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="10.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="60.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="66.6" prefHeight="66.6" vgrow="SOMETIMES" />
-  </rowConstraints>
-   <children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.register.RegisterController">
+   <center>
+      <VBox>
          <children>
-            <Button mnemonicParsing="false" onAction="#volverAInicioSesion" text="&lt;- Atrás" />
+            <HBox>
+               <children>
+                  <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="200.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="175.0" prefWidth="175.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="200.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="200.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="200.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="10.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="10.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="60.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="66.6" prefHeight="66.6" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <TextField fx:id="fieldNombre" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" prefWidth="132.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="fieldApellido" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="fieldUsuario" maxHeight="30.0" maxWidth="128.0" minHeight="30.0" minWidth="128.0" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" prefHeight="30.0" prefWidth="128.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="fieldContraseña" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="fieldTarjeta" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" promptText="1234-1234-1234-1234" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                           <children>
+                              <Label text="Nombre: *" />
+                           </children>
+                           <GridPane.margin>
+                              <Insets right="15.0" />
+                           </GridPane.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+                           <children>
+                              <Label text="Apellido: *" />
+                           </children>
+                           <GridPane.margin>
+                              <Insets right="15.0" />
+                           </GridPane.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+                           <children>
+                              <Label text="Usuario: *" />
+                           </children>
+                           <GridPane.margin>
+                              <Insets right="15.0" />
+                           </GridPane.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="5">
+                           <children>
+                              <Label text="Contraseña: *" />
+                           </children>
+                           <GridPane.margin>
+                              <Insets right="15.0" />
+                           </GridPane.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="7">
+                           <children>
+                              <Label text="Tarjeta de crédito:" />
+                           </children>
+                           <GridPane.margin>
+                              <Insets right="15.0" />
+                           </GridPane.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="8">
+                           <children>
+                              <Label text="CVC:" />
+                           </children>
+                           <GridPane.margin>
+                              <Insets right="15.0" />
+                           </GridPane.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="10">
+                           <children>
+                              <Label text="Foto de perfil:" />
+                           </children>
+                           <GridPane.margin>
+                              <Insets right="15.0" />
+                           </GridPane.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#registrarCuenta" text="Registrarse" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                           <children>
+                              <Button focusTraversable="false" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #333333; -fx-border-width: 1; -fx-border-radius: 4;">
+                                 <graphic>
+                                    <ImageView fx:id="imagenPerfilRegistro" fitHeight="56.0" fitWidth="56.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../../resources/images/elNano.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#subirImagen" style="-fx-background-color: transparent; -fx-underline: true;" text="Cambiar imagen" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="errorNombre" text="Campo obligatorio" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label fx:id="errorApellido" text="Campo obligatorio" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Label fx:id="errorContraseña" text="Campo obligatorio" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                        <Label fx:id="errorTarjeta" text="Tarjeta o CVC incorrectos" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                           <children>
+                              <TextField fx:id="fieldCVC" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" prefHeight="26.0" prefWidth="37.0" promptText="123" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+                           <children>
+                              <Label text="Teléfono: *" />
+                           </children>
+                           <GridPane.margin>
+                              <Insets right="15.0" />
+                           </GridPane.margin>
+                        </HBox>
+                        <TextField fx:id="fieldTelefono" onKeyTyped="#manejaType" onMouseClicked="#manejaClick" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="* : campo obligatorio" GridPane.columnIndex="1" />
+                        <Label fx:id="errorTelefono" text="Campo obligatorio" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Label fx:id="errorUsuario" text="Campo obligatorio" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                     </children>
+                  </GridPane>
+               </children>
+            </HBox>
          </children>
-         <padding>
-            <Insets left="20.0" top="20.0" />
-         </padding>
-      </HBox>
-      <TextField fx:id="fieldNombre" onKeyReleased="#compruebaErrores" onMouseReleased="#compruebaErrores" prefWidth="132.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField fx:id="fieldApellido" onKeyReleased="#compruebaErrores" onMouseReleased="#compruebaErrores" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <TextField fx:id="fieldUsuario" onKeyReleased="#compruebaErrores" onMouseReleased="#compruebaErrores" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <TextField fx:id="fieldContraseña" onKeyReleased="#compruebaErrores" onMouseReleased="#compruebaErrores" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <TextField fx:id="fieldTarjeta" onKeyReleased="#compruebaErrores" onMouseReleased="#compruebaErrores" promptText="1234-1234-1234-1234" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+      </VBox>
+   </center>
+   <top>
+      <HBox BorderPane.alignment="CENTER">
          <children>
-            <Label text="Nombre: *" />
-         </children>
-         <GridPane.margin>
-            <Insets right="15.0" />
-         </GridPane.margin>
-      </HBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
-         <children>
-            <Label text="Apellido: *" />
-         </children>
-         <GridPane.margin>
-            <Insets right="15.0" />
-         </GridPane.margin>
-      </HBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
-         <children>
-            <Label text="Usuario: *" />
-         </children>
-         <GridPane.margin>
-            <Insets right="15.0" />
-         </GridPane.margin>
-      </HBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
-         <children>
-            <Label text="Contraseña: *" />
-         </children>
-         <GridPane.margin>
-            <Insets right="15.0" />
-         </GridPane.margin>
-      </HBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="6">
-         <children>
-            <Label text="Tarjeta de crédito:" />
-         </children>
-         <GridPane.margin>
-            <Insets right="15.0" />
-         </GridPane.margin>
-      </HBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="7">
-         <children>
-            <Label text="CVC:" />
-         </children>
-         <GridPane.margin>
-            <Insets right="15.0" />
-         </GridPane.margin>
-      </HBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="9">
-         <children>
-            <Label text="Foto de perfil:" />
-         </children>
-         <GridPane.margin>
-            <Insets right="15.0" />
-         </GridPane.margin>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
-         <children>
-            <Button mnemonicParsing="false" onAction="#registrarCuenta" text="Registrarse" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-         <children>
-            <Label text="* : campo obligatorio" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
-         <children>
-            <Button focusTraversable="false" maxHeight="60.0" maxWidth="60.0" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #333333; -fx-border-width: 1; -fx-border-radius: 4;">
-               <graphic>
-                  <ImageView fx:id="imagenPerfilRegistro" fitHeight="56.0" fitWidth="56.0" pickOnBounds="true">
-                     <image>
-                        <Image url="@../../resources/images/elNano.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
+            <Button mnemonicParsing="false" onAction="#volverAInicioSesion" text="&lt;- Atrás">
+               <HBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#subirImagen" style="-fx-background-color: transparent; -fx-underline: true;" text="Cambiar imagen" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#volverAMenuPrincipal" text="Menú Principal -&gt;">
+               <HBox.margin>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </HBox.margin>
+            </Button>
          </children>
       </HBox>
-      <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
-         <GridPane.margin>
-            <Insets right="20.0" top="20.0" />
-         </GridPane.margin>
-         <children>
-            <Button mnemonicParsing="false" onAction="#volverAMenuPrincipal" text="Menú Principal -&gt;" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <padding>
-            <Insets left="15.0" />
-         </padding>
-         <children>
-            <Label fx:id="errorNombre" text="Campo obligatorio" textFill="RED" visible="false" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <padding>
-            <Insets left="15.0" />
-         </padding>
-         <children>
-            <Label fx:id="errorApellido" text="Campo obligatorio" textFill="RED" visible="false" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
-         <children>
-            <Label fx:id="errorUsuario" text="Usuario ya registrado" textFill="RED" visible="false" />
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <GridPane.margin>
-            <Insets left="15.0" />
-         </GridPane.margin>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <padding>
-            <Insets left="15.0" />
-         </padding>
-         <children>
-            <Label fx:id="errorContraseña" text="Campo obligatorio" textFill="RED" visible="false" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
-         <padding>
-            <Insets left="15.0" />
-         </padding>
-         <children>
-            <Label fx:id="errorTarjeta" text="Tarjeta o CVC incorrectos" textFill="RED" visible="false" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
-         <children>
-            <TextField fx:id="fieldCVC" onKeyReleased="#compruebaErrores" onMouseReleased="#compruebaErrores" prefHeight="26.0" prefWidth="37.0" promptText="123" />
-         </children>
-      </HBox>
-   </children>
-</GridPane>
+   </top>
+</BorderPane>

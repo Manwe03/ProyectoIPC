@@ -29,7 +29,11 @@ public class UtilData {
     
     private String password;
     
-    private LocalDate selectedDate;
+    private LocalDate selectedDate; //guarda el dia que estas viendo en la vista de pistas
+    
+    private boolean registrarse;    //un boolean de si el usuario quiere o no registrarse, se utiliza para saber si hay que mandarlo a login o a register cuando se pulsa MiPerfil
+    
+    private FXMLDocumentController mainController;
     
     public static HashMap<String,Scene> escenas = new HashMap<>();
     
@@ -47,6 +51,9 @@ public class UtilData {
     public void initialize(Stage stage) throws IOException{
         this.stage = stage;
         Scene scene;
+        
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+        //loader.load()
         scene = new Scene(FXMLLoader.load(getClass().getResource("FXMLDocument.fxml")));
         escenas.put("Main", scene);
         
@@ -59,10 +66,16 @@ public class UtilData {
     
     public void showScene(String nombre){
         Scene escena = escenas.get(nombre);
+        if(nombre == "Main"){//Una movida, si se carga main mostrar la pantalla de pistas no la otra, se ve que no hay manera de ponmer una tab default (no se)
+            mainController.triggerOnButtonPistas();
+        }
         stage.setScene(escena);
         
-        String css = this.getClass().getResource("BaseStyleSheet.css").toExternalForm();
-        escena.getStylesheets().add(css);
+        //String css = this.getClass().getResource("resources/BaseStyleSheet.css").toExternalForm();
+        //String cssError = this.getClass().getResource("resources/ErrorFieldStyleSheet.css").toExternalForm();
+        
+        //escena.getStylesheets().add(css);
+        //escena.getStylesheets().addAll(css);
         
         stage.setHeight(dpi*7);
         stage.setWidth(dpi*10);
@@ -97,10 +110,13 @@ public class UtilData {
     public String getPassword(){return this.password;}
     public LocalDate getSelectedDate(){return this.selectedDate;}
     public Stage getStage() {return this.stage;}
+    public FXMLDocumentController getMainController(){return this.mainController;}
+    public boolean getRegistrarse(){return this.registrarse;}
     //SET
     public void setDpi(double dpi){this.dpi = dpi;}
     public void setLogin(String login){this.login = login;}
     public void setPassword(String password){this.password = password;}
     public void setSelectedDate(LocalDate selectedDate){this.selectedDate = selectedDate;}
-   
+    public void setMainController(FXMLDocumentController mainController){this.mainController = mainController;}
+    public void setRegistrarse(boolean registrarse){this.registrarse = registrarse;}
 }
