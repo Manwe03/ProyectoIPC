@@ -7,6 +7,13 @@ package javafxmlapplication.login;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +23,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Duration;
 import javafxmlapplication.UtilData;
 import model.Club;
 import model.ClubDAOException;
@@ -42,6 +50,10 @@ public class LoginController  implements Initializable{
     private PasswordField pfieldContraseña;
     @FXML
     private ToggleButton toggleContraseña;
+    @FXML
+    private Button botonIniciandoSesion;
+    @FXML
+    private Button botonAtras;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -65,22 +77,30 @@ public class LoginController  implements Initializable{
     private void atras(ActionEvent event) {
         UtilData.getInstance().showScene("Main");
     }
-
+    
     @FXML
     private void intentoIniciarSesion(ActionEvent event) throws ClubDAOException, IOException, InterruptedException {
         try {
             //para ver si existe tal miembro y si no da error
-            Member m = Club.getInstance().getMemberByCredentials(fieldUsuario.getText(), pfieldContraseña.getText());
-            UtilData.getInstance().setLogin(fieldUsuario.getText());
-            UtilData.getInstance().setPassword(pfieldContraseña.getText());
+            Member m = Club.getInstance().getMemberByCredentials(fieldUsuario.getText(), pfieldContraseña.getText()); 
             loginFailed.setVisible(false);
-            login.setText("Iniciando sesión...");
-            Thread.sleep(1000);
-            UtilData.getInstance().showScene("Main");
+            login.setVisible(false);
+            botonIniciandoSesion.setVisible(true);
+            fieldUsuario.setEditable(false);
+            fieldContraseña.setEditable(false);
+            pfieldContraseña.setEditable(false);
+            botonAtras.setDisable(true);
+            login.setDisable(true);
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            pause.setOnFinished(pauseEvent -> {                
+                UtilData.getInstance().setLogin(fieldUsuario.getText());
+                UtilData.getInstance().setPassword(pfieldContraseña.getText());
+                UtilData.getInstance().showScene("Main");
+            });
+            pause.play();                         
         } catch (NullPointerException ex) {
             loginFailed.setVisible(true);
-        }
-                
+        }                
     }
 
     @FXML

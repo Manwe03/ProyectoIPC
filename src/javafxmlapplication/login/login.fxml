@@ -60,7 +60,7 @@
       </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#atras" text="&lt;- Atrás" />
+            <Button fx:id="botonAtras" mnemonicParsing="false" onAction="#atras" text="&lt;- Atrás" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" top="20.0" />
@@ -68,7 +68,12 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
-            <Button fx:id="login" mnemonicParsing="false" onAction="#intentoIniciarSesion" text="Iniciar sesión" />
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="botonIniciandoSesion" mnemonicParsing="false" text="Iniciando sesión..." visible="false" />
+                  <Button fx:id="login" mnemonicParsing="false" onAction="#intentoIniciarSesion" text="Iniciar sesión" />
+               </children>
+            </StackPane>
          </children>
       </HBox>
       <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">

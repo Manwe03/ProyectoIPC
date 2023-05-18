@@ -33,7 +33,7 @@ public class JavaFXMLApplication extends Application {
         //     - se muestra el stage de manera no modal mediante el metodo show()
         double dpi = Screen.getPrimary().getDpi();
         
-        UtilData.getInstance().showScene("Main");
+        UtilData.getInstance().showScene("Register");
         //stage.setScene(scene);
         //stage.setHeight(dpi*7);
         //stage.setWidth(dpi*10);
