@@ -15,7 +15,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
@@ -65,6 +67,10 @@ public class RegisterController implements Initializable {
     private TextField fieldTelefono;
     @FXML
     private Label errorTelefono;
+    @FXML
+    private ToggleButton toggleContraseña;
+    @FXML
+    private PasswordField pfieldContraseña;
 
     /**
      * Initializes the controller class.
@@ -72,6 +78,15 @@ public class RegisterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        pfieldContraseña.textProperty().addListener((observable, oldValue, newValue) -> {
+        fieldContraseña.setText(newValue);
+        });
+        
+        fieldContraseña.textProperty().addListener((observable, oldValue, newValue) -> {
+        pfieldContraseña.setText(newValue);
+        });
+        
+        pfieldContraseña.textProperty().bindBidirectional(fieldContraseña.textProperty()); 
     }    
 
     @FXML
@@ -95,7 +110,11 @@ public class RegisterController implements Initializable {
             ((fieldTarjeta.getText().length() != 0 || fieldCVC.getText().length() != 0))) {            
                 errorTarjeta.setVisible(true);
         } else { errorTarjeta.setVisible(false); }  
-        if(fieldTelefono.getText().length() != 9) {
+        if(fieldTelefono.getText().length() == 0) {
+            errorTelefono.setText("Campo obligatorio");
+            errorTelefono.setVisible(true);
+        }
+        else if(fieldTelefono.getText().length() != 9) {
             errorTelefono.setText("Número incorrecto");
             errorTelefono.setVisible(true);}
         
@@ -213,6 +232,22 @@ public class RegisterController implements Initializable {
         }   
         
     }
+
+    @FXML
+    private void verContraseña(ActionEvent event) {        
+            if (toggleContraseña.isSelected()) {
+                pfieldContraseña.setEditable(false);
+                pfieldContraseña.setVisible(false);
+                fieldContraseña.setEditable(true);
+                fieldContraseña.setVisible(true);
+            } else {
+                fieldContraseña.setEditable(false);
+                fieldContraseña.setVisible(false);
+                pfieldContraseña.setEditable(true);
+                pfieldContraseña.setVisible(true);
+            }    
+    }
+
     
                
         
