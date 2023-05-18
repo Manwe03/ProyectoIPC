@@ -235,17 +235,17 @@ public class RegisterController implements Initializable {
 
     @FXML
     private void verContraseña(ActionEvent event) {        
-            if (toggleContraseña.isSelected()) {
-                pfieldContraseña.setEditable(false);
-                pfieldContraseña.setVisible(false);
-                fieldContraseña.setEditable(true);
-                fieldContraseña.setVisible(true);
-            } else {
-                fieldContraseña.setEditable(false);
-                fieldContraseña.setVisible(false);
-                pfieldContraseña.setEditable(true);
-                pfieldContraseña.setVisible(true);
-            }    
+        if (toggleContraseña.isSelected()) {
+            pfieldContraseña.setEditable(false);
+            pfieldContraseña.setVisible(false);
+            fieldContraseña.setEditable(true);
+            fieldContraseña.setVisible(true);
+        } else {
+            fieldContraseña.setEditable(false);
+            fieldContraseña.setVisible(false);
+            pfieldContraseña.setEditable(true);
+            pfieldContraseña.setVisible(true);
+        }    
     }
 
     
