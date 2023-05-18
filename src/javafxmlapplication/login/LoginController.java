@@ -11,6 +11,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafxmlapplication.UtilData;
+import model.Club;
 
 /**
  * FXML Controller class
@@ -19,29 +23,40 @@ import javafx.scene.control.Label;
  */
 public class LoginController  implements Initializable{
 
+    private UtilData utilData;
+    @FXML
+    private PasswordField contraseñaLabel;
+    @FXML
+    private TextField usuarioLabel;
     @FXML
     private Button register;
-    @FXML
-    private Label loginFailed;
     @FXML
     private Button login;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        this.utilData = UtilData.getInstance();
     }
 
     @FXML
     private void irARegistro(ActionEvent event) {
+        UtilData.getInstance().showScene("Register");
     }
 
-    @FXML
     private void atras(ActionEvent event) {
-        
+        UtilData.getInstance().showScene("Main");
     }
 
     @FXML
     private void intentoIniciarSesion(ActionEvent event) {
+        utilData.setLogin(usuarioLabel.getText());
+        utilData.setPassword(contraseñaLabel.getText());
+        if(utilData.isLogged()){//Epico, info correcta
+            utilData.showScene("Main");
+        }else{
+            //Notificar al usuario
+            usuarioLabel.getText();
+        }
     }
 
 }

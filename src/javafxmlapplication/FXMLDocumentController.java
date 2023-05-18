@@ -4,6 +4,8 @@
  */
 package javafxmlapplication;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -13,6 +15,9 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventType;
@@ -32,6 +37,8 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -40,6 +47,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafxmlapplication.misReservas.FXMLReservasController;
 import javafxmlapplication.pistaCalendario.FXMLpistaCController;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import model.Booking;
 import model.Club;
 import model.ClubDAOException;
@@ -83,8 +93,6 @@ public class FXMLDocumentController implements Initializable {
     private Button posButton;
     @FXML
     private Tab buttonMiPerfil;
-    @FXML
-    private HBox perfilTopPane;
     @FXML
     private HBox perfilBottomPane;
     @FXML
@@ -152,13 +160,15 @@ public class FXMLDocumentController implements Initializable {
     private boolean svcLabelUp = false;
     
     private UtilData utilData;
-    
-    @FXML
-    private Separator miPerfilSeparator;
+
     @FXML
     private Label svcErrorLabel;
     @FXML
     private Button buttonPistasButton;
+    @FXML
+    private Button subirImagen;
+    @FXML
+    private ImageView imagenPerfilRegistro;
     
     
     
@@ -170,7 +180,8 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         utilData = UtilData.getInstance();
-                
+        utilData.setMainController(this);
+        
         scrollPane.widthProperty().addListener((observable,oldVal,newVal)-> {//on withpropertie changed
             updateFlowPane();
             updateMisReservasVboxView();
@@ -220,13 +231,10 @@ public class FXMLDocumentController implements Initializable {
         
         scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
         tabPane.getSelectionModel().select(2);//pone la tab pistas como seleccion inicial
-        try {
-            onButtonPistas(new Event(EventType.ROOT));
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClubDAOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        addTextLimiter(svcField,3);
+        
+        triggerOnButtonPistas();
+        
         utilData.setSelectedDate(dpBookingDay.getValue());
         
         updateFlowPane();
@@ -237,8 +245,7 @@ public class FXMLDocumentController implements Initializable {
         double dpi = utilData.getDpi();
         perfilBottomPane.setMaxHeight(dpi);
         perfilBottomPane.setMinHeight(dpi);
-        perfilTopPane.setMaxHeight(dpi);
-        perfilTopPane.setMinHeight(dpi);
+        
         //nombreLabel.toFront();
     }
     
@@ -286,6 +293,14 @@ public class FXMLDocumentController implements Initializable {
         updateMisReservas();
     }
     
+    /**Metodo para activar onButtonPistas que es como si se pulsara el boton*/
+    public void triggerOnButtonPistas(){
+        try {
+            onButtonPistas(new Event(EventType.ROOT));
+        } catch (IOException | ClubDAOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     @FXML
     private void onButtonPistas(Event event) throws IOException, ClubDAOException{
         tabPane.getSelectionModel().select(2);
@@ -371,17 +386,88 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void onGuardarCambiosButton(ActionEvent event) {
-        guardarCambiosButton.setVisible(false);
-        cancelarCambiosButton.setVisible(false);
-        perfilEditarButton.setDisable(false);
-        perfilEditMode(false);
+        
+        if(nombreField.getText().equals("")) { nombreErrorLabel.setVisible(true); }
+        if(apellidosField.getText().equals("")) { apellidosErrorLabel.setVisible(true); }
+        if(telefonoField.getText().length() != 9) {
+            telefonoErrorLabel.setText("Número incorrecto");
+            telefonoErrorLabel.setVisible(true);
+        }
+        if(nickField.getText().equals("")) { nickErrorLabel.setVisible(true); }
+        if(contraseñaField.getText().equals("")) { contraseñaErrorLabel.setVisible(true); }
+        if(numTarjetaField.getText().equals("")){}
+        if(svcField.getText().equals("")){}
+        /* hummmmmmmmm
+        if (!soloNumeros(numTarjetaField.getText()) || !soloNumeros(fieldCVC.getText()) 
+            || (fieldTarjeta.getText().length() != 16 || fieldCVC.getText().length() != 3) &&
+            ((fieldTarjeta.getText().length() != 0 || fieldCVC.getText().length() != 0))) {            
+                errorTarjeta.setVisible(true);
+        } else { errorTarjeta.setVisible(false); }  
+        */
+        
+        //Compruebo que no hay errores
+        if(!nombreErrorLabel.isVisible() && !apellidosErrorLabel.isVisible() && !telefonoErrorLabel.isVisible() 
+            && !nickErrorLabel.isVisible() && !contraseñaErrorLabel.isVisible() && !repetirContraseñaErrorLabel.isVisible() 
+            && !numTarjetaErrorLabel.isVisible() && !svcErrorLabel.isVisible() ) {
+            
+            String tarjeta = "";
+            String cvc = "";
+            int cvcInt = 0;
+            if(numTarjetaField.getText().length() > 0) {
+                tarjeta = numTarjetaField.getText();
+                cvc = svcField.getText();
+                cvcInt = Integer.parseInt(cvc);
+            }
+            
+            try {
+                //Crear nuevo usuario
+                Club.getInstance().registerMember(nombreField.getText(), apellidosField.getText(), telefonoField.getText(),nickField.getText(), contraseñaField.getText(), tarjeta, cvcInt, imagenPerfilRegistro.getImage());
+            } catch (ClubDAOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            UtilData.getInstance().setLogin(nickField.getText());
+            UtilData.getInstance().setPassword(contraseñaField.getText());
+            
+            //Informar que se ha creado la cuenta
+            //UtilData.getInstance().showScene("CuentaCreada");
+            guardarCambiosButton.setVisible(false);
+            cancelarCambiosButton.setVisible(false);
+            perfilEditarButton.setDisable(false);
+            perfilEditMode(false);
+        } 
+        
+        
     }
+    
+    @FXML
+    private void onSubirImagen(ActionEvent event) {
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de imagen", "jpg", "jpeg", "png");
+        fileChooser.setFileFilter(filter);
 
+        int resultado = fileChooser.showOpenDialog(null);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivoImagen = fileChooser.getSelectedFile();
+            try {
+                BufferedImage imagenBuf = ImageIO.read(archivoImagen);
+                Image imagen = SwingFXUtils.toFXImage(imagenBuf, null);
+                imagenPerfilRegistro.setImage(imagen);                
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }   
+    }
+    
     @FXML
     private void onCancelarCambiosButton(ActionEvent event) {
         guardarCambiosButton.setVisible(false);
         cancelarCambiosButton.setVisible(false);
         perfilEditarButton.setDisable(false);
+        hideErrorLabels();
+        updateMiPerfilLabelsInfo();
         perfilEditMode(false);
     }
     
@@ -398,7 +484,14 @@ public class FXMLDocumentController implements Initializable {
                     String creditcard = member.getCreditCard();
                     numTarjetaField.setPromptText("------------" + creditcard.substring(creditcard.length()-4,creditcard.length()));
                     svcField.setPromptText("###");
+                }else{
+                    numTarjetaField.setPromptText("");
+                    svcField.setPromptText("");
                 }
+                contraseñaField.setText("");
+                repetirContraseñaField.setText("");
+                numTarjetaField.setText("");
+                svcField.setText("");      
             }
         } catch (ClubDAOException | IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -410,7 +503,7 @@ public class FXMLDocumentController implements Initializable {
         repetirContraseñaLabel.setVisible(edit);
         numTarjetaLabel.setVisible(edit);
         svcLabel.setVisible(edit);
-                
+        
         nombreField.setDisable(!edit);
         apellidosField.setDisable(!edit);
         telefonoField.setDisable(!edit);
@@ -420,7 +513,12 @@ public class FXMLDocumentController implements Initializable {
         numTarjetaField.setVisible(edit);
         svcField.setVisible(edit); 
         miPerfilOpcionalLabel.setVisible(edit);
-        miPerfilSeparator.setVisible(edit);
+        if(edit){
+            contraseñaField.setText("");
+        }else{
+            contraseñaField.setText("00000000000");
+        }
+        //miPerfilSeparator.setVisible(edit);
     }
     /**Oculta las labels de error*/
     private void hideErrorLabels(){
@@ -433,17 +531,7 @@ public class FXMLDocumentController implements Initializable {
         numTarjetaErrorLabel.setVisible(false);
         svcErrorLabel.setVisible(false);
     }
-    /**Elimina los datos de los campos de edición de mi prefil
-    private void clearPerfilFields(){
-        nombreField.setText("");
-        apellidosField.setText("");
-        telefonoField.setText("");
-        nickField.setText("");
-        contraseñaField.setText("");
-        repetirContraseñaField.setText("");
-        numTarjetaField.setText("");
-        svcField.setText("");
-    }*/
+
     private boolean moveLabelIntoBorder(Node nodo, boolean globalState){ //https://www.youtube.com/watch?v=UdGiuDDi7Rg no me puedo creer que javafx no permita animaciones/transiciones en css :( vaya M, full serio, increible
         boolean state;
         TranslateTransition translateR = new TranslateTransition();
@@ -460,4 +548,18 @@ public class FXMLDocumentController implements Initializable {
         translateR.play();
         return state;
     }
+    
+    public static void addTextLimiter(final TextField tf, final int maxLength) {// Codigo epico gracias https://stackoverflow.com/questions/15159988/javafx-2-2-textfield-maxlength
+        tf.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+                if (tf.getText().length() > maxLength) {
+                    String s = tf.getText().substring(0, maxLength);
+                    tf.setText(s);
+                }
+            }
+        });
+    }
+
+    
 }
