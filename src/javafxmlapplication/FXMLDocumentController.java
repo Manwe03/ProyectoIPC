@@ -176,6 +176,8 @@ public class FXMLDocumentController implements Initializable {
     private Button subirImagen;
     @FXML
     private ImageView imagenPerfilRegistro;
+    @FXML
+    private Button loginButton;
 
     /**
      * Initializes the controller class.
@@ -280,7 +282,7 @@ public class FXMLDocumentController implements Initializable {
                 repetirContraseñaErrorLabel.setText("Contraseña diferente a la anterior");
                 repetirContraseñaErrorLabel.setVisible(true);
             }
-            if(repetirContraseñaField.getText() == ""){
+            if("".equals(repetirContraseñaField.getText())){
                 repetirContraseñaErrorLabel.setText("Campo vacío");
                 repetirContraseñaErrorLabel.setVisible(false);
             }
@@ -291,15 +293,13 @@ public class FXMLDocumentController implements Initializable {
             //Solo permite introducir numeros
             numTarjetaErrorLabel.setVisible(false);
                 
-            if(newVal != ""){
+            if(!"".equals(newVal)){
                 try{
-                    Integer.parseInt(newVal.substring(newVal.length()-1));
+                    Integer.valueOf(newVal.substring(newVal.length()-1));
                 }catch(NumberFormatException e){
                     numTarjetaField.setText(oldVal);
                 }
-            }
-            
-            
+            }  
         });
         svcField.textProperty().addListener((observable,oldVal,newVal)-> {
 
@@ -309,7 +309,7 @@ public class FXMLDocumentController implements Initializable {
                 svcErrorLabel.setVisible(false);
             }
             //Solo permite introducir numeros
-            if(newVal != ""){
+            if(!"".equals(newVal)){
                 try{
                     Integer.parseInt(newVal.substring(newVal.length()-1));
                 }catch(NumberFormatException e){
@@ -321,17 +321,17 @@ public class FXMLDocumentController implements Initializable {
         
                         //INICIALIZACIÓN PARA TESTING//
         ////////////////////////////////////////////////////////////////////////
-        try {
+        //try {
             club.setInitialData(); //Resetea la base de datos al iniciar
-            //Club.getInstance().addSimpleData();
+            club.addSimpleData();
             
-            club.registerMember("Fernando", "Alonso", "99999999", "0", "0", "0000000000000000", 000, null); //registra un miembro de prueba
+            //club.registerMember("Fernando", "Alonso", "99999999", "0", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //utilData.setLogin("pepe");
             //utilData.setPassword("pipo");
             
-        } catch (ClubDAOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //} catch (ClubDAOException ex) {
+        //    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        //}
         ////////////////////////////////////////////////////////////////////////
         
         //INICIALIZACIÓN DE LA PRIMERA PANTALLA || Estes orden es muy importante
@@ -404,7 +404,11 @@ public class FXMLDocumentController implements Initializable {
     private void onButtonMisreservas(Event event) throws IOException, ClubDAOException {
         tabPane.getSelectionModel().select(1);
         utilData.setRegistrarse(false);//Siempre que salga de MiPerfil poner registrarse a false
-        updateMisReservas();
+        if(utilData.isLogged()){
+            updateMisReservas();
+        }else{
+            nombreUsuarioReservas.setText("Reservas no disponibles, no estas autenticado");
+        }
     }
     
     /**Metodo para activar onButtonPistas que es como si se pulsara el boton*/
@@ -483,6 +487,7 @@ public class FXMLDocumentController implements Initializable {
                 guardarCambiosButton.setVisible(true);
                 cancelarCambiosButton.setVisible(true);
                 cancelarCambiosButton.setDisable(true);
+                loginButton.setVisible(true);
                 nickField.setDisable(false);
             }else{
                 utilData.showScene("Login");
@@ -493,7 +498,9 @@ public class FXMLDocumentController implements Initializable {
             perfilEditMode(false);
             perfilEditarButton.setDisable(false);
             guardarCambiosButton.setVisible(false);
+            cancelarCambiosButton.setDisable(false);
             cancelarCambiosButton.setVisible(false);
+            loginButton.setVisible(false);
             nickField.setDisable(true);
         }
     }
@@ -551,10 +558,13 @@ public class FXMLDocumentController implements Initializable {
         if(!nombreErrorLabel.isVisible() && !apellidosErrorLabel.isVisible() && !telefonoErrorLabel.isVisible() 
             && !nickErrorLabel.isVisible() && !contraseñaErrorLabel.isVisible() && !repetirContraseñaErrorLabel.isVisible() 
             && !numTarjetaErrorLabel.isVisible() && !svcErrorLabel.isVisible()){    //comprueba si hay errores
-            
+            int svc = 0;
+            if(!"".equals(svcField.getText())){
+                svc = Integer.parseInt(svcField.getText());
+            }
             try {
                 //Crear nuevo usuario
-                club.registerMember(nombreField.getText(), apellidosField.getText(), telefonoField.getText(),nickField.getText(), contraseñaField.getText(), numTarjetaField.getText(), Integer.parseInt(svcField.getText()), imagenPerfilRegistro.getImage());
+                club.registerMember(nombreField.getText(), apellidosField.getText(), telefonoField.getText(),nickField.getText(), contraseñaField.getText(), numTarjetaField.getText(), svc , imagenPerfilRegistro.getImage());
                 guardarCambiosButton.setVisible(false);
                 cancelarCambiosButton.setVisible(false);
                 perfilEditarButton.setDisable(false);
@@ -581,7 +591,7 @@ public class FXMLDocumentController implements Initializable {
             miembro.setTelephone(telefonoField.getText());
             miembro.setPassword(contraseñaField.getText());
             miembro.setCreditCard(numTarjetaField.getText());
-            if(svcField.getText() != ""){
+            if(!"".equals(svcField.getText())){
                 miembro.setSvc(Integer.parseInt(svcField.getText()));
             }
             guardarCambiosButton.setVisible(false);
@@ -704,6 +714,12 @@ public class FXMLDocumentController implements Initializable {
                 }
             }
         });
+    }
+
+    @FXML
+    private void onButtonLogin(ActionEvent event) {
+        utilData.setRegistrarse(false);
+        onButtonMiPerfil(new Event(EventType.ROOT));
     }
 }    
 
