@@ -86,31 +86,42 @@ public class LoginController  implements Initializable{
 
     @FXML
     private void intentoIniciarSesion(ActionEvent event) throws ClubDAOException, IOException, InterruptedException {
-        try {
-            //para ver si existe tal miembro y si no da error
-            Member m = Club.getInstance().getMemberByCredentials(usuarioField.getText(), contraseñaField.getText()); 
-            
-            login.setVisible(false);
-            usuarioField.setEditable(false);
-            contraseñaField.setEditable(false);
-            menuButton.setDisable(true);
-            login.setDisable(true);
-            
-            PauseTransition pause = new PauseTransition(Duration.millis(300));
-            pause.setOnFinished(pauseEvent -> {                
-                UtilData.getInstance().setLogin(usuarioField.getText());
-                UtilData.getInstance().setPassword(contraseñaField.getText());
-                UtilData.getInstance().showScene("Main");
-            });
-            pause.play();                         
-        } catch (NullPointerException ex) {
+        if(usuarioField.getText().isBlank()){
             usuarioField.setId("defaultInputBoxError");
+            contraseñaErrorLabel.setText("Usuario vacio");
+            contraseñaErrorLabel.setVisible(true);
+        }else if(contraseñaField.getText().isBlank()){
             contraseñaField.setId("defaultInputBoxError");
             temporaryTextField.setId("defaultInputBoxError");
+            contraseñaErrorLabel.setText("Contraseña vacia");
+            contraseñaErrorLabel.setVisible(true);    
+        }else{
+            try {
+                //para ver si existe tal miembro y si no da error
+                Club.getInstance().getMemberByCredentials(usuarioField.getText(), contraseñaField.getText()); 
 
-            contraseñaErrorLabel.setText("Usuario o contraseña incorrectos");
-            contraseñaErrorLabel.setVisible(true);
-        }                
+                login.setVisible(false);
+                usuarioField.setEditable(false);
+                contraseñaField.setEditable(false);
+                menuButton.setDisable(true);
+                login.setDisable(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(300));
+                pause.setOnFinished(pauseEvent -> {                
+                    UtilData.getInstance().setLogin(usuarioField.getText());
+                    UtilData.getInstance().setPassword(contraseñaField.getText());
+                    UtilData.getInstance().showScene("Main");
+                });
+                pause.play();                         
+            } catch (NullPointerException ex) {
+                usuarioField.setId("defaultInputBoxError");
+                contraseñaField.setId("defaultInputBoxError");
+                temporaryTextField.setId("defaultInputBoxError");
+
+                contraseñaErrorLabel.setText("Usuario o contraseña incorrectos");
+                contraseñaErrorLabel.setVisible(true);
+            } 
+        }
     }
     
     @FXML

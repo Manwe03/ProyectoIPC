@@ -242,6 +242,16 @@
                      </BorderPane.margin>
                   </HBox>
                </bottom>
+               <top>
+                  <Button fx:id="loginButton" mnemonicParsing="false" onAction="#onButtonLogin" text="Login" BorderPane.alignment="TOP_LEFT">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <BorderPane.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </BorderPane.margin>
+                  </Button>
+               </top>
             </BorderPane>
          </content>
          <graphic>
