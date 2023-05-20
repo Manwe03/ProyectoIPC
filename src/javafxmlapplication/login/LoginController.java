@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.AccessibleRole;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -86,6 +87,7 @@ public class LoginController  implements Initializable{
 
     @FXML
     private void intentoIniciarSesion(ActionEvent event) throws ClubDAOException, IOException, InterruptedException {
+        
         if(usuarioField.getText().isBlank()){
             usuarioField.setId("defaultInputBoxError");
             contraseñaErrorLabel.setText("Usuario vacio");
@@ -105,14 +107,15 @@ public class LoginController  implements Initializable{
                 contraseñaField.setEditable(false);
                 menuButton.setDisable(true);
                 login.setDisable(true);
-
+                
                 PauseTransition pause = new PauseTransition(Duration.millis(300));
                 pause.setOnFinished(pauseEvent -> {                
-                    UtilData.getInstance().setLogin(usuarioField.getText());
-                    UtilData.getInstance().setPassword(contraseñaField.getText());
-                    UtilData.getInstance().showScene("Main");
+                    utilData.setLogin(usuarioField.getText());
+                    utilData.setPassword(contraseñaField.getText());
+                    utilData.showScene("Main");
                 });
-                pause.play();                         
+                pause.play();
+                ((Button)event.getSource()).getScene().setCursor(Cursor.HAND);
             } catch (NullPointerException ex) {
                 usuarioField.setId("defaultInputBoxError");
                 contraseñaField.setId("defaultInputBoxError");
