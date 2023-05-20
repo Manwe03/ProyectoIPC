@@ -321,17 +321,17 @@ public class FXMLDocumentController implements Initializable {
         
                         //INICIALIZACIÓN PARA TESTING//
         ////////////////////////////////////////////////////////////////////////
-        //try {
+        try {
             club.setInitialData(); //Resetea la base de datos al iniciar
-            club.addSimpleData();
+            //club.addSimpleData();
             
-            //club.registerMember("Fernando", "Alonso", "99999999", "0", "0", "0000000000000000", 000, null); //registra un miembro de prueba
+            club.registerMember("Fernando", "Alonso", "99999999", "1", "1", "0000000000000000", 000, null); //registra un miembro de prueba
             //utilData.setLogin("pepe");
             //utilData.setPassword("pipo");
             
-        //} catch (ClubDAOException ex) {
-        //    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        //}
+        } catch (ClubDAOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ////////////////////////////////////////////////////////////////////////
         
         //INICIALIZACIÓN DE LA PRIMERA PANTALLA || Estes orden es muy importante
@@ -388,7 +388,7 @@ public class FXMLDocumentController implements Initializable {
         
         double width = scrollPane.getWidth()- dpi * 0.15;
         
-        double vBoxWidth = ((2.2+0.3)*dpi);
+        double vBoxWidth = ((3.71)*dpi); //Tamaño de la pista
         
         int columns = (int) Math.floor(width/vBoxWidth);
         if(columns < 6){
@@ -440,7 +440,6 @@ public class FXMLDocumentController implements Initializable {
         utilData.setSelectedDate(dpBookingDay.getValue());//Actualiza el dia seleccionado en el datePicker
         //Elimina y actualiza los pistaBox
         flowPane.getChildren().clear();
-        String styles = "-fx-background-color: #999999;" + "-fx-border-color: #ff0000;";
         for(int i = 1; i <= 6; i++){
             try {
                 
@@ -448,8 +447,6 @@ public class FXMLDocumentController implements Initializable {
                 Parent pistaBox = loader.load();
                 FXMLpistaCController controler = loader.getController();
                 controler.setData(club.getCourt("Pista " + i),dpBookingDay.getValue());  
-               
-                pistaBox.setStyle(styles);
                 
                 flowPane.getChildren().add(pistaBox);
             } catch (IOException ex) {

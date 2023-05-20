@@ -14,11 +14,12 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -38,10 +39,6 @@ import model.Member;
  */
 public class FXMLpistaCController implements Initializable {
 
-
-    @FXML
-    private VBox vBoxPista;
-    
     private Court court; //pista
     
     private LocalDate madeForDay; //Dia
@@ -77,9 +74,19 @@ public class FXMLpistaCController implements Initializable {
     
     private Club club;
     
-    private static int[] buttonState = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+    private static int[][] buttonState;
     
     UtilData utilData;
+    
+    @FXML
+    private VBox hourVBox;
+    @FXML
+    private GridPane gridPane;
+    @FXML
+    private Pane offsetPane;
+   
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -87,29 +94,74 @@ public class FXMLpistaCController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //Pone el tamaño de los botones con respecto a los puntos por pulgada
         utilData = UtilData.getInstance();
-        utilData.setSize_DPI(vBoxPista,2.2+0.3,0.35*13+0.7);
+        
+        utilData.setSize_DPI(offsetPane,0.2,0.15);
+        utilData.setSize_DPI(gridPane,3.7,7);
+        hourVBox.setSpacing(utilData.getDpi()*0.264);
+        
         try {
             club = Club.getInstance();
         } catch (ClubDAOException | IOException ex) {
             Logger.getLogger(FXMLpistaCController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //columna 0 estados 0 1 2 : 0 libre 1 reservado 2 reservado por mi
+        //columna 1 estados 0 1   : 0 posicion normal   1 animacion activa
+        buttonState = new int[2][13];
+        for(int i = 0; i<13; i++){
+            buttonState[0][i] = 0;
+            buttonState[1][i] = 0;
+        }
         //inicia el tamaño del label con respecto a la escala
         pistaLabel.setFont(Font.font("system", FontWeight.NORMAL, FontPosture.REGULAR, utilData.getDpi()*0.2));
         
         utilData.setSize_DPI(pistaLabel, 2.2, 0.35);
-        utilData.setSize_DPI(b_09, 2.2, 0.35);
-        utilData.setSize_DPI(b_10, 2.2, 0.35);
-        utilData.setSize_DPI(b_11, 2.2, 0.35);
-        utilData.setSize_DPI(b_12, 2.2, 0.35);
-        utilData.setSize_DPI(b_13, 2.2, 0.35);
-        utilData.setSize_DPI(b_14, 2.2, 0.35);
-        utilData.setSize_DPI(b_15, 2.2, 0.35);
-        utilData.setSize_DPI(b_16, 2.2, 0.35);
-        utilData.setSize_DPI(b_17, 2.2, 0.35);
-        utilData.setSize_DPI(b_18, 2.2, 0.35);
-        utilData.setSize_DPI(b_19, 2.2, 0.35);
-        utilData.setSize_DPI(b_20, 2.2, 0.35);
-        utilData.setSize_DPI(b_21, 2.2, 0.35);
+        
+        
+        
+        utilData.setSize_DPI(b_09, 2.5, 0.4);
+        utilData.setSize_DPI(b_10, 2.5, 0.4);
+        utilData.setSize_DPI(b_11, 2.5, 0.4);
+        utilData.setSize_DPI(b_12, 2.5, 0.4);
+        utilData.setSize_DPI(b_13, 2.5, 0.4);
+        utilData.setSize_DPI(b_14, 2.5, 0.4);
+        utilData.setSize_DPI(b_15, 2.5, 0.4);
+        utilData.setSize_DPI(b_16, 2.5, 0.4);
+        utilData.setSize_DPI(b_17, 2.5, 0.4);
+        utilData.setSize_DPI(b_18, 2.5, 0.4);
+        utilData.setSize_DPI(b_19, 2.5, 0.4);
+        utilData.setSize_DPI(b_20, 2.5, 0.4);
+        utilData.setSize_DPI(b_21, 2.5, 0.4);
+        
+        b_09.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][0] = UtilData.translatePressedButton(b_09, buttonState[1][0]); });
+        b_10.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][1] = UtilData.translatePressedButton(b_10, buttonState[1][1]); });
+        b_11.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][2] = UtilData.translatePressedButton(b_11, buttonState[1][2]); });
+        b_12.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][3] = UtilData.translatePressedButton(b_12, buttonState[1][3]); });
+        b_13.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][4] = UtilData.translatePressedButton(b_13, buttonState[1][4]); });
+        b_14.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][5] = UtilData.translatePressedButton(b_14, buttonState[1][5]); });
+        b_15.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][6] = UtilData.translatePressedButton(b_15, buttonState[1][6]); });
+        b_16.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][7] = UtilData.translatePressedButton(b_16, buttonState[1][7]); });
+        b_17.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][8] = UtilData.translatePressedButton(b_17, buttonState[1][8]); });
+        b_18.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][9] = UtilData.translatePressedButton(b_18, buttonState[1][9]); });
+        b_19.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][10] = UtilData.translatePressedButton(b_19, buttonState[1][10]); });
+        b_20.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][11] = UtilData.translatePressedButton(b_20, buttonState[1][11]); });
+        b_21.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][12] = UtilData.translatePressedButton(b_21, buttonState[1][12]); });
+        
+        /*
+        b_09.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][0] = setTextOnContext(b_09, buttonState[1][0], buttonState[0][0]); });
+        b_10.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][1] = setTextOnContext(b_10, buttonState[1][1], buttonState[0][1]); });
+        b_11.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][2] = setTextOnContext(b_11, buttonState[1][2], buttonState[0][2]); });
+        b_12.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][3] = setTextOnContext(b_12, buttonState[1][3], buttonState[0][3]); });
+        b_13.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][4] = setTextOnContext(b_13, buttonState[1][4], buttonState[0][4]); });
+        b_14.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][5] = setTextOnContext(b_14, buttonState[1][5], buttonState[0][5]); });
+        b_15.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][6] = setTextOnContext(b_15, buttonState[1][6], buttonState[0][6]); });
+        b_16.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][7] = setTextOnContext(b_16, buttonState[1][7], buttonState[0][7]); });
+        b_17.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][8] = setTextOnContext(b_17, buttonState[1][8], buttonState[0][8]); });
+        b_18.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][9] = setTextOnContext(b_18, buttonState[1][9], buttonState[0][9]); });
+        b_19.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][10] = setTextOnContext(b_19, buttonState[1][10], buttonState[0][10]); });
+        b_20.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][11] = setTextOnContext(b_20, buttonState[1][11], buttonState[0][11]); });
+        b_21.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][12] = setTextOnContext(b_21, buttonState[1][12], buttonState[0][12]); });
+        */
     }    
 
     public void setData(Court court,LocalDate madeForDay){
@@ -118,60 +170,47 @@ public class FXMLpistaCController implements Initializable {
         updateButtonState();
         pistaLabel.setText(court.getName());
         
+        updateDisplay();
     }
     
     private void updateButtonState(){ 
         try {
             //0 = no reservado || 1 = reservado || 2 = reservado por mi
             List<Booking> reservasDelDia = club.getCourtBookings(court.getName(), madeForDay); //obtiene las reservas del dia
-            for(int i = 0; i < 13; i++){buttonState[i] = 0;}//todas a 0
+            for(int i = 0; i < 13; i++){
+                buttonState[0][i] = 0;//ponemos los datos de la columna 0 a 0 
+            }
+            
             for(Booking reserva: reservasDelDia){ //recorre las reservas
                 if(!utilData.isLogged()){
-                    buttonState[reserva.getFromTime().getHour()-9] = 1;
+                    buttonState[0][reserva.getFromTime().getHour()-9] = 0;
                 }
                 else if(reserva.getMember().equals(Club.getInstance().getMemberByCredentials(utilData.getLogin(), utilData.getPassword()))){
-                    buttonState[reserva.getFromTime().getHour()-9] = 2;
+                    buttonState[0][reserva.getFromTime().getHour()-9] = 2;
                 }else{
-                    buttonState[reserva.getFromTime().getHour()-9] = 1;
+                    buttonState[0][reserva.getFromTime().getHour()-9] = 1;
                 }
             }
-            updateDisplay();
+            
+            //updateDisplay();
         } catch (ClubDAOException | IOException ex) {
             Logger.getLogger(FXMLpistaCController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
     private void updateDisplay(){
-        updateButton(b_09,buttonState[0]);
-        updateButton(b_10,buttonState[1]);
-        updateButton(b_11,buttonState[2]);
-        updateButton(b_12,buttonState[3]);
-        updateButton(b_13,buttonState[4]);
-        updateButton(b_14,buttonState[5]);
-        updateButton(b_15,buttonState[6]);
-        updateButton(b_16,buttonState[7]);
-        updateButton(b_17,buttonState[8]);
-        updateButton(b_18,buttonState[9]);
-        updateButton(b_19,buttonState[10]);
-        updateButton(b_20,buttonState[11]);
-        updateButton(b_21,buttonState[12]);
-    }
-    
-    private void updateButton(Button boton, int state){
-        switch(state){
-            case 0:
-                boton.setText("Libre");
-                boton.setId("buttonLibre");
-                break;
-            case 1:
-                boton.setText("Reservado");
-                boton.setId("buttonReservado");
-                break;
-            case 2:      
-                boton.setText("Reservado por mi");
-                boton.setId("buttonReservadoMi");
-                break;
-        }
+        setTextOnContext(b_09, buttonState[1][0], buttonState[0][0]);
+        setTextOnContext(b_10, buttonState[1][1], buttonState[0][1]);
+        setTextOnContext(b_11, buttonState[1][2], buttonState[0][2]);
+        setTextOnContext(b_12, buttonState[1][3], buttonState[0][3]);
+        setTextOnContext(b_13, buttonState[1][4], buttonState[0][4]);
+        setTextOnContext(b_14, buttonState[1][5], buttonState[0][5]);
+        setTextOnContext(b_15, buttonState[1][6], buttonState[0][6]);
+        setTextOnContext(b_16, buttonState[1][7], buttonState[0][7]);
+        setTextOnContext(b_17, buttonState[1][8], buttonState[0][8]);
+        setTextOnContext(b_18, buttonState[1][9], buttonState[0][9]);
+        setTextOnContext(b_19, buttonState[1][10], buttonState[0][10]);
+        setTextOnContext(b_20, buttonState[1][11], buttonState[0][11]);
+        setTextOnContext(b_21, buttonState[1][12], buttonState[0][12]);
     }
     
     /**Hace la reserva. Devuelve true si se puede hacer la reserva false si no.*/
@@ -188,7 +227,6 @@ public class FXMLpistaCController implements Initializable {
             if(!reservaDuplicada){ //si se puede reservar a esa hora es dicir no hay una reserva a la misma hora, hace la reserva
                 Club.getInstance().registerBooking(bookingDate, madeForDay, fromHour, paid, court, member);
                 System.out.println("Reserva Exitosa");
-                updateButtonState();
                 return true;//exito
             }
             else{   //si no se puede hacer la reserva
@@ -205,9 +243,10 @@ public class FXMLpistaCController implements Initializable {
     private void onCalendarButtons(int numButton){
         //Button button = (Button) event.getSource();//obtiene el boton sobre el que se a realizado el evento
         //int numButton = Integer.parseInt( button.getId().substring(2, 4));
-       
+        System.out.println(numButton-9);
         Member member;
-        switch (buttonState[numButton-9]) {
+        
+        switch (buttonState[0][numButton-9]) {
             case 0: //si no esta reservada
                 System.out.println("Libre");
                 if(utilData.isLogged()){//si estas loggeado -> Reservar
@@ -217,15 +256,19 @@ public class FXMLpistaCController implements Initializable {
                     }else{
                         LocalTime fromtime = LocalTime.of(numButton,0);//obtiene la hora de la reserva
                         safeRegisterBooking(LocalDateTime.now(), utilData.getSelectedDate(), fromtime , member.checkHasCreditInfo(), court, member);//intenta registrar una reserva
+                        updateButtonState();
+                        updateDisplay();
                     }
                 }else{//si no estas loggeado -> Notificar
                     utilData.showScene("Login");
                 }
+                
                 break;
             case 1: //si esta reservada por otro
+                
                 System.out.println("Reservada por otro");
-                
-                
+                updateButtonState();
+                updateDisplay();
                 break;
             case 2: //si esta reservada por ti
                 if(!utilData.isLogged()){break;}//Se verifica que estes logeado por si acaso
@@ -243,19 +286,55 @@ public class FXMLpistaCController implements Initializable {
 
                         if(reserva.getFromTime().equals(fromtime)){
                             club.removeBooking(reserva);
-                            System.out.println("Reserva cancelada");
                             updateButtonState();
+                            updateDisplay();
+                            System.out.println("Reserva cancelada");
                             break;
                         }
                     }
                 } catch (ClubDAOException | IOException ex) {
                     Logger.getLogger(FXMLpistaCController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                
-                
                 break;
 
+        }
+    }
+    
+    private int setTextOnContext(Button node, int presionado, int estadoReserva){
+        switch (estadoReserva) {
+            case 0:
+                //libre//
+                node.setId("buttonLibre");
+                if(presionado == 0){
+                    node.setText("Reservar");
+                    return 1;
+                }
+                else{
+                    node.setText("Libre");
+                    return 0;
+                }
+            case 1:
+                //reservado por otro//
+                node.setId("buttonReservado");
+                if(presionado == 0){
+                    node.setText("Reservado por:");
+                    return 1;
+                }
+                else{
+                    node.setText("Pista Ocupada");
+                    return 0;
+                }
+            default:
+                //reservado por ti//
+                node.setId("buttonReservadoMi");
+                if(presionado == 0){
+                    node.setText("Cancelar Reserva");
+                    return 1;
+                }
+                else{
+                    node.setText("Reservado por mi");
+                    return 0;
+                }
         }
     }
 

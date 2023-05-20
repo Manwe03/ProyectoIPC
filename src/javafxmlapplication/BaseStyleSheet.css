@@ -7,14 +7,82 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Author     : manub
 */
 .button{
-    -fx-text-fill: #222222;
+    -fx-text-fill: #070707;
 }
 .separator:horizontal{
     -fx-border-color: #aaaaaa;
     -fx-background-color: #aaaaaa;
     -fx-border-radius: 3;
     -fx-border-width: 3;
+    
 }
+#buttonLibre{
+    -fx-background-color: #dbdbdb;
+    -fx-background-radius: 0 0 0 0;
+    
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 0 0 0 0;
+    -fx-border-width: 5;
+
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 0, 10, 3, 3);
+
+    -fx-font-family: Monospac821 BT;
+}
+#buttonLibre:hover{
+    -fx-background-color: #e1ffdd;
+}
+#buttonLibre:active{
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 0, 10, 0, 0);
+}
+
+#buttonReservado{
+    -fx-background-color: #e9d94f;
+    -fx-background-radius: 0 0 0 0;
+    
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 0 0 0 0;
+    -fx-border-width: 5;
+
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 0, 10, 3, 3);
+
+    -fx-font-family: Monospac821 BT;
+}
+#buttonReservado:hover{
+    -fx-background-color: #d4c648;
+}
+
+#buttonReservadoMi{
+    -fx-background-color: #00ee14;
+    -fx-background-radius: 0 0 0 0;
+    
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 0 0 0 0;
+    -fx-border-width: 5;
+
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 0, 10, 3, 3);
+
+    -fx-font-family: Monospac821 BT;
+}
+#buttonReservadoMi:hover{
+    -fx-background-color: #00c210;
+}
+
+#defaultHBox{
+    -fx-background-color: #c4c4c4;
+    -fx-border-width: 5 0 0 5;
+    -fx-border-color: #292929;
+}
+
+#fondoGrid{
+    -fx-background-color: #ffffff;
+    -fx-opacity: 100%;
+}
+
+#defaultLabel{
+    -fx-font-family: Monospac821 BT;
+}
+
+
 #defaultInputBox{
     -fx-background-color: #cccccc;
     -fx-background-radius: 3;

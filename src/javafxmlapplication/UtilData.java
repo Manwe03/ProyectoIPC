@@ -9,10 +9,14 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Club;
 import model.ClubDAOException;
 
@@ -102,6 +106,23 @@ public class UtilData {
         nodo.setMinWidth(dpi*width);
         nodo.setMaxHeight(dpi*height);
         nodo.setMinHeight(dpi*height);
+    }
+    /**Mueve un boton como si estuviera presionado
+     * El estado: true = esta desplazado ; false = no esta desplazado
+     */
+    public static int translatePressedButton(Node node, int estado){
+        TranslateTransition translate = new TranslateTransition(Duration.millis(100));
+        translate.setNode(node);              
+        if(estado == 0){
+           translate.setToX(3);
+           translate.setToY(3);
+        }else{
+           translate.setToX(0);
+           translate.setToY(0);
+        }
+        translate.play();
+        if(estado == 0){return 1;}
+        else{return 0;}
     }
     
     //GET
