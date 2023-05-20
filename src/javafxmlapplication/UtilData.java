@@ -59,7 +59,6 @@ public class UtilData {
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
         //loader.load()
         scene = new Scene(FXMLLoader.load(getClass().getResource("FXMLDocument.fxml")));
-        scene.getStylesheets().add(getClass().getResource("BaseStyleSheet.css").toExternalForm());
         escenas.put("Main", scene);
         
         scene = new Scene(FXMLLoader.load(getClass().getResource("login/login.fxml")));
