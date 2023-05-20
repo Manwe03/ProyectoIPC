@@ -100,7 +100,7 @@
             </VBox>
             <VBox alignment="CENTER" fillWidth="false" spacing="6.0">
                <children>
-                  <Label id="defaultLabel" fx:id="pistaLabel" alignment="CENTER" stylesheets="@../BaseStyleSheet.css" text="Pista x" VBox.vgrow="NEVER">
+                  <Label fx:id="pistaLabel" alignment="CENTER" stylesheets="@../BaseStyleSheet.css" text="Pista x" VBox.vgrow="NEVER">
                      <font>
                         <Font name="System Bold" size="26.0" />
                      </font>

@@ -39,6 +39,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -70,7 +71,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TabPane tabPane;
     @FXML
-    private Tab buttonMisreservas;
+    private Button buttonMisreservas;
     @FXML
     private Label nombreUsuarioReservas;
     @FXML
@@ -78,7 +79,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private VBox misReservasContainer;
     @FXML
-    private Tab buttonPistas;
+    private Button buttonPistas;
     @FXML
     private DatePicker dpBookingDay;
     @FXML
@@ -91,8 +92,6 @@ public class FXMLDocumentController implements Initializable {
     private Button antButton;
     @FXML
     private Button posButton;
-    @FXML
-    private Tab buttonMiPerfil;
     @FXML
     private HBox perfilBottomPane;
     @FXML
@@ -171,13 +170,17 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Label svcErrorLabel;
     @FXML
-    private Button buttonPistasButton;
-    @FXML
     private Button subirImagen;
     @FXML
     private ImageView imagenPerfilRegistro;
     @FXML
     private Button loginButton;
+    @FXML
+    private BorderPane miPerfilBorderPane;
+    @FXML
+    private Button miPerfilButton;
+    @FXML
+    private Tab miPerfilTab;
 
     /**
      * Initializes the controller class.
@@ -345,7 +348,7 @@ public class FXMLDocumentController implements Initializable {
         //Limitadores de tamaño
         addTextLimiter(svcField,3);
         addTextLimiter(numTarjetaField,16);
-        
+
         triggerOnButtonPistas();
         
         utilData.setSelectedDate(dpBookingDay.getValue());

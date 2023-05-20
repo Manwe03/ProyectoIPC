@@ -74,7 +74,9 @@ public class FXMLpistaCController implements Initializable {
     
     private Club club;
     
-    private static int[][] buttonState;
+    private static byte[] pressedState;
+    private static byte[] reservaState;
+    private static boolean[] hoveredState;
     
     UtilData utilData;
     
@@ -105,19 +107,20 @@ public class FXMLpistaCController implements Initializable {
             Logger.getLogger(FXMLpistaCController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //columna 0 estados 0 1 2 : 0 libre 1 reservado 2 reservado por mi
-        //columna 1 estados 0 1   : 0 posicion normal   1 animacion activa
-        buttonState = new int[2][13];
+       
+        
+        pressedState = new byte[13]; // 0 posicion normal // 1 animacion activa
+        reservaState = new byte[13]; // 0 libre // 1 reservado // 2 reservado por mi
+        hoveredState = new boolean[13];
         for(int i = 0; i<13; i++){
-            buttonState[0][i] = 0;
-            buttonState[1][i] = 0;
+            pressedState[i] = 0;
+            reservaState[i] = 0;
+            hoveredState[i] = false;
         }
         //inicia el tamaño del label con respecto a la escala
-        pistaLabel.setFont(Font.font("system", FontWeight.NORMAL, FontPosture.REGULAR, utilData.getDpi()*0.2));
+        //pistaLabel.setFont(Font.font("system", FontWeight.NORMAL, FontPosture.REGULAR, utilData.getDpi()*0.2));
         
         utilData.setSize_DPI(pistaLabel, 2.2, 0.35);
-        
-        
         
         utilData.setSize_DPI(b_09, 2.5, 0.4);
         utilData.setSize_DPI(b_10, 2.5, 0.4);
@@ -133,35 +136,37 @@ public class FXMLpistaCController implements Initializable {
         utilData.setSize_DPI(b_20, 2.5, 0.4);
         utilData.setSize_DPI(b_21, 2.5, 0.4);
         
-        b_09.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][0] = UtilData.translatePressedButton(b_09, buttonState[1][0]); });
-        b_10.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][1] = UtilData.translatePressedButton(b_10, buttonState[1][1]); });
-        b_11.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][2] = UtilData.translatePressedButton(b_11, buttonState[1][2]); });
-        b_12.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][3] = UtilData.translatePressedButton(b_12, buttonState[1][3]); });
-        b_13.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][4] = UtilData.translatePressedButton(b_13, buttonState[1][4]); });
-        b_14.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][5] = UtilData.translatePressedButton(b_14, buttonState[1][5]); });
-        b_15.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][6] = UtilData.translatePressedButton(b_15, buttonState[1][6]); });
-        b_16.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][7] = UtilData.translatePressedButton(b_16, buttonState[1][7]); });
-        b_17.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][8] = UtilData.translatePressedButton(b_17, buttonState[1][8]); });
-        b_18.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][9] = UtilData.translatePressedButton(b_18, buttonState[1][9]); });
-        b_19.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][10] = UtilData.translatePressedButton(b_19, buttonState[1][10]); });
-        b_20.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][11] = UtilData.translatePressedButton(b_20, buttonState[1][11]); });
-        b_21.pressedProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][12] = UtilData.translatePressedButton(b_21, buttonState[1][12]); });
+
         
-        /*
-        b_09.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][0] = setTextOnContext(b_09, buttonState[1][0], buttonState[0][0]); });
-        b_10.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][1] = setTextOnContext(b_10, buttonState[1][1], buttonState[0][1]); });
-        b_11.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][2] = setTextOnContext(b_11, buttonState[1][2], buttonState[0][2]); });
-        b_12.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][3] = setTextOnContext(b_12, buttonState[1][3], buttonState[0][3]); });
-        b_13.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][4] = setTextOnContext(b_13, buttonState[1][4], buttonState[0][4]); });
-        b_14.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][5] = setTextOnContext(b_14, buttonState[1][5], buttonState[0][5]); });
-        b_15.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][6] = setTextOnContext(b_15, buttonState[1][6], buttonState[0][6]); });
-        b_16.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][7] = setTextOnContext(b_16, buttonState[1][7], buttonState[0][7]); });
-        b_17.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][8] = setTextOnContext(b_17, buttonState[1][8], buttonState[0][8]); });
-        b_18.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][9] = setTextOnContext(b_18, buttonState[1][9], buttonState[0][9]); });
-        b_19.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][10] = setTextOnContext(b_19, buttonState[1][10], buttonState[0][10]); });
-        b_20.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][11] = setTextOnContext(b_20, buttonState[1][11], buttonState[0][11]); });
-        b_21.hoverProperty().addListener((observable,oldVal,newVal)-> { buttonState[1][12] = setTextOnContext(b_21, buttonState[1][12], buttonState[0][12]); });
-        */
+        b_09.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[0] = UtilData.translatePressedButton(b_09, pressedState[0]); });
+        b_10.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[1] = UtilData.translatePressedButton(b_10, pressedState[1]); });
+        b_11.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[2] = UtilData.translatePressedButton(b_11, pressedState[2]); });
+        b_12.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[3] = UtilData.translatePressedButton(b_12, pressedState[3]); });
+        b_13.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[4] = UtilData.translatePressedButton(b_13, pressedState[4]); });
+        b_14.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[5] = UtilData.translatePressedButton(b_14, pressedState[5]); });
+        b_15.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[6] = UtilData.translatePressedButton(b_15, pressedState[6]); });
+        b_16.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[7] = UtilData.translatePressedButton(b_16, pressedState[7]); });
+        b_17.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[8] = UtilData.translatePressedButton(b_17, pressedState[8]); });
+        b_18.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[9] = UtilData.translatePressedButton(b_18, pressedState[9]); });
+        b_19.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[10] = UtilData.translatePressedButton(b_19, pressedState[10]); });
+        b_20.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[11] = UtilData.translatePressedButton(b_20, pressedState[11]); });
+        b_21.pressedProperty().addListener((observable,oldVal,newVal)-> { pressedState[12] = UtilData.translatePressedButton(b_21, pressedState[12]); });
+        
+        
+        b_09.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_09,hoveredState,0); });
+        b_10.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_10,hoveredState,1); });
+        b_11.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_11,hoveredState,2); });
+        b_12.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_12,hoveredState,3); });
+        b_13.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_13,hoveredState,4); });
+        b_14.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_14,hoveredState,5); });
+        b_15.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_15,hoveredState,6); });
+        b_16.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_16,hoveredState,7); });
+        b_17.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_17,hoveredState,8); });
+        b_18.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_18,hoveredState,9); });
+        b_19.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_19,hoveredState,10); });
+        b_20.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_20,hoveredState,11); });
+        b_21.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_21,hoveredState,12); });
+        
     }    
 
     public void setData(Court court,LocalDate madeForDay){
@@ -170,47 +175,65 @@ public class FXMLpistaCController implements Initializable {
         updateButtonState();
         pistaLabel.setText(court.getName());
         
-        updateDisplay();
+        updateButtonsText();
     }
     
     private void updateButtonState(){ 
-        try {
-            //0 = no reservado || 1 = reservado || 2 = reservado por mi
-            List<Booking> reservasDelDia = club.getCourtBookings(court.getName(), madeForDay); //obtiene las reservas del dia
-            for(int i = 0; i < 13; i++){
-                buttonState[0][i] = 0;//ponemos los datos de la columna 0 a 0 
-            }
-            
-            for(Booking reserva: reservasDelDia){ //recorre las reservas
-                if(!utilData.isLogged()){
-                    buttonState[0][reserva.getFromTime().getHour()-9] = 0;
-                }
-                else if(reserva.getMember().equals(Club.getInstance().getMemberByCredentials(utilData.getLogin(), utilData.getPassword()))){
-                    buttonState[0][reserva.getFromTime().getHour()-9] = 2;
-                }else{
-                    buttonState[0][reserva.getFromTime().getHour()-9] = 1;
-                }
-            }
-            
-            //updateDisplay();
-        } catch (ClubDAOException | IOException ex) {
-            Logger.getLogger(FXMLpistaCController.class.getName()).log(Level.SEVERE, null, ex);
+        //0 = no reservado || 1 = reservado || 2 = reservado por mi
+        List<Booking> reservasDelDia = club.getCourtBookings(court.getName(), madeForDay); //obtiene las reservas del dia
+        for(int i = 0; i < 13; i++){
+            reservaState[i] = 0;//ponemos los datos de la columna 0 a 0
         }
+        for(Booking reserva: reservasDelDia){ //recorre las reservas
+            Member miembro = reserva.getMember();
+            Member yo;
+            try{
+                yo = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword());
+            }catch(NullPointerException e){
+                yo = null;
+            }
+            if(miembro == null){
+                
+            }else if(miembro.equals(yo)){//si la reserva es tuya
+                reservaState[reserva.getFromTime().getHour()-9] = 2;
+
+            }
+            else{ //si la reserva no es tuya
+                reservaState[reserva.getFromTime().getHour()-9] = 1;
+                
+            }
+        }
+        updateButtonsStyle();
     }
-    private void updateDisplay(){
-        setTextOnContext(b_09, buttonState[1][0], buttonState[0][0]);
-        setTextOnContext(b_10, buttonState[1][1], buttonState[0][1]);
-        setTextOnContext(b_11, buttonState[1][2], buttonState[0][2]);
-        setTextOnContext(b_12, buttonState[1][3], buttonState[0][3]);
-        setTextOnContext(b_13, buttonState[1][4], buttonState[0][4]);
-        setTextOnContext(b_14, buttonState[1][5], buttonState[0][5]);
-        setTextOnContext(b_15, buttonState[1][6], buttonState[0][6]);
-        setTextOnContext(b_16, buttonState[1][7], buttonState[0][7]);
-        setTextOnContext(b_17, buttonState[1][8], buttonState[0][8]);
-        setTextOnContext(b_18, buttonState[1][9], buttonState[0][9]);
-        setTextOnContext(b_19, buttonState[1][10], buttonState[0][10]);
-        setTextOnContext(b_20, buttonState[1][11], buttonState[0][11]);
-        setTextOnContext(b_21, buttonState[1][12], buttonState[0][12]);
+    private void updateButtonsStyle(){
+        setStyleOnContext(b_09,reservaState[0]);
+        setStyleOnContext(b_10,reservaState[1]);
+        setStyleOnContext(b_11,reservaState[2]);
+        setStyleOnContext(b_12,reservaState[3]);
+        setStyleOnContext(b_13,reservaState[4]);
+        setStyleOnContext(b_14,reservaState[5]);
+        setStyleOnContext(b_15,reservaState[6]);
+        setStyleOnContext(b_16,reservaState[7]);
+        setStyleOnContext(b_17,reservaState[8]);
+        setStyleOnContext(b_18,reservaState[9]);
+        setStyleOnContext(b_19,reservaState[10]);
+        setStyleOnContext(b_20,reservaState[11]);
+        setStyleOnContext(b_21,reservaState[12]);
+    }
+    private void updateButtonsText(){
+        setTextOnContext(b_09,hoveredState,0);
+        setTextOnContext(b_10,hoveredState,1);
+        setTextOnContext(b_11,hoveredState,2);
+        setTextOnContext(b_12,hoveredState,3);
+        setTextOnContext(b_13,hoveredState,4);
+        setTextOnContext(b_14,hoveredState,5);
+        setTextOnContext(b_15,hoveredState,6);
+        setTextOnContext(b_16,hoveredState,7);
+        setTextOnContext(b_17,hoveredState,8);
+        setTextOnContext(b_18,hoveredState,9);
+        setTextOnContext(b_19,hoveredState,10);
+        setTextOnContext(b_20,hoveredState,11);
+        setTextOnContext(b_21,hoveredState,12);
     }
     
     /**Hace la reserva. Devuelve true si se puede hacer la reserva false si no.*/
@@ -231,7 +254,7 @@ public class FXMLpistaCController implements Initializable {
             }
             else{   //si no se puede hacer la reserva
                 //FALTA avisar al usuario
-                System.out.println("Reserva Fallida");
+                //System.out.println("Reserva Fallida");
                 return false;//fallo
             }
         } catch (ClubDAOException | IOException ex) { //mitico catch
@@ -243,33 +266,26 @@ public class FXMLpistaCController implements Initializable {
     private void onCalendarButtons(int numButton){
         //Button button = (Button) event.getSource();//obtiene el boton sobre el que se a realizado el evento
         //int numButton = Integer.parseInt( button.getId().substring(2, 4));
-        System.out.println(numButton-9);
         Member member;
-        
-        switch (buttonState[0][numButton-9]) {
+        switch (reservaState[numButton-9]) {
             case 0: //si no esta reservada
-                System.out.println("Libre");
+                //System.out.println("Libre");
                 if(utilData.isLogged()){//si estas loggeado -> Reservar
                     member = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword());//obtiene el miembro logeado actualmente
-                    if(member == null){
-                        System.out.println("Porque? era necesario?");
-                    }else{
+                    if(member != null){
                         LocalTime fromtime = LocalTime.of(numButton,0);//obtiene la hora de la reserva
                         safeRegisterBooking(LocalDateTime.now(), utilData.getSelectedDate(), fromtime , member.checkHasCreditInfo(), court, member);//intenta registrar una reserva
                         updateButtonState();
-                        updateDisplay();
                     }
                 }else{//si no estas loggeado -> Notificar
                     utilData.showScene("Login");
                 }
-                
-                break;
+            break;
             case 1: //si esta reservada por otro
                 
-                System.out.println("Reservada por otro");
+                //System.out.println("Reservada por otro");
                 updateButtonState();
-                updateDisplay();
-                break;
+            break;
             case 2: //si esta reservada por ti
                 if(!utilData.isLogged()){break;}//Se verifica que estes logeado por si acaso
                 
@@ -278,16 +294,12 @@ public class FXMLpistaCController implements Initializable {
                     reservasDelDia = Club.getInstance().getCourtBookings(court.getName(), madeForDay);
                     LocalTime fromtime = LocalTime.of(numButton,0);//obtiene la hora de la reserva
                     Booking reserva;
-
                     for(int i = 0; i<reservasDelDia.size();i++){
-
-                        System.out.println("Reservada por ti");
+                        //System.out.println("Reservada por ti");
                         reserva = reservasDelDia.get(i);
-
                         if(reserva.getFromTime().equals(fromtime)){
                             club.removeBooking(reserva);
                             updateButtonState();
-                            updateDisplay();
                             System.out.println("Reserva cancelada");
                             break;
                         }
@@ -295,47 +307,58 @@ public class FXMLpistaCController implements Initializable {
                 } catch (ClubDAOException | IOException ex) {
                     Logger.getLogger(FXMLpistaCController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                break;
-
+            break;
         }
     }
-    
-    private int setTextOnContext(Button node, int presionado, int estadoReserva){
-        switch (estadoReserva) {
+    //State:
+    //columna 0 estados 0 1 2 : 0 libre 1 reservado 2 reservado por mi
+    //columna 1 estados 0 1   : 0 posicion normal   1 animacion activa
+    private void setStyleOnContext(Button node, int state){
+        switch (state) {
             case 0:
                 //libre//
                 node.setId("buttonLibre");
-                if(presionado == 0){
-                    node.setText("Reservar");
-                    return 1;
-                }
-                else{
-                    node.setText("Libre");
-                    return 0;
-                }
+                break;
             case 1:
                 //reservado por otro//
                 node.setId("buttonReservado");
-                if(presionado == 0){
-                    node.setText("Reservado por:");
-                    return 1;
-                }
-                else{
-                    node.setText("Pista Ocupada");
-                    return 0;
-                }
-            default:
+                break;
+            case 2:
                 //reservado por ti//
                 node.setId("buttonReservadoMi");
-                if(presionado == 0){
-                    node.setText("Cancelar Reserva");
-                    return 1;
-                }
-                else{
-                    node.setText("Reservado por mi");
-                    return 0;
-                }
+                break;
         }
+    }
+    
+    private void setTextOnContext(Button node, boolean[] hoveredState, int i){
+        if(node.getId().equals("buttonLibre")){
+            if(hoveredState[i]){
+                node.setText("Reservar");
+            }else{
+                node.setText("Libre");
+            }
+        }else if(node.getId().equals("buttonReservado")){
+            List<Booking> reservasDelDia = club.getCourtBookings(court.getName(), madeForDay); //obtiene las reservas del dia
+            Member miembro = null;
+            for(Booking reserva: reservasDelDia){ //recorre las reservas
+                if(reserva.getFromTime().equals(LocalTime.of(i+9, 0))){
+                    miembro = reserva.getMember();
+                    break;
+                }
+            }
+            if(hoveredState[i]){
+                node.setText(miembro.getNickName());  
+            }else{
+                node.setText("Ocupado Por: " + miembro.getNickName()); 
+            }
+        }else{
+            if(hoveredState[i]){
+                node.setText("Cancelar");
+            }else{
+                node.setText("Reservado");
+            }
+        }
+        hoveredState[i] = !hoveredState[i];
     }
 
     @FXML

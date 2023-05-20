@@ -23,9 +23,9 @@
 
 <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.FXMLDocumentController">
     <tabs>
-        <Tab fx:id="buttonMiPerfil" closable="false">
+        <Tab id="tabM" fx:id="miPerfilTab" closable="false" style="-fx-background-color: transpartent;">
          <content>
-            <BorderPane>
+            <BorderPane fx:id="miPerfilBorderPane">
                <center>
                   <VBox alignment="CENTER">
                      <children>
@@ -255,9 +255,9 @@
             </BorderPane>
          </content>
          <graphic>
-            <Button mnemonicParsing="false" onMouseClicked="#onButtonMiPerfil" text="Mi Perfil" />
+            <Button id="tabButton" fx:id="miPerfilButton" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onMouseClicked="#onButtonMiPerfil" stylesheets="@BaseStyleSheet.css" text="Mi Perfil" />
          </graphic></Tab>
-    <Tab fx:id="buttonMisreservas" closable="false">
+    <Tab closable="false" style="-fx-background-color: transpartent;">
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <top>
@@ -272,10 +272,10 @@
                </center></BorderPane>
          </content>
          <graphic>
-            <Button mnemonicParsing="false" onMouseClicked="#onButtonMisreservas" text="Mis Reservas" />
+            <Button fx:id="buttonMisreservas" mnemonicParsing="false" onMouseClicked="#onButtonMisreservas" text="Mis Reservas" />
          </graphic>
     </Tab>
-      <Tab fx:id="buttonPistas" closable="false">
+      <Tab closable="false">
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <top>
@@ -297,7 +297,7 @@
                      <content>
                         <HBox alignment="TOP_CENTER">
                            <children>
-                              <FlowPane fx:id="flowPane" columnHalignment="CENTER" prefWidth="1915.0" style="-fx-background-color: #000000;" />
+                              <FlowPane fx:id="flowPane" columnHalignment="CENTER" prefWidth="1915.0" />
                            </children>
                         </HBox>
                      </content>
@@ -308,7 +308,7 @@
                </center></BorderPane>
          </content>
          <graphic>
-            <Button fx:id="buttonPistasButton" mnemonicParsing="false" onMouseClicked="#onButtonPistas" text="Pistas" />
+            <Button fx:id="buttonPistas" mnemonicParsing="false" onMouseClicked="#onButtonPistas" text="Pistas" />
          </graphic>
       </Tab>
   </tabs>
