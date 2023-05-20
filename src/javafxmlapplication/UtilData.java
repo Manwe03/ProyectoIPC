@@ -59,6 +59,7 @@ public class UtilData {
         //FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
         //loader.load()
         scene = new Scene(FXMLLoader.load(getClass().getResource("FXMLDocument.fxml")));
+        scene.getStylesheets().add(getClass().getResource("BaseStyleSheet.css").toExternalForm());
         escenas.put("Main", scene);
         
         scene = new Scene(FXMLLoader.load(getClass().getResource("login/login.fxml")));
@@ -110,7 +111,7 @@ public class UtilData {
     /**Mueve un boton como si estuviera presionado
      * El estado: true = esta desplazado ; false = no esta desplazado
      */
-    public static int translatePressedButton(Node node, int estado){
+    public static byte translatePressedButton(Node node, byte estado){
         TranslateTransition translate = new TranslateTransition(Duration.millis(100));
         translate.setNode(node);              
         if(estado == 0){

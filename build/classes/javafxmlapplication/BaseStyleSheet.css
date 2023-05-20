@@ -67,6 +67,32 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: #00c210;
 }
 
+.tab {
+
+    -fx-pref-width: 250
+} 
+.tab-header-background {
+    -fx-background-color:transparent
+}
+
+.tab-pane{
+    -fx-padding: 0 -1 -1 -1
+}
+
+#tabButton{
+    -fx-background-color: #dbdbdb;
+    -fx-background-radius: 0 0 0 0;
+    
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 0 0 0 0;
+    -fx-border-width: 5;
+
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 0, 10, 3, 3);
+
+    -fx-font-family: Monospac821 BT;
+}
+
+
 #defaultHBox{
     -fx-background-color: #c4c4c4;
     -fx-border-width: 5 0 0 5;
