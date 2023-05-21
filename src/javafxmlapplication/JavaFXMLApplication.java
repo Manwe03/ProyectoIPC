@@ -6,9 +6,6 @@
 package javafxmlapplication;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -17,30 +14,15 @@ public class JavaFXMLApplication extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        //======================================================================
-        // 1- creación del grafo de escena a partir del fichero FXML
-        UtilData.getInstance().initialize(stage);
-        //FXMLLoader loader = new  FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
-        //Parent root = loader.load();
+        UtilData utilData = UtilData.getInstance();
         
-        //Scene scene = new Scene(UtilData.getInstance().escenas.get("Main"));
+        utilData.initialize(stage);
         
+        utilData.setDpi(Screen.getPrimary().getDpi());
         
-        //System.out.println(Screen.getPrimary().getDpi());
-        //======================================================================
-        // 3- asiganación de la escena al Stage que recibe el metodo 
-        //     - configuracion del stage
-        //     - se muestra el stage de manera no modal mediante el metodo show()
-        double dpi = Screen.getPrimary().getDpi();
-        
-        UtilData.getInstance().showScene("Main");
-        //stage.setScene(scene);
-        //stage.setHeight(dpi*7);
-        //stage.setWidth(dpi*10);
-        //stage.setMinHeight(dpi*6);
-        //stage.setMinWidth(dpi*7);
-        //stage.setTitle("GreenBall");
-        //stage.show();
+        utilData.showScene("Main");
+        utilData.getMainController().triggerOnPistasButton();
+  
     }
 
     /**

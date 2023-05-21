@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.login.LoginController">
+<BorderPane stylesheets="@../BaseStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.login.LoginController">
    <center>
       <VBox alignment="CENTER">
          <children>
@@ -32,16 +32,16 @@
                       <RowConstraints minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="50.0" prefHeight="55.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <PasswordField id="defaultInputBox" fx:id="contraseñaField" maxHeight="30.0" maxWidth="128.0" minHeight="30.0" minWidth="128.0" prefHeight="30.0" prefWidth="128.0" stylesheets="@../BaseStyleSheet.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                        <PasswordField id="defaultInputBox" fx:id="contraseñaField" maxHeight="30.0" maxWidth="128.0" minHeight="30.0" minWidth="128.0" prefHeight="30.0" prefWidth="128.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </PasswordField>
-                        <TextField id="defaultInputBox" fx:id="usuarioField" maxHeight="30.0" maxWidth="128.0" minHeight="30.0" minWidth="128.0" prefHeight="30.0" prefWidth="128.0" stylesheets="@../BaseStyleSheet.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                        <TextField id="defaultInputBox" fx:id="usuarioField" maxHeight="30.0" maxWidth="128.0" minHeight="30.0" minWidth="128.0" prefHeight="30.0" prefWidth="128.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -82,7 +82,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Button fx:id="login" defaultButton="true" mnemonicParsing="false" onAction="#intentoIniciarSesion" text="Iniciar sesión" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                        <Button id="buttonDeault" fx:id="login" defaultButton="true" mnemonicParsing="false" onAction="#intentoIniciarSesion" text="Iniciar sesión" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -92,7 +92,7 @@
                               <Font size="15.0" />
                            </font>
                         </TextField>
-                        <ToggleButton fx:id="mostrarButton" mnemonicParsing="false" onAction="#verContraseña" text="Mostrar" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                        <ToggleButton id="buttonDeault" fx:id="mostrarButton" mnemonicParsing="false" onAction="#verContraseña" text="Mostrar" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                            <GridPane.margin>
                               <Insets bottom="3.0" left="5.0" right="5.0" />
                            </GridPane.margin>
@@ -119,7 +119,7 @@
       <HBox prefHeight="50.0" BorderPane.alignment="CENTER">
          <children>
             <Pane HBox.hgrow="ALWAYS" />
-            <Button fx:id="menuButton" alignment="CENTER" mnemonicParsing="false" onAction="#onMenuButton" text="Menú Principal" HBox.hgrow="NEVER">
+            <Button id="buttonDeault" fx:id="menuButton" alignment="CENTER" mnemonicParsing="false" onAction="#onMenuButton" text="Menú Principal" HBox.hgrow="NEVER">
                <HBox.margin>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </HBox.margin>

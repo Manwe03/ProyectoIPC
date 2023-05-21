@@ -16,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafxmlapplication.FXMLDocumentController;
+import javafxmlapplication.UtilData;
+import javafxmlapplication.reservas.FXMLReservasController;
 import model.Booking;
 import model.Club;
 import model.ClubDAOException;
@@ -25,11 +27,11 @@ import model.ClubDAOException;
  *
  * @author manub
  */
-public class FXMLReservasController implements Initializable {
+public class FXMLReservasBoxController implements Initializable {
 
     Booking reserva;
     
-    FXMLDocumentController parentController;
+    FXMLReservasController parentController;
     
     @FXML
     private HBox r1;
@@ -44,15 +46,19 @@ public class FXMLReservasController implements Initializable {
     @FXML
     private Label pista;
     
+    private Club club;
+    private UtilData utilData;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        try {club = Club.getInstance();} catch (ClubDAOException | IOException ex) {}
+        this.utilData = UtilData.getInstance();
     }    
     
-    public void setData(Booking MIreserva, FXMLDocumentController parentController){
+    public void setData(Booking MIreserva, FXMLReservasController parentController){
         this.reserva = MIreserva;
         this.parentController = parentController;
         fechaL.setText(reserva.getMadeForDay().toString());
@@ -72,9 +78,9 @@ public class FXMLReservasController implements Initializable {
             Club.getInstance().removeBooking(this.reserva);
             parentController.updateMisReservas();
         } catch (ClubDAOException ex) {
-            Logger.getLogger(FXMLReservasController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLReservasBoxController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(FXMLReservasController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLReservasBoxController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
