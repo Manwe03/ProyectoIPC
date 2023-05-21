@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import model.Club;
 import model.ClubDAOException;
@@ -36,11 +37,11 @@ public class FXMLDocumentController implements Initializable {
     private Button reservasButton;
     @FXML
     private Button pistasButton;
-    @FXML
-    private Pane mainWindow;
 
     private Club club;
     private UtilData utilData;
+    @FXML
+    private StackPane mainStackPane;
     
     /**
      * Initializes the controller class.
@@ -67,8 +68,8 @@ public class FXMLDocumentController implements Initializable {
         }
         ////////////////////////////////////////////////////////////////////////
         
+        //mainBorderPane.maxWidthProperty().bind(ov);
         
-
     }    
 
     public void updateButtonText(){

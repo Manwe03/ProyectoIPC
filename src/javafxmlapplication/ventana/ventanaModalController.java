@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package javafxmlapplication.cuentaCreada;
+package javafxmlapplication.ventana;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,12 +20,14 @@ import javafxmlapplication.UtilData;
  *
  * @author Miquel
  */
-public class CuentaCreadaController implements Initializable {
+public class ventanaModalController implements Initializable {
 
     @FXML
     private Label labelFelicidades;
     @FXML
     private Button menuPrincipal;
+    @FXML
+    private Button iniciarSesion;
 
     /**
      * Initializes the controller class.
@@ -41,6 +43,10 @@ public class CuentaCreadaController implements Initializable {
         
         UtilData.getInstance().showScene("Main");
         
+    }
+
+    @FXML
+    private void aIniciarSesion(ActionEvent event) {
     }
     
 }

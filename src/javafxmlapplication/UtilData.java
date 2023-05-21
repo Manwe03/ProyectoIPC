@@ -81,13 +81,16 @@ public class UtilData {
         
         scene = new Scene(FXMLLoader.load(getClass().getResource("/javafxmlapplication/perfil/FXMLPerfil.fxml")));
         escenas.put("Perfil", scene);
+        
+        scene = new Scene(FXMLLoader.load(getClass().getResource("/javafxmlapplication/ventana/ventanaModal.fxml")));
+        escenas.put("Ventana", scene);
     }
     
     public void showScene(String nombre){
         Scene escena = escenas.get(nombre);
-        if(nombre == "Main"){//Una movida, si se carga main mostrar la pantalla de pistas no la otra, se ve que no hay manera de ponmer una tab default (no se)
-            //mainController.triggerOnButtonPistas();
+        if(nombre == "Main"){//nada de momento
         }
+        
         stage.setScene(escena);
         
         //String css = this.getClass().getResource("resources/BaseStyleSheet.css").toExternalForm();
