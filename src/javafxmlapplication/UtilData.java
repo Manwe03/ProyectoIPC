@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,6 +19,7 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafxmlapplication.perfil.FXMLPerfilController;
+import javafxmlapplication.pistaCalendario.FXMLpistaBoxController;
 import javafxmlapplication.pistas.FXMLPistasController;
 import javafxmlapplication.reservas.FXMLReservasController;
 import model.Club;
@@ -48,7 +50,11 @@ public class UtilData {
     
     private FXMLPistasController pistasController;
     
+    private FXMLpistaBoxController pistaBoxController;
+    
     public static HashMap<String,Scene> escenas = new HashMap<>();
+    
+    public int ventanaMode; //0:editardatos // 1:registrarse // 2:hacer reserva //3:nada //4: cancelar reserva
     
     Stage stage;
     
@@ -90,21 +96,17 @@ public class UtilData {
         Scene escena = escenas.get(nombre);
         if(nombre == "Main"){//nada de momento
         }
-        
+  
         stage.setScene(escena);
-        
-        //String css = this.getClass().getResource("resources/BaseStyleSheet.css").toExternalForm();
-        //String cssError = this.getClass().getResource("resources/ErrorFieldStyleSheet.css").toExternalForm();
-        
-        //escena.getStylesheets().add(css);
-        //escena.getStylesheets().addAll(css);
-        
+       
         stage.setHeight(dpi*7);
         stage.setWidth(dpi*10);
         stage.setMinHeight(dpi*6);
         stage.setMinWidth(dpi*7);
         stage.setTitle("GreenBall");
         stage.show();
+        
+        stage.centerOnScreen();
     }
     
     public boolean isLogged(){
@@ -157,6 +159,7 @@ public class UtilData {
     public FXMLReservasController getReservasController(){return this.reservasController;}
     public FXMLPerfilController getPerfilController(){return this.perfilController;}
     public FXMLPistasController getPistasController(){return this.pistasController;}
+    public FXMLpistaBoxController getPistaBoxController(){return this.pistaBoxController;}
     //SET
     public void setDpi(double dpi){this.dpi = dpi;}
     public void setLogin(String login){this.login = login;}
@@ -168,4 +171,5 @@ public class UtilData {
     public void setReservasController(FXMLReservasController reservasController){this.reservasController = reservasController;}
     public void setPerfilController(FXMLPerfilController perfilController){this.perfilController = perfilController;}
     public void setPistasController(FXMLPistasController pistasController){this.pistasController = pistasController;}
+    public void setPistaBoxController(FXMLpistaBoxController pistaBoxController){this.pistaBoxController = pistaBoxController;}
 }

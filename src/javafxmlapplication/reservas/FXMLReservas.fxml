@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.reservas.FXMLReservasController">
    <top>
       <Label fx:id="nombreUsuarioReservas" alignment="CENTER" contentDisplay="CENTER" prefHeight="63.0" prefWidth="413.0" text="Label" BorderPane.alignment="CENTER" />
@@ -13,7 +12,7 @@
    <center>
       <ScrollPane fx:id="misReservasScrollPane" BorderPane.alignment="CENTER">
          <content>
-            <VBox fx:id="misReservasContainer" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="1000.0" />
+            <VBox fx:id="misReservasContainer" alignment="TOP_CENTER" />
          </content>
       </ScrollPane>
    </center>

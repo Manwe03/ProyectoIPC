@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox fx:id="r1" alignment="CENTER" prefHeight="100.0" prefWidth="1280.0" spacing="50.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.misReservas.FXMLReservasBoxController">
+<HBox fx:id="r1" alignment="CENTER" maxHeight="100.0" minHeight="100.0" prefHeight="100.0" spacing="50.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.misReservas.FXMLReservasBoxController">
    <children>
       <Label fx:id="fechaL" text="Fecha" />
       <Label fx:id="horaL" text="Hora" />

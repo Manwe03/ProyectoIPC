@@ -51,6 +51,10 @@ public class FXMLReservasController implements Initializable {
         this.utilData = UtilData.getInstance();
         utilData.setReservasController(this);
         startReservas();
+        
+        misReservasContainer.maxWidthProperty().bind(misReservasScrollPane.widthProperty());
+        misReservasContainer.minWidthProperty().bind(misReservasScrollPane.widthProperty());
+        
     }
     
     public void startReservas(){
@@ -70,8 +74,6 @@ public class FXMLReservasController implements Initializable {
     }
 
     private void updateMisReservasVboxView(){
-        misReservasContainer.setMaxWidth(misReservasScrollPane.getWidth()-31);
-        misReservasContainer.setMinWidth(misReservasScrollPane.getWidth()-31);
         misReservasContainer.setMaxHeight(100 * Math.min(numReservas, 10)/*Multiplo de la cantidad de reservas*/);
         misReservasContainer.setMinHeight(100 * Math.min(numReservas, 10)/*Multiplo de la cantidad de reservas*/);
     } 

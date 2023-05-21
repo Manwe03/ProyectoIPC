@@ -6,6 +6,7 @@ package javafxmlapplication;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,11 +15,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import javafxmlapplication.perfil.FXMLPerfilController;
+import javafxmlapplication.pistaCalendario.FXMLpistaBoxController;
 import model.Club;
 import model.ClubDAOException;
 
@@ -42,6 +47,16 @@ public class FXMLDocumentController implements Initializable {
     private UtilData utilData;
     @FXML
     private StackPane mainStackPane;
+    @FXML
+    private Pane ventanaPane;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private Button iButton;
+    @FXML
+    private Button dButton;
+    @FXML
+    private Text infoLabel;
     
     /**
      * Initializes the controller class.
@@ -68,7 +83,11 @@ public class FXMLDocumentController implements Initializable {
         }
         ////////////////////////////////////////////////////////////////////////
         
-        //mainBorderPane.maxWidthProperty().bind(ov);
+        mainBorderPane.maxWidthProperty().bind(mainStackPane.widthProperty());
+        mainBorderPane.minWidthProperty().bind(mainStackPane.widthProperty());
+        
+        mainBorderPane.maxHeightProperty().bind(mainStackPane.heightProperty());
+        mainBorderPane.minHeightProperty().bind(mainStackPane.heightProperty());
         
     }    
 
@@ -80,6 +99,28 @@ public class FXMLDocumentController implements Initializable {
         }else{
             perfilButton.setText("Login");
         }
+    }
+    
+    public void showVentana(boolean show){
+        if(show){
+            ventanaPane.toFront();
+        }else{
+            ventanaPane.toBack();
+        }
+        mainBorderPane.setDisable(show);
+        ventanaPane.setDisable(!show);
+    }
+    public void setVentanaInfo(String titulo, String texto){
+        iButton.setVisible(false);
+        dButton.setVisible(true);
+        titleLabel.setText(titulo);
+        infoLabel.setText(texto);
+    }
+    public void setVentanaConfirmar(String titulo, String texto){
+        iButton.setVisible(true);
+        iButton.setVisible(true);
+        titleLabel.setText(titulo);
+        infoLabel.setText(texto);
     }
     
     public void triggerOnPerfilButton() {
@@ -128,5 +169,42 @@ public class FXMLDocumentController implements Initializable {
         reservasButton.setId("buttonDeault");
         pistasButton.setId("buttonTabSelected");
         updateButtonText();
+    }
+
+    @FXML
+    private void onIButton(ActionEvent event) {
+        showVentana(false);//quita la ventana modal
+    }
+
+    @FXML
+    private void onDButton(ActionEvent event) {
+        
+        switch(utilData.ventanaMode){
+            case 0:
+                FXMLPerfilController controller = utilData.getPerfilController();
+                controller.editarDatos();
+                controller.removeContraseñaField();
+            break;
+            case 1:
+                utilData.showScene("Login");
+            break;
+            case 2:
+                FXMLpistaBoxController pistaController = utilData.getPistaBoxController();
+                pistaController.safeRegisterBooking(LocalDateTime.now(), utilData.getSelectedDate());
+            break;
+            case 3:    
+            break;
+            case 4:
+                FXMLpistaBoxController pistaController2 = utilData.getPistaBoxController();
+                try {
+                    club.removeBooking(pistaController2.reservaCancel);
+                } catch (ClubDAOException ex) {Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);}
+                pistaController2.updateButtonState();
+            break;
+
+                
+                
+        }
+        showVentana(false);//quita la ventana modal
     }
 }
