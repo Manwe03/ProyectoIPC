@@ -37,7 +37,7 @@ import model.Member;
  *
  * @author manub
  */
-public class FXMLpistaCController implements Initializable {
+public class FXMLpistaBoxController implements Initializable {
 
     private Court court; //pista
     
@@ -95,7 +95,8 @@ public class FXMLpistaCController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Pone el tamaño de los botones con respecto a los puntos por pulgada
-        utilData = UtilData.getInstance();
+        try {club = Club.getInstance();} catch (ClubDAOException | IOException ex) {}
+        this.utilData = UtilData.getInstance();
         
         utilData.setSize_DPI(offsetPane,0.2,0.15);
         utilData.setSize_DPI(gridPane,3.7,7);
@@ -104,7 +105,7 @@ public class FXMLpistaCController implements Initializable {
         try {
             club = Club.getInstance();
         } catch (ClubDAOException | IOException ex) {
-            Logger.getLogger(FXMLpistaCController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLpistaBoxController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
        
@@ -305,7 +306,7 @@ public class FXMLpistaCController implements Initializable {
                         }
                     }
                 } catch (ClubDAOException | IOException ex) {
-                    Logger.getLogger(FXMLpistaCController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FXMLpistaBoxController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             break;
         }

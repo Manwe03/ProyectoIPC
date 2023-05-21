@@ -7,13 +7,10 @@ package javafxmlapplication.login;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.AccessibleRole;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,7 +21,6 @@ import javafx.util.Duration;
 import javafxmlapplication.UtilData;
 import model.Club;
 import model.ClubDAOException;
-import model.Member;
 
 /**
  * FXML Controller class
@@ -55,12 +51,10 @@ public class LoginController  implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        try {club = Club.getInstance();} catch (ClubDAOException | IOException ex) {}
         this.utilData = UtilData.getInstance();
-        try {
-            this.club = Club.getInstance();
-        } catch (ClubDAOException | IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         contraseñaField.textProperty().bindBidirectional(temporaryTextField.textProperty()); 
         usuarioField.textProperty().addListener((observable,oldVal,newVal)-> { 
             usuarioField.setId("defaultInputBox");
@@ -81,7 +75,7 @@ public class LoginController  implements Initializable{
     private void irARegistro(ActionEvent event) {
         utilData.showScene("Main");
         utilData.setRegistrarse(true);
-        utilData.getMainController().triggerOnMiPerfil();
+        utilData.getPerfilController().startPerfil();
         
     }
 
@@ -107,12 +101,13 @@ public class LoginController  implements Initializable{
                 contraseñaField.setEditable(false);
                 menuButton.setDisable(true);
                 login.setDisable(true);
-                
+                //System.out.println("He pasado por login");
                 PauseTransition pause = new PauseTransition(Duration.millis(300));
                 pause.setOnFinished(pauseEvent -> {                
                     utilData.setLogin(usuarioField.getText());
                     utilData.setPassword(contraseñaField.getText());
                     utilData.showScene("Main");
+                    utilData.getMainController().triggerOnPistasButton();
                 });
                 pause.play();
                 ((Button)event.getSource()).getScene().setCursor(Cursor.HAND);
@@ -135,7 +130,8 @@ public class LoginController  implements Initializable{
 
     @FXML
     private void onMenuButton(ActionEvent event) {
-        UtilData.getInstance().showScene("Main");
+        utilData.showScene("Main");
+        utilData.getMainController().triggerOnPistasButton();
     }
     
 }

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="gridPane" stylesheets="@../BaseStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.pistaCalendario.FXMLpistaCController">
+<GridPane fx:id="gridPane" stylesheets="@../BaseStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.pistaCalendario.FXMLpistaBoxController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />

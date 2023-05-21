@@ -17,6 +17,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafxmlapplication.perfil.FXMLPerfilController;
+import javafxmlapplication.pistas.FXMLPistasController;
+import javafxmlapplication.reservas.FXMLReservasController;
 import model.Club;
 import model.ClubDAOException;
 
@@ -38,6 +41,12 @@ public class UtilData {
     private boolean registrarse;    //un boolean de si el usuario quiere o no registrarse, se utiliza para saber si hay que mandarlo a login o a register cuando se pulsa MiPerfil
     
     private FXMLDocumentController mainController;
+    
+    private FXMLPerfilController perfilController;
+    
+    private FXMLReservasController reservasController;
+    
+    private FXMLPistasController pistasController;
     
     public static HashMap<String,Scene> escenas = new HashMap<>();
     
@@ -61,17 +70,23 @@ public class UtilData {
         scene = new Scene(FXMLLoader.load(getClass().getResource("FXMLDocument.fxml")));
         escenas.put("Main", scene);
         
-        scene = new Scene(FXMLLoader.load(getClass().getResource("login/login.fxml")));
+        scene = new Scene(FXMLLoader.load(getClass().getResource("/javafxmlapplication/login/login.fxml")));
         escenas.put("Login", scene);
         
-        scene = new Scene(FXMLLoader.load(getClass().getResource("register/register.fxml")));
-        escenas.put("Register", scene);
+        scene = new Scene(FXMLLoader.load(getClass().getResource("/javafxmlapplication/pistas/FXMLPistas.fxml")));
+        escenas.put("Pistas", scene);
+        
+        scene = new Scene(FXMLLoader.load(getClass().getResource("/javafxmlapplication/reservas/FXMLReservas.fxml")));
+        escenas.put("Reservas", scene);
+        
+        scene = new Scene(FXMLLoader.load(getClass().getResource("/javafxmlapplication/perfil/FXMLPerfil.fxml")));
+        escenas.put("Perfil", scene);
     }
     
     public void showScene(String nombre){
         Scene escena = escenas.get(nombre);
         if(nombre == "Main"){//Una movida, si se carga main mostrar la pantalla de pistas no la otra, se ve que no hay manera de ponmer una tab default (no se)
-            mainController.triggerOnButtonPistas();
+            //mainController.triggerOnButtonPistas();
         }
         stage.setScene(escena);
         
@@ -92,6 +107,8 @@ public class UtilData {
     public boolean isLogged(){
         try {
             Club.getInstance().getMemberByCredentials(this.login, this.password);
+            System.out.println(this.login);
+            System.out.println(this.password);
             return true;
         } catch (NullPointerException elBicho){
             return false;
@@ -131,13 +148,21 @@ public class UtilData {
     public String getPassword(){return this.password;}
     public LocalDate getSelectedDate(){return this.selectedDate;}
     public Stage getStage() {return this.stage;}
-    public FXMLDocumentController getMainController(){return this.mainController;}
     public boolean getRegistrarse(){return this.registrarse;}
+    
+    public FXMLDocumentController getMainController(){return this.mainController;}
+    public FXMLReservasController getReservasController(){return this.reservasController;}
+    public FXMLPerfilController getPerfilController(){return this.perfilController;}
+    public FXMLPistasController getPistasController(){return this.pistasController;}
     //SET
     public void setDpi(double dpi){this.dpi = dpi;}
     public void setLogin(String login){this.login = login;}
     public void setPassword(String password){this.password = password;}
     public void setSelectedDate(LocalDate selectedDate){this.selectedDate = selectedDate;}
-    public void setMainController(FXMLDocumentController mainController){this.mainController = mainController;}
     public void setRegistrarse(boolean registrarse){this.registrarse = registrarse;}
+    
+    public void setMainController(FXMLDocumentController mainController){this.mainController = mainController;}
+    public void setReservasController(FXMLReservasController reservasController){this.reservasController = reservasController;}
+    public void setPerfilController(FXMLPerfilController perfilController){this.perfilController = perfilController;}
+    public void setPistasController(FXMLPistasController pistasController){this.pistasController = pistasController;}
 }

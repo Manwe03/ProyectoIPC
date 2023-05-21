@@ -16,6 +16,30 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-border-width: 3;
     
 }
+#buttonDeault{
+    -fx-background-color: #dbdbdb;
+    -fx-background-radius: 0 0 0 0;
+    
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 0 0 0 0;
+    -fx-border-width: 5;
+
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 0, 10, 3, 3);
+}
+#buttonDeault:default{
+    -fx-background-color: #ccefff;
+}
+#buttonDeault:hover{
+    -fx-background-color: #e1ffdd;
+}
+#buttonDeault:active{
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 0, 10, 0, 0);
+}
+#buttonDeault:disabled{
+    -fx-opacity: 60%;
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 0, 10, 0, 0);
+}
+
 #buttonLibre{
     -fx-background-color: #dbdbdb;
     -fx-background-radius: 0 0 0 0;
