@@ -9,6 +9,8 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.sun.javafx.util.Utils;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -16,7 +18,9 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import javafxmlapplication.perfil.FXMLPerfilController;
 import javafxmlapplication.pistaCalendario.FXMLpistaBoxController;
@@ -96,7 +100,7 @@ public class UtilData {
         Scene escena = escenas.get(nombre);
         if(nombre == "Main"){//nada de momento
         }
-  
+
         stage.setScene(escena);
        
         stage.setHeight(dpi*7);
