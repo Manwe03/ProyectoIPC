@@ -71,6 +71,16 @@ public class FXMLDocumentController implements Initializable {
 
     }    
 
+    public void updateButtonText(){
+        if(utilData.getRegistrarse()){
+            perfilButton.setText("Registrarse");
+        }else if(utilData.isLogged()){
+            perfilButton.setText("Perfil");
+        }else{
+            perfilButton.setText("Login");
+        }
+    }
+    
     public void triggerOnPerfilButton() {
         onPerfilButton(new ActionEvent(this, perfilButton));
         perfilButton.requestFocus();
@@ -81,6 +91,10 @@ public class FXMLDocumentController implements Initializable {
         mainBorderPane.setCenter(null);
         mainBorderPane.setCenter(escena.getRoot());
         utilData.getPerfilController().startPerfil();
+        perfilButton.setId("buttonTabSelected");
+        reservasButton.setId("buttonDeault");
+        pistasButton.setId("buttonDeault");
+        updateButtonText();
     }
     
     public void triggerOnReservasButton(){
@@ -93,6 +107,10 @@ public class FXMLDocumentController implements Initializable {
         mainBorderPane.setCenter(null);
         mainBorderPane.setCenter(escena.getRoot());
         utilData.getReservasController().startReservas();
+        perfilButton.setId("buttonDeault");
+        reservasButton.setId("buttonTabSelected");
+        pistasButton.setId("buttonDeault");
+        updateButtonText();
     }
     
     public void triggerOnPistasButton(){
@@ -105,5 +123,9 @@ public class FXMLDocumentController implements Initializable {
         mainBorderPane.setCenter(null);
         mainBorderPane.setCenter(escena.getRoot());
         utilData.getPistasController().startPistas();
+        perfilButton.setId("buttonDeault");
+        reservasButton.setId("buttonDeault");
+        pistasButton.setId("buttonTabSelected");
+        updateButtonText();
     }
 }

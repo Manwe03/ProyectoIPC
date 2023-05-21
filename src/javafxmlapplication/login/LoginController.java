@@ -76,7 +76,7 @@ public class LoginController  implements Initializable{
         utilData.showScene("Main");
         utilData.setRegistrarse(true);
         utilData.getPerfilController().startPerfil();
-        
+        utilData.getMainController().updateButtonText();
     }
 
     @FXML
