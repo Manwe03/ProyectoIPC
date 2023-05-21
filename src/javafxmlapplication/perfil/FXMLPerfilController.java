@@ -294,7 +294,12 @@ public class FXMLPerfilController implements Initializable {
             nickField.setDisable(true);
         }
     }
-        
+    
+    public void removeContraseñaField(){
+        contraseñaField.setText("");
+        repetirContraseñaField.setText("");
+    }
+    
     @FXML
     private void onButtonLogin(ActionEvent event) {
         utilData.setRegistrarse(false);
@@ -305,14 +310,25 @@ public class FXMLPerfilController implements Initializable {
     private void onGuardarCambiosButton(ActionEvent event) {
         if(utilData.isLogged()){    //si esta loguedo, quiere editar
             comprobarFieldsVacios(6);
-            editarDatos();
-            contraseñaField.setText("");
-            repetirContraseñaField.setText("");
+            
+            if(!nombreErrorLabel.isVisible() && !apellidosErrorLabel.isVisible() && !telefonoErrorLabel.isVisible() 
+            && !nickErrorLabel.isVisible() && !contraseñaErrorLabel.isVisible() && !repetirContraseñaErrorLabel.isVisible() 
+            && !numTarjetaErrorLabel.isVisible() && !svcErrorLabel.isVisible()){
+                
+                utilData.ventanaMode = 0;//modo editar datos, es necesario para que la ventana modal sepa que hacer
+                utilData.getMainController().showVentana(true);
+                utilData.getMainController().setVentanaConfirmar("Editar", "Estas seguro de que quieres cambiar la información de tu perfil?");
+            }
         }else{                      //si NO esta loguedo, quiere registrarse
             comprobarFieldsVacios(6);//comprueba si te has dejado algo, en el caso de que todo este vacio esto es en seguro
+            
             registrarse();
             contraseñaField.setText("");
             repetirContraseñaField.setText("");
+            
+            utilData.ventanaMode = 1;//modo registrarse, es necesario para que la ventana modal sepa que hacer
+            utilData.getMainController().showVentana(true);
+            utilData.getMainController().setVentanaInfo("Felicidades", "Tu cuenta ha sido creada");
         }  
     }
 
@@ -406,7 +422,7 @@ public class FXMLPerfilController implements Initializable {
                 utilData.setPassword(contraseñaField.getText());
                 utilData.setLogin(nickField.getText());
                 
-                utilData.showScene("Login");
+                
             } catch (ClubDAOException ex) {
                 //Cosas chungas no se puede crear
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -415,7 +431,7 @@ public class FXMLPerfilController implements Initializable {
             //no se puede registrar
         }
     }
-    private void editarDatos(){
+    public void editarDatos(){
         if(!nombreErrorLabel.isVisible() && !apellidosErrorLabel.isVisible() && !telefonoErrorLabel.isVisible() 
             && !nickErrorLabel.isVisible() && !contraseñaErrorLabel.isVisible() && !repetirContraseñaErrorLabel.isVisible() 
             && !numTarjetaErrorLabel.isVisible() && !svcErrorLabel.isVisible()){    //comprueba si hay errores

@@ -78,7 +78,13 @@ public class FXMLpistaBoxController implements Initializable {
     private static byte[] reservaState;
     private static boolean[] hoveredState;
     
+    int numButton;
+    
     UtilData utilData;
+    
+    FXMLDocumentController mainController;
+    
+    public Booking reservaCancel;//reserva a cancelar
     
     @FXML
     private VBox hourVBox;
@@ -98,18 +104,12 @@ public class FXMLpistaBoxController implements Initializable {
         try {club = Club.getInstance();} catch (ClubDAOException | IOException ex) {}
         this.utilData = UtilData.getInstance();
         
+        mainController = utilData.getMainController();
+        
         utilData.setSize_DPI(offsetPane,0.2,0.15);
         utilData.setSize_DPI(gridPane,3.7,7);
         hourVBox.setSpacing(utilData.getDpi()*0.264);
-        
-        try {
-            club = Club.getInstance();
-        } catch (ClubDAOException | IOException ex) {
-            Logger.getLogger(FXMLpistaBoxController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-       
-        
+
         pressedState = new byte[13]; // 0 posicion normal // 1 animacion activa
         reservaState = new byte[13]; // 0 libre // 1 reservado // 2 reservado por mi
         hoveredState = new boolean[13];
@@ -118,6 +118,7 @@ public class FXMLpistaBoxController implements Initializable {
             reservaState[i] = 0;
             hoveredState[i] = false;
         }
+        
         //inicia el tamaño del label con respecto a la escala
         //pistaLabel.setFont(Font.font("system", FontWeight.NORMAL, FontPosture.REGULAR, utilData.getDpi()*0.2));
         
@@ -167,7 +168,7 @@ public class FXMLpistaBoxController implements Initializable {
         b_19.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_19,hoveredState,10); });
         b_20.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_20,hoveredState,11); });
         b_21.hoverProperty().addListener((observable,oldVal,newVal)-> { setTextOnContext(b_21,hoveredState,12); });
-        
+
     }    
 
     public void setData(Court court,LocalDate madeForDay){
@@ -175,11 +176,36 @@ public class FXMLpistaBoxController implements Initializable {
         this.madeForDay = madeForDay;
         updateButtonState();
         pistaLabel.setText(court.getName());
-        
         updateButtonsText();
+        
+        ////////////////////////////////////////////////////////////////////////
+        //Desactivar las horas en el pasado
+        ////////////////////////////////////////////////////////////////////////
+        if(madeForDay.equals(LocalDate.now())){//si esta pista_box es de hoy
+            disableReservasEnElPasado(b_09,9);
+            disableReservasEnElPasado(b_10,10);
+            disableReservasEnElPasado(b_11,11);
+            disableReservasEnElPasado(b_12,12);
+            disableReservasEnElPasado(b_13,13);
+            disableReservasEnElPasado(b_14,14);
+            disableReservasEnElPasado(b_15,15);
+            disableReservasEnElPasado(b_16,16);
+            disableReservasEnElPasado(b_17,17);
+            disableReservasEnElPasado(b_18,18);
+            disableReservasEnElPasado(b_19,19);
+            disableReservasEnElPasado(b_20,20);
+            disableReservasEnElPasado(b_21,21);
+        }
+        
     }
     
-    private void updateButtonState(){ 
+    private void disableReservasEnElPasado(Button boton, int hora){
+        if(hora <= LocalTime.now().getHour()){
+            boton.setDisable(true);
+        }
+    }
+    
+    public void updateButtonState(){ 
         //0 = no reservado || 1 = reservado || 2 = reservado por mi
         List<Booking> reservasDelDia = club.getCourtBookings(court.getName(), madeForDay); //obtiene las reservas del dia
         for(int i = 0; i < 13; i++){
@@ -238,10 +264,13 @@ public class FXMLpistaBoxController implements Initializable {
     }
     
     /**Hace la reserva. Devuelve true si se puede hacer la reserva false si no.*/
-    private boolean safeRegisterBooking(LocalDateTime bookingDate, LocalDate madeForDay, LocalTime fromHour, boolean paid, Court court, Member member){
+    public boolean safeRegisterBooking(LocalDateTime bookingDate, LocalDate madeForDay){
+        Member member = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword());//obtiene el miembro logeado actualmente
+        boolean paid = member.checkHasCreditInfo();
         try {
             List<Booking> reservasDelDia = Club.getInstance().getCourtBookings(court.getName(), madeForDay); //obtiene las reservas del dia
             Boolean reservaDuplicada = false;
+            LocalTime fromHour = LocalTime.of(numButton,0);//obtiene la hora de la reserva
             for(Booking reserva: reservasDelDia){ //recorre las reservas buscando una con la misma hora que la que queremos reservar
                 if(reserva.getFromTime().equals(fromHour)){ //si existe una, no se reserva y devuelve un fallo
                     reservaDuplicada = true;
@@ -251,6 +280,8 @@ public class FXMLpistaBoxController implements Initializable {
             if(!reservaDuplicada){ //si se puede reservar a esa hora es dicir no hay una reserva a la misma hora, hace la reserva
                 Club.getInstance().registerBooking(bookingDate, madeForDay, fromHour, paid, court, member);
                 System.out.println("Reserva Exitosa");
+                updateButtonState();
+                //updateButtonsText();
                 return true;//exito
             }
             else{   //si no se puede hacer la reserva
@@ -264,20 +295,46 @@ public class FXMLpistaBoxController implements Initializable {
         return false;//fallo
     }
     
-    private void onCalendarButtons(int numButton){
+    private void onCalendarButtons(){
         //Button button = (Button) event.getSource();//obtiene el boton sobre el que se a realizado el evento
         //int numButton = Integer.parseInt( button.getId().substring(2, 4));
+        utilData.setPistaBoxController(this);
+        updateButtonState();
         Member member;
         switch (reservaState[numButton-9]) {
             case 0: //si no esta reservada
                 //System.out.println("Libre");
                 if(utilData.isLogged()){//si estas loggeado -> Reservar
-                    member = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword());//obtiene el miembro logeado actualmente
-                    if(member != null){
-                        LocalTime fromtime = LocalTime.of(numButton,0);//obtiene la hora de la reserva
-                        safeRegisterBooking(LocalDateTime.now(), utilData.getSelectedDate(), fromtime , member.checkHasCreditInfo(), court, member);//intenta registrar una reserva
-                        updateButtonState();
+                    ////////////////////////////////////////////////////////////
+                    //Comprobar que no hay 3 reservas seguidas
+                    boolean reservable = true;
+                    if(numButton-9 <= 1){       //esta al principio [ ][ ][0]...
+                        if(reservaState[numButton-8] == 2 && reservaState[numButton-7] == 2){   //miro dos por delante [][][0][#][#]
+                            reservable = false;
+                        }
                     }
+                    else if(numButton-9 >= 11){ //esta al final ...[0][ ][ ]
+                        if(reservaState[numButton-10] == 2 && reservaState[numButton-11] == 2){ //miro dos por detras [#][#][0][][]
+                            reservable = false;
+                        }
+                    }else{                      //si esta en el medio miro ambos lados
+                        if((reservaState[numButton-8] == 2 && reservaState[numButton-7] == 2) || (reservaState[numButton-10] == 2 && reservaState[numButton-11] == 2)){   //miro dos por delante [][][0][#][#]
+                            reservable = false;
+                        }
+                    }
+                    if(!reservable){//si no es reservable no se reserva informar al usuario
+                        utilData.ventanaMode = 3;//modo de la ventana para que no haga nada
+                        mainController.showVentana(true);//enseña la ventana
+                        mainController.setVentanaInfo("Error", "No se puede reservar mas de dos horas seguidas una pista");
+                        break;
+                    }
+                    //mandarlo a la ventana
+                    utilData.setPistaBoxController(this);//guarda el controlador para que la ventana modal sepa donde ejecutar el register
+                    utilData.ventanaMode = 2;//modo de la ventana
+                    mainController.showVentana(true);//enseña la ventana
+                    //pone la información de la ventana
+                    mainController.setVentanaConfirmar("Reservar pista", "¿Estas seguro de reservar una pista?\nLas reservas solo se pueden cancelar con mas de 24H de antelación");
+
                 }else{//si no estas loggeado -> Notificar
                     utilData.showScene("Login");
                 }
@@ -288,21 +345,37 @@ public class FXMLpistaBoxController implements Initializable {
                 updateButtonState();
             break;
             case 2: //si esta reservada por ti
-                if(!utilData.isLogged()){break;}//Se verifica que estes logeado por si acaso
+                if(!utilData.isLogged()){break;}//Se verifica que estes logueado por si acaso
                 
                 List<Booking> reservasDelDia; 
                 try {
                     reservasDelDia = Club.getInstance().getCourtBookings(court.getName(), madeForDay);
                     LocalTime fromtime = LocalTime.of(numButton,0);//obtiene la hora de la reserva
-                    Booking reserva;
-                    for(int i = 0; i<reservasDelDia.size();i++){
-                        //System.out.println("Reservada por ti");
-                        reserva = reservasDelDia.get(i);
-                        if(reserva.getFromTime().equals(fromtime)){
-                            club.removeBooking(reserva);
-                            updateButtonState();
-                            System.out.println("Reserva cancelada");
-                            break;
+                    
+                    if(LocalDate.now().equals(madeForDay)){//si se quiere cancelar una reserva para hoy, no se permite
+                        utilData.ventanaMode = 3;//nada
+                        mainController.showVentana(true);
+                        mainController.setVentanaInfo("No se puede cancelar la Reserva", "No se pueden cancelar reservas con menos de 24H de antelación");
+                    }
+                    else if(LocalDate.now().plusDays(1).equals(madeForDay) && (fromtime.compareTo(LocalTime.now()) < 0)){//si es para mañana y la reserva tiene una fecha posterior a la hora actual
+                        utilData.ventanaMode = 3;//nada
+                        mainController.showVentana(true);
+                        mainController.setVentanaInfo("No se puede cancelar la Reserva", "No se pueden cancelar reservas con menos de 24H de antelación");
+                        System.out.println("NO se puede cancelar ##########################");
+                    }
+                    else{
+                        for(int i = 0; i<reservasDelDia.size();i++){
+                            if(reservasDelDia.get(i).getFromTime().equals(fromtime)){
+                                reservaCancel = reservasDelDia.get(i); //poner la reserva que hay que cancelar
+
+                                utilData.ventanaMode = 4;//modo cancelar reserva
+                                mainController.showVentana(true);
+                                mainController.setVentanaConfirmar("Cancelar Reserva", "¿Estas seguro de que quieres cancelar tu reserva?");
+                                /////////////////////////////////////////////////////////////////////////////////////
+
+                                System.out.println("Reserva cancelada");
+                                break;
+                            }
                         }
                     }
                 } catch (ClubDAOException | IOException ex) {
@@ -364,66 +437,79 @@ public class FXMLpistaBoxController implements Initializable {
 
     @FXML
     private void OnB_09(ActionEvent event) {
-        onCalendarButtons(9);
+        numButton = 9;
+        onCalendarButtons();
     }
 
     @FXML
     private void onB_10(ActionEvent event) {
-        onCalendarButtons(10);
+        numButton = 10;
+        onCalendarButtons();
     }
 
     @FXML
     private void onB_11(ActionEvent event) {
-        onCalendarButtons(11);
+        numButton = 11;
+        onCalendarButtons();
     }
 
     @FXML
     private void onB_12(ActionEvent event) {
-        onCalendarButtons(12);
+        numButton = 12;
+        onCalendarButtons();
     }
 
     @FXML
     private void onB_13(ActionEvent event) {
-        onCalendarButtons(13);
+        numButton = 13;
+        onCalendarButtons();
     }
 
     @FXML
     private void onB_14(ActionEvent event) {
-        onCalendarButtons(14);
+        numButton = 14;
+        onCalendarButtons();
     }
 
     @FXML
     private void onB_15(ActionEvent event) {
-        onCalendarButtons(15);
+        numButton = 15;
+        onCalendarButtons();
     }
 
     @FXML
     private void onB_16(ActionEvent event) {
-        onCalendarButtons(16);
+        numButton = 16;
+        onCalendarButtons();
     }
 
     @FXML
     private void onB_17(ActionEvent event) {
-        onCalendarButtons(17);
+        numButton = 17;
+        onCalendarButtons();
     }
 
     @FXML
     private void onB_18(ActionEvent event) {
-        onCalendarButtons(18);
+        numButton = 18;
+        onCalendarButtons();
     }
 
     @FXML
     private void onB_19(ActionEvent event) {
-        onCalendarButtons(19);
+        numButton = 19;
+        onCalendarButtons();
     }
 
     @FXML
     private void onB_20(ActionEvent event) {
-        onCalendarButtons(20);
+        numButton = 20;
+        onCalendarButtons();
     }
 
     @FXML
     private void onB_21(ActionEvent event) {
-        onCalendarButtons(21);
+        numButton = 21;
+        onCalendarButtons();
     }
 }
