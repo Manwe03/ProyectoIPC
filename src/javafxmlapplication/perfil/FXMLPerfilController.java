@@ -306,9 +306,13 @@ public class FXMLPerfilController implements Initializable {
         if(utilData.isLogged()){    //si esta loguedo, quiere editar
             comprobarFieldsVacios(6);
             editarDatos();
+            contraseñaField.setText("");
+            repetirContraseñaField.setText("");
         }else{                      //si NO esta loguedo, quiere registrarse
             comprobarFieldsVacios(6);//comprueba si te has dejado algo, en el caso de que todo este vacio esto es en seguro
             registrarse();
+            contraseñaField.setText("");
+            repetirContraseñaField.setText("");
         }  
     }
 
@@ -318,8 +322,10 @@ public class FXMLPerfilController implements Initializable {
         cancelarCambiosButton.setVisible(false);
         perfilEditarButton.setDisable(false);
         hideErrorLabels();
-        updateMiPerfilLabelsInfo();
+        
         perfilEditMode(false);
+        contraseñaField.setText("");
+        repetirContraseñaField.setText("");
     }
 
     @FXML
@@ -396,7 +402,11 @@ public class FXMLPerfilController implements Initializable {
                 perfilEditarButton.setDisable(false);
                 utilData.setRegistrarse(false);
                 perfilEditMode(false);
-                //triggerOnMiPerfil(); modificar
+                
+                utilData.setPassword(contraseñaField.getText());
+                utilData.setLogin(nickField.getText());
+                
+                utilData.showScene("Login");
             } catch (ClubDAOException ex) {
                 //Cosas chungas no se puede crear
                 Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -416,13 +426,22 @@ public class FXMLPerfilController implements Initializable {
             miembro.setSurname(apellidosField.getText());
             miembro.setTelephone(telefonoField.getText());
             miembro.setPassword(contraseñaField.getText());
-            miembro.setCreditCard(numTarjetaField.getText());
-            if(!"".equals(svcField.getText())){
-                miembro.setSvc(Integer.parseInt(svcField.getText()));
+            if(numTarjetaField.getText().isBlank() || svcField.getText().isBlank()){
+                
+            }else{
+                miembro.setCreditCard(numTarjetaField.getText());
+                if(!"".equals(svcField.getText())){
+                    miembro.setSvc(Integer.parseInt(svcField.getText()));
+                }
             }
+            
+            
+            utilData.setPassword(contraseñaField.getText());
+            
             guardarCambiosButton.setVisible(false);
             cancelarCambiosButton.setVisible(false);
             perfilEditarButton.setDisable(false);
+            
             perfilEditMode(false);
         }
     }
@@ -431,13 +450,18 @@ public class FXMLPerfilController implements Initializable {
     private void updateMiPerfilLabelsInfo() {
         if(utilData.isLogged()){//Si estas logueado
             Member member = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword());
+            if(member == null){
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                utilData.getLogin();
+                utilData.getPassword();
+            }
             nombreField.setText(member.getName());
             apellidosField.setText(member.getSurname());
             telefonoField.setText(member.getTelephone());
             nickField.setText(member.getNickName());
             if(member.checkHasCreditInfo()){
                 String creditcard = member.getCreditCard();
-                numTarjetaField.setPromptText("------------" + creditcard.substring(creditcard.length()-4,creditcard.length()));
+                numTarjetaField.setPromptText("#######" + creditcard.substring(creditcard.length()-4,creditcard.length()));
                 svcField.setPromptText("###");
             }else{
                 numTarjetaField.setPromptText("");
@@ -452,6 +476,7 @@ public class FXMLPerfilController implements Initializable {
     
     /**cambia entre modo edición y modo vista normal*/
     private void perfilEditMode(boolean edit){
+        contraseñaLabel.setVisible(edit);
         repetirContraseñaLabel.setVisible(edit);
         numTarjetaLabel.setVisible(edit);
         svcLabel.setVisible(edit);
@@ -459,18 +484,14 @@ public class FXMLPerfilController implements Initializable {
         nombreField.setDisable(!edit);
         apellidosField.setDisable(!edit);
         telefonoField.setDisable(!edit);
-        //nickField.setDisable(!edit); quitar seguramente
-        contraseñaField.setDisable(!edit);
+        
+        contraseñaField.setVisible(edit);
+        
         repetirContraseñaField.setVisible(edit);
         numTarjetaField.setVisible(edit);
         svcField.setVisible(edit); 
         miPerfilOpcionalLabel.setVisible(edit);
-        if(edit){
-            contraseñaField.setText("");
-        }else{
-            contraseñaField.setText("00000000000");
-        }
-        //miPerfilSeparator.setVisible(edit);
+        
     }
     /**Oculta las labels de error*/
     private void hideErrorLabels(){

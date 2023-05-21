@@ -40,6 +40,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 0, 10, 0, 0);
 }
 
+#buttonTabSelected{
+    -fx-background-color: #009e08;
+    -fx-background-radius: 0 0 0 0;
+    
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 0 0 0 0;
+    -fx-border-width: 5;
+
+    -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 0, 10, 3, 3);
+}
+
 #buttonLibre{
     -fx-background-color: #dbdbdb;
     -fx-background-radius: 0 0 0 0;
