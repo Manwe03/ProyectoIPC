@@ -32,9 +32,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 #buttonDeault:hover{
     -fx-background-color: #e1ffdd;
 }
-#buttonDeault:selected{
-    -fx-background-color: #21c400;
-}
 #buttonDeault:active{
     -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 0, 10, 0, 0);
 }
