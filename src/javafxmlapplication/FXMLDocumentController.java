@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,6 +21,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafxmlapplication.perfil.FXMLPerfilController;
@@ -57,6 +59,8 @@ public class FXMLDocumentController implements Initializable {
     private Button dButton;
     @FXML
     private Text infoLabel;
+    @FXML
+    private VBox ventanaHbox;
     
     /**
      * Initializes the controller class.
@@ -72,9 +76,14 @@ public class FXMLDocumentController implements Initializable {
         ////////////////////////////////////////////////////////////////////////
         try {
             club.setInitialData(); //Resetea la base de datos al iniciar
-            //club.addSimpleData();
+            club.addSimpleData();
             
-            club.registerMember("Fernando", "Alonso", "99999999", "1", "1", "0000000000000000", 000, null); //registra un miembro de prueba
+            club.registerMember("Fernando", "Alonso", "99999999", "pepe", "0", "0000000000000000", 000, null); //registra un miembro de prueba
+            //club.registerMember("Fernando", "Alonso", "99999999", "papo", "0", "0000000000000000", 000, null); //registra un miembro de prueba
+            //club.registerMember("Fernando", "Alonso", "99999999", "antonio", "0", "0000000000000000", 000, null); //registra un miembro de prueba
+            //club.registerMember("Fernando", "Alonso", "99999999", "yiyi", "0", "0000000000000000", 000, null); //registra un miembro de prueba
+            //club.registerMember("Fernando", "Alonso", "99999999", "jovani", "0", "0000000000000000", 000, null); //registra un miembro de prueba
+            //club.registerMember("Fernando", "Alonso", "99999999", "skipy", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //utilData.setLogin("1");
             //utilData.setPassword("1");
             
@@ -101,6 +110,11 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
+    ////Como usar la ventana modal esta loca :)/////////////////////////////////
+    //1) setVentanaInfo(String titulo, String texto) o setVentanaConfirmar(String titulo, String texto)
+    //2) ventanaAddNode() tantos como quieras
+    //3) showVentana()
+    ////////////////////////////////////////////////////////////////////////////
     public void showVentana(boolean show){
         if(show){
             ventanaPane.toFront();
@@ -110,19 +124,23 @@ public class FXMLDocumentController implements Initializable {
         mainBorderPane.setDisable(show);
         ventanaPane.setDisable(!show);
     }
-    public void setVentanaInfo(String titulo, String texto){
+    public void setVentanaInfo(String titulo){
         iButton.setVisible(false);
         dButton.setVisible(true);
         titleLabel.setText(titulo);
-        infoLabel.setText(texto);
+        ventanaHbox.getChildren().clear();
     }
-    public void setVentanaConfirmar(String titulo, String texto){
+    public void setVentanaConfirmar(String titulo){
         iButton.setVisible(true);
         iButton.setVisible(true);
         titleLabel.setText(titulo);
-        infoLabel.setText(texto);
+        ventanaHbox.getChildren().clear();
+    }
+    public void ventanaAddNode(Node nodo){
+        ventanaHbox.getChildren().add(nodo);
     }
     
+    /**ejecuta onPerfilButton como si se hubiera presionado, usado para llamarlo desde otra clase*/
     public void triggerOnPerfilButton() {
         onPerfilButton(new ActionEvent(this, perfilButton));
         perfilButton.requestFocus();
@@ -139,6 +157,7 @@ public class FXMLDocumentController implements Initializable {
         updateButtonText();
     }
     
+    /**ejecuta onReservasButton como si se hubiera presionado, usado para llamarlo desde otra clase*/
     public void triggerOnReservasButton(){
         onReservasButton(new ActionEvent(this, reservasButton));
         reservasButton.requestFocus();
@@ -155,6 +174,7 @@ public class FXMLDocumentController implements Initializable {
         updateButtonText();
     }
     
+    /**ejecuta onPistasButton como si se hubiera presionado, usado para llamarlo desde otra clase*/
     public void triggerOnPistasButton(){
         onPistasButton(new ActionEvent(this, pistasButton));
         pistasButton.requestFocus();
@@ -170,31 +190,35 @@ public class FXMLDocumentController implements Initializable {
         pistasButton.setId("buttonTabSelected");
         updateButtonText();
     }
-
+    
+    /**Boton de cancelar de la ventana modal custom*/
     @FXML
     private void onIButton(ActionEvent event) {
         showVentana(false);//quita la ventana modal
     }
 
+    /**Boton de aceptar de la ventana modal custom
+     * filtra lo que tiene que hacer dependiendo de ventanaMode
+     */
     @FXML
     private void onDButton(ActionEvent event) {
         
         switch(utilData.ventanaMode){
-            case 0:
+            case 0: //0:editardatos 
                 FXMLPerfilController controller = utilData.getPerfilController();
                 controller.editarDatos();
                 controller.removeContraseñaField();
             break;
-            case 1:
+            case 1: // 1:registrarse
                 utilData.showScene("Login");
             break;
-            case 2:
+            case 2: // 2:hacer reserva 
                 FXMLpistaBoxController pistaController = utilData.getPistaBoxController();
                 pistaController.safeRegisterBooking(LocalDateTime.now(), utilData.getSelectedDate());
             break;
-            case 3:    
+            case 3: //3:nada 
             break;
-            case 4:
+            case 4: //4: cancelar reserva
                 FXMLpistaBoxController pistaController2 = utilData.getPistaBoxController();
                 try {
                     club.removeBooking(pistaController2.reservaCancel);

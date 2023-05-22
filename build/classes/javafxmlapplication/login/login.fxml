@@ -75,7 +75,7 @@
                               <Insets bottom="3.0" left="5.0" right="5.0" />
                            </GridPane.margin>
                         </ToggleButton>
-                        <Label focusTraversable="false" prefHeight="30.0" text="Usuario:" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                        <Label fx:id="usuarioLabel" focusTraversable="false" prefHeight="30.0" text="Usuario" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -86,7 +86,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" prefHeight="30.0" text="Contraseña:" textOverrun="CLIP" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
+                        <Label fx:id="contraseñaLabel" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" prefHeight="30.0" text="Contraseña" textOverrun="CLIP" GridPane.hgrow="NEVER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
