@@ -98,19 +98,15 @@ public class UtilData {
     
     public void showScene(String nombre){
         Scene escena = escenas.get(nombre);
-        if(nombre == "Main"){//nada de momento
-        }
 
         stage.setScene(escena);
-       
-        stage.setHeight(dpi*7);
-        stage.setWidth(dpi*10);
+        
         stage.setMinHeight(dpi*6);
         stage.setMinWidth(dpi*7);
         stage.setTitle("GreenBall");
         stage.show();
         
-        stage.centerOnScreen();
+        //stage.centerOnScreen();
     }
     
     public boolean isLogged(){

@@ -8,10 +8,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.PauseTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -48,14 +50,25 @@ public class LoginController  implements Initializable{
     private ToggleButton mostrarButton;
     @FXML
     private Label contraseñaErrorLabel;
+    @FXML
+    private Label usuarioLabel;
+    @FXML
+    private Label contraseñaLabel;
     
+    private boolean usuarioLabelR;
+    private boolean contraseñaLabelR;
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         try {club = Club.getInstance();} catch (ClubDAOException | IOException ex) {}
         this.utilData = UtilData.getInstance();
         
-        contraseñaField.textProperty().bindBidirectional(temporaryTextField.textProperty()); 
+        usuarioField.focusedProperty().addListener((observable,oldVal,newVal)-> { usuarioLabelR = moveLabelIntoBorder(usuarioLabel,usuarioLabelR);});
+        contraseñaField.focusedProperty().addListener((observable,oldVal,newVal)-> { contraseñaLabelR = moveLabelIntoBorder(contraseñaLabel,contraseñaLabelR);});
+        
+        contraseñaField.textProperty().bindBidirectional(temporaryTextField.textProperty());
+        
         usuarioField.textProperty().addListener((observable,oldVal,newVal)-> { 
             usuarioField.setId("defaultInputBox");
             contraseñaErrorLabel.setVisible(false);
@@ -134,4 +147,15 @@ public class LoginController  implements Initializable{
         utilData.getMainController().triggerOnPistasButton();
     }
     
+    private boolean moveLabelIntoBorder(Node nodo, boolean estado){
+        TranslateTransition translate = new TranslateTransition(Duration.millis(100));
+        translate.setNode(nodo);              
+        if(estado){
+           translate.setToX(0);
+        }else{
+           translate.setToX(8);
+        }
+        translate.play();
+        return !estado;
+    }
 }

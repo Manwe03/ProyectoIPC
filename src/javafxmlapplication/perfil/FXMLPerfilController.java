@@ -24,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -127,6 +128,10 @@ public class FXMLPerfilController implements Initializable {
     
     private Club club;
     private UtilData utilData;
+    @FXML
+    private TextField contraseñaFieldV;
+    @FXML
+    private ToggleButton mostrarContraseñaButton;
     
     /**
      * Initializes the controller class.
@@ -137,6 +142,11 @@ public class FXMLPerfilController implements Initializable {
         try {club = Club.getInstance();} catch (ClubDAOException | IOException ex) {}
         this.utilData = UtilData.getInstance();
         utilData.setPerfilController(this);
+        
+        contraseñaField.textProperty().bindBidirectional(contraseñaFieldV.textProperty());
+
+        mostrarContraseñaButton.visibleProperty().bind(contraseñaField.visibleProperty().or(contraseñaFieldV.visibleProperty()));
+        
         
         //LISTENERS para las animaciones de las labels en MiPerfil
         nombreField.focusedProperty().addListener((observable,oldVal,newVal)-> { nombreLabelUp = moveLabelIntoBorder(nombreLabel,nombreLabelUp);});
@@ -273,6 +283,8 @@ public class FXMLPerfilController implements Initializable {
             if(utilData.getRegistrarse()){//si quiere registrarse es decir a pasado por la pantalla de login
                 hideErrorLabels();
                 perfilEditMode(true);
+                contraseñaField.setVisible(true);
+                contraseñaFieldV.setVisible(false);
                 perfilEditarButton.setDisable(true);
                 guardarCambiosButton.setVisible(true);
                 cancelarCambiosButton.setVisible(true);
@@ -286,6 +298,8 @@ public class FXMLPerfilController implements Initializable {
             updateMiPerfilLabelsInfo();
             hideErrorLabels();
             perfilEditMode(false);
+            contraseñaField.setVisible(false);
+            contraseñaFieldV.setVisible(false);
             perfilEditarButton.setDisable(false);
             guardarCambiosButton.setVisible(false);
             cancelarCambiosButton.setDisable(false);
@@ -310,25 +324,31 @@ public class FXMLPerfilController implements Initializable {
     private void onGuardarCambiosButton(ActionEvent event) {
         if(utilData.isLogged()){    //si esta loguedo, quiere editar
             comprobarFieldsVacios(6);
-            
             if(!nombreErrorLabel.isVisible() && !apellidosErrorLabel.isVisible() && !telefonoErrorLabel.isVisible() 
             && !nickErrorLabel.isVisible() && !contraseñaErrorLabel.isVisible() && !repetirContraseñaErrorLabel.isVisible() 
             && !numTarjetaErrorLabel.isVisible() && !svcErrorLabel.isVisible()){
                 
                 utilData.ventanaMode = 0;//modo editar datos, es necesario para que la ventana modal sepa que hacer
                 utilData.getMainController().showVentana(true);
-                utilData.getMainController().setVentanaConfirmar("Editar", "Estas seguro de que quieres cambiar la información de tu perfil?");
+                utilData.getMainController().setVentanaConfirmar("Editar");
+                utilData.getMainController().ventanaAddNode(new Label("Estas seguro de que quieres cambiar la información de tu perfil?"));
             }
         }else{                      //si NO esta loguedo, quiere registrarse
-            comprobarFieldsVacios(6);//comprueba si te has dejado algo, en el caso de que todo este vacio esto es en seguro
-            
-            registrarse();
-            contraseñaField.setText("");
-            repetirContraseñaField.setText("");
-            
-            utilData.ventanaMode = 1;//modo registrarse, es necesario para que la ventana modal sepa que hacer
-            utilData.getMainController().showVentana(true);
-            utilData.getMainController().setVentanaInfo("Felicidades", "Tu cuenta ha sido creada");
+            comprobarFieldsVacios(6);
+            if(!nombreErrorLabel.isVisible() && !apellidosErrorLabel.isVisible() && !telefonoErrorLabel.isVisible() 
+            && !nickErrorLabel.isVisible() && !contraseñaErrorLabel.isVisible() && !repetirContraseñaErrorLabel.isVisible() 
+            && !numTarjetaErrorLabel.isVisible() && !svcErrorLabel.isVisible()){
+                comprobarFieldsVacios(6);//comprueba si te has dejado algo, en el caso de que todo este vacio esto es en seguro
+
+                registrarse();
+                contraseñaField.setText("");
+                repetirContraseñaField.setText("");
+
+                utilData.ventanaMode = 1;//modo registrarse, es necesario para que la ventana modal sepa que hacer
+                utilData.getMainController().showVentana(true);
+                utilData.getMainController().setVentanaInfo("Felicidades");
+                utilData.getMainController().ventanaAddNode(new Label("Tu cuenta ha sido creada"));
+            }
         }  
     }
 
@@ -349,6 +369,8 @@ public class FXMLPerfilController implements Initializable {
         hideErrorLabels();
         perfilEditMode(true);
         
+        contraseñaField.setVisible(true);
+        contraseñaFieldV.setVisible(false);
         guardarCambiosButton.setVisible(true);
         cancelarCambiosButton.setVisible(true);
         perfilEditarButton.setDisable(true);
@@ -466,11 +488,7 @@ public class FXMLPerfilController implements Initializable {
     private void updateMiPerfilLabelsInfo() {
         if(utilData.isLogged()){//Si estas logueado
             Member member = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword());
-            if(member == null){
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                utilData.getLogin();
-                utilData.getPassword();
-            }
+            
             nombreField.setText(member.getName());
             apellidosField.setText(member.getSurname());
             telefonoField.setText(member.getTelephone());
@@ -484,6 +502,7 @@ public class FXMLPerfilController implements Initializable {
                 svcField.setPromptText("");
             }
             contraseñaField.setText("");
+            contraseñaFieldV.setText("");
             repetirContraseñaField.setText("");
             numTarjetaField.setText("");
             svcField.setText("");      
@@ -502,6 +521,7 @@ public class FXMLPerfilController implements Initializable {
         telefonoField.setDisable(!edit);
         
         contraseñaField.setVisible(edit);
+        contraseñaFieldV.setVisible(edit);
         
         repetirContraseñaField.setVisible(edit);
         numTarjetaField.setVisible(edit);
@@ -549,5 +569,10 @@ public class FXMLPerfilController implements Initializable {
             }
         });
     }
-    
+
+    @FXML
+    private void onMostrarContraseñaButton(ActionEvent event) {
+        contraseñaField.setVisible(!contraseñaField.isVisible());
+        contraseñaFieldV.setVisible(!contraseñaFieldV.isVisible());
+    }
 }

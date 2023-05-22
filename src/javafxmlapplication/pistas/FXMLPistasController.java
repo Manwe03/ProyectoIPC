@@ -8,7 +8,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.SortedSet;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -17,15 +20,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafxmlapplication.FXMLDocumentController;
 import javafxmlapplication.UtilData;
 import javafxmlapplication.pistaCalendario.FXMLpistaBoxController;
+import model.Booking;
 import model.Club;
 import model.ClubDAOException;
+import model.Member;
 
 /**
  * FXML Controller class
@@ -44,13 +54,23 @@ public class FXMLPistasController implements Initializable {
     private ScrollPane scrollPane;
     @FXML
     private FlowPane flowPane;
+
     
     DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/mm/yyyy");
     DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("hh:mm:ss");
     
     private Club club;
     private UtilData utilData;
+    List<Member> miembros;
+    
+    private AutoCompleteTextField buscadorTextField;
+    
+    @FXML
+    private HBox barraPistas;
+    @FXML
+    private VBox buscadorContainer;
 
+    
     /**
      * Initializes the controller class.
      */
@@ -71,18 +91,22 @@ public class FXMLPistasController implements Initializable {
             updatePistasView();
         });
         
+        //buscadorComboBox.getT
+        //updateBuscador(String nombreKey)
+        
+        
         dpBookingDay.setValue(LocalDate.now());
         
         scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
         
         utilData.setSelectedDate(dpBookingDay.getValue());
         
-        
-        
+                
         startPistas();
     }    
 
     public void startPistas(){
+        miembros = club.getMembers();
         dpBookingDay.setDayCellFactory((DatePicker picker) -> {//Desabilita los dias en el pasado en el datPicker
             return new DateCell() {
                 @Override
@@ -95,6 +119,7 @@ public class FXMLPistasController implements Initializable {
         });
         updatePistasView(); //se encarga de actualizar la vista
         updateFlowPane();
+        updateBuscador();
         utilData.setRegistrarse(false);//Siempre que salga de MiPerfil poner registrarse a false
     }
             
@@ -135,7 +160,21 @@ public class FXMLPistasController implements Initializable {
         
         antButton.setDisable(dpBookingDay.getValue().isEqual(LocalDate.now()));//desabilita el boton de ir al dia anterior si estas en el dia actual
     }
-
+    /**Añade al combo box todos los miembros*/
+    private void updateBuscador(){
+        //buscadorComboBox.getItems().clear(); //elimina los elemnetos de la combobox
+        buscadorTextField = new AutoCompleteTextField();
+        buscadorTextField.maxWidth(113);
+        buscadorTextField.minWidth(113);
+        
+        buscadorContainer.getChildren().clear();
+        buscadorContainer.getChildren().add(buscadorTextField);
+        
+        for(Member miembro: miembros){ //recorre los miembros del club
+            buscadorTextField.getEntries().add(miembro.getNickName());
+        }
+    }
+    
     @FXML
     private void onAntButton(ActionEvent event) {
         dpBookingDay.setValue(dpBookingDay.getValue().minusDays(1));
@@ -144,6 +183,20 @@ public class FXMLPistasController implements Initializable {
     @FXML
     private void onPosButton(ActionEvent event) {
         dpBookingDay.setValue(dpBookingDay.getValue().plusDays(1));
+    }
+
+    @FXML
+    private void onBuscarButton(ActionEvent event) {
+        utilData.ventanaMode = 3;//modo nada
+        //hay que comprobar primero que el nickname existe
+        List<Booking> reservas = club.getUserBookings(buscadorTextField.getText());//obtiene las reservas de una persona
+        utilData.getMainController().setVentanaInfo("Reservas hoy de " + buscadorTextField.getText());
+        for(Booking reserva: reservas){
+            if(reserva.getMadeForDay().equals(LocalDate.now())){
+                utilData.getMainController().ventanaAddNode(new Label(reserva.getCourt().getName() + " reservada a las " + reserva.getFromTime()));//nuevo string con la informacion de la reserva
+            }
+        }   
+        utilData.getMainController().showVentana(true);
     }
     
 }
