@@ -190,16 +190,21 @@ public class FXMLPistasController implements Initializable {
     }
 
     @FXML
-    private void onBuscarButton(ActionEvent event) {
+    private void onBuscarButton(ActionEvent event) throws ClubDAOException, IOException {
         utilData.ventanaMode = 3;//modo nada
         //hay que comprobar primero que el nickname existe
-        List<Booking> reservas = club.getUserBookings(buscadorTextField.getText());//obtiene las reservas de una persona
-        utilData.getMainController().setVentanaInfo("Reservas hoy de " + buscadorTextField.getText());
-        for(Booking reserva: reservas){
-            if(reserva.getMadeForDay().equals(LocalDate.now())){
-                utilData.getMainController().ventanaAddNode(new Label(reserva.getCourt().getName() + " reservada a las " + reserva.getFromTime()));//nuevo string con la informacion de la reserva
+        if(!Club.getInstance().existsLogin(buscadorTextField.getText())) {
+            utilData.getMainController().setVentanaInfo("Reservas de hoy de " + buscadorTextField.getText());
+            utilData.getMainController().ventanaAddNode(new Label("El usuario " + buscadorTextField.getText() + " no existe"));
+        } else {        
+            List<Booking> reservas = club.getUserBookings(buscadorTextField.getText());//obtiene las reservas de una persona
+            utilData.getMainController().setVentanaInfo("Reservas de hoy de " + buscadorTextField.getText());
+            for(Booking reserva: reservas){
+                if(reserva.getMadeForDay().equals(LocalDate.now())){
+                    utilData.getMainController().ventanaAddNode(new Label(reserva.getCourt().getName() + " reservada a las " + reserva.getFromTime()));//nuevo string con la informacion de la reserva
+                }
             }
-        }   
+        }
         utilData.getMainController().showVentana(true);
     }
     

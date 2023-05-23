@@ -428,7 +428,7 @@ public class FXMLpistaBoxController implements Initializable {
             }
         }else{
             if(hoveredState[i]){
-                node.setText("Cancelar");
+                node.setText("Cancelar Reserva");
             }else{
                 node.setText("Reservado");
             }
