@@ -24,6 +24,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
+import javafxmlapplication.misReservas.FXMLReservasBoxController;
 import javafxmlapplication.perfil.FXMLPerfilController;
 import javafxmlapplication.pistaCalendario.FXMLpistaBoxController;
 import model.Club;
@@ -225,6 +226,12 @@ public class FXMLDocumentController implements Initializable {
                 } catch (ClubDAOException ex) {Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);}
                 pistaController2.updateButtonState();
             break;
+            case 5: //5: confirmar pagar con la tarjeta
+                FXMLReservasBoxController reservasBoxController = utilData.getReservasBoxController();
+                utilData.getReservasBoxController().cambiarPagarAPagado();
+                
+                
+            break;    
 
                 
                 

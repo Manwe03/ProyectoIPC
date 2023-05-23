@@ -22,6 +22,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import javafxmlapplication.misReservas.FXMLReservasBoxController;
 import javafxmlapplication.perfil.FXMLPerfilController;
 import javafxmlapplication.pistaCalendario.FXMLpistaBoxController;
 import javafxmlapplication.pistas.FXMLPistasController;
@@ -55,6 +56,8 @@ public class UtilData {
     private FXMLPistasController pistasController;
     
     private FXMLpistaBoxController pistaBoxController;
+    
+    private FXMLReservasBoxController reservasBoxController;
     
     public static HashMap<String,Scene> escenas = new HashMap<>();
     
@@ -160,6 +163,7 @@ public class UtilData {
     public FXMLPerfilController getPerfilController(){return this.perfilController;}
     public FXMLPistasController getPistasController(){return this.pistasController;}
     public FXMLpistaBoxController getPistaBoxController(){return this.pistaBoxController;}
+    public FXMLReservasBoxController getReservasBoxController(){return this.reservasBoxController;}
     //SET
     public void setDpi(double dpi){this.dpi = dpi;}
     public void setLogin(String login){this.login = login;}
@@ -172,4 +176,5 @@ public class UtilData {
     public void setPerfilController(FXMLPerfilController perfilController){this.perfilController = perfilController;}
     public void setPistasController(FXMLPistasController pistasController){this.pistasController = pistasController;}
     public void setPistaBoxController(FXMLpistaBoxController pistaBoxController){this.pistaBoxController = pistaBoxController;}
+    public void setReservasBoxController(FXMLReservasBoxController reservasBoxController){this.reservasBoxController = reservasBoxController;}
 }
