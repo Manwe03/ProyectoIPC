@@ -7,6 +7,7 @@ package javafxmlapplication.misReservas;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -68,6 +69,13 @@ public class FXMLReservasBoxController implements Initializable {
     
     @FXML
     private void onPagar(ActionEvent event) throws ClubDAOException, IOException {
+        if(Club.getInstance().hasCreditCard(utilData.getLogin())) {            
+            utilData.setReservasBoxController(this);            
+            utilData.getMainController().setVentanaConfirmar("¿Pagar con tarjeta xxxx-xxxx-xxxx-" + Club.getInstance().getMemberByCredentials(utilData.getLogin(), utilData.getPassword()).getCreditCard().substring(12) + "?");
+            utilData.getMainController().showVentana(true);
+        } else { //registrar la tarjeta de crédito
+            
+        }
         System.out.println("pagado");
     }
 
@@ -82,6 +90,13 @@ public class FXMLReservasBoxController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLReservasBoxController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void cambiarPagarAPagado() {
+        pagarB.setText("Pagado");
+        pagarB.setDisable(true);
+        this.reserva.setPaid(true);
+        System.out.println("Pagar -> Pagado");
     }
     
 }
