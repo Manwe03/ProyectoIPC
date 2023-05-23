@@ -92,8 +92,8 @@ public class UtilData {
         scene = new Scene(FXMLLoader.load(getClass().getResource("/javafxmlapplication/perfil/FXMLPerfil.fxml")));
         escenas.put("Perfil", scene);
         
-        scene = new Scene(FXMLLoader.load(getClass().getResource("/javafxmlapplication/ventana/ventanaModal.fxml")));
-        escenas.put("Ventana", scene);
+        //scene = new Scene(FXMLLoader.load(getClass().getResource("/javafxmlapplication/ventana/ventanaModal.fxml")));
+        //escenas.put("Ventana", scene);
     }
     
     public void showScene(String nombre){
