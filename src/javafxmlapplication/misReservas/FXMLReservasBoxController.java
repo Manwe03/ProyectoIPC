@@ -72,10 +72,12 @@ public class FXMLReservasBoxController implements Initializable {
         if(Club.getInstance().hasCreditCard(utilData.getLogin())) {            
             utilData.setReservasBoxController(this);            
             utilData.getMainController().setVentanaConfirmar("¿Pagar con tarjeta xxxx-xxxx-xxxx-" + Club.getInstance().getMemberByCredentials(utilData.getLogin(), utilData.getPassword()).getCreditCard().substring(12) + "?");
-            utilData.getMainController().showVentana(true);
+            
         } else { //registrar la tarjeta de crédito
+            utilData.getMainController().setVentanaInfo("Añadir tarjeta de crédito");
             
         }
+        utilData.getMainController().showVentana(true);
         System.out.println("pagado");
     }
 
