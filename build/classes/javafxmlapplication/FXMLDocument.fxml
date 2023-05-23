@@ -46,7 +46,7 @@
          <center>
             <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" BorderPane.alignment="CENTER">
                <content>
-                  <VBox fx:id="ventanaHbox" alignment="TOP_CENTER" spacing="10.0">
+                  <VBox fx:id="ventanaVbox" alignment="TOP_CENTER" spacing="10.0">
                      <children>
                         <Text fx:id="infoLabel" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="¡Felicidades! La cuenta ha sido creada con éxito" />
                      </children>

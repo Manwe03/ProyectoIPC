@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="769ee8bf-fb41-401a-98b8-cce6081c5999" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="015a5ca8-03e6-4e98-a79a-3aef7d4ac766" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../build/built-jar.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../build/built-jar.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/.netbeans_automatic_build" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/.netbeans_update_resources" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/BaseStyleSheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/BaseStyleSheet.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/FXMLDocument.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/FXMLDocument.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/FXMLDocumentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/FXMLDocumentController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/JavaFXMLApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/JavaFXMLApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/UtilData.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/UtilData.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/cuentaCreada/cuentaCreada.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/login/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/login/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/misReservas/FXMLMisReservas.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/misReservas/FXMLReservas.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/misReservas/FXMLReservasBoxController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/misReservas/FXMLReservasBoxController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/perfil/FXMLPerfilController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/perfil/FXMLPerfilController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/perfil/FXMLPerfilController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/perfil/FXMLPerfilController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistaCalendario/FXMLpistaBoxController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistaCalendario/FXMLpistaBoxController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistaCalendario/FXMLpistaC.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistas/AutoCompleteTextField$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistas/AutoCompleteTextField$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistas/AutoCompleteTextField$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistas/AutoCompleteTextField$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistas/AutoCompleteTextField$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistas/AutoCompleteTextField$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistas/AutoCompleteTextField.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistas/AutoCompleteTextField.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistas/FXMLPistasController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistas/FXMLPistasController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistas/FXMLPistasController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/pistas/FXMLPistasController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/register/register.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/reservas/FXMLReservasController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../build/classes/javafxmlapplication/reservas/FXMLReservasController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/classes/javafxmlapplication/ventana/ventanaModal.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../club.db" beforeDir="false" afterPath="$PROJECT_DIR$/../club.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javafxmlapplication/BaseStyleSheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/javafxmlapplication/BaseStyleSheet.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javafxmlapplication/FXMLDocument.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/javafxmlapplication/FXMLDocument.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javafxmlapplication/FXMLDocumentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/javafxmlapplication/FXMLDocumentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javafxmlapplication/pistas/FXMLPistasController.java" beforeDir="false" afterPath="$PROJECT_DIR$/javafxmlapplication/pistas/FXMLPistasController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -10,38 +45,40 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$/.." value="Miquel33" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectId" id="2Q9Lgww9vkkdEDCeAQjwJLS3Cqq" />
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$PROJECT_DIR$/../../SDK/javafx-sdk-17.0.7/lib/javafx.graphics.jar!/javafx/stage/Window.class" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectId" id="2Q7LijJgMaZbrlLyIARi2JUra1I" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;Manuel&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/manub/Documents/GitHub/ProyectoIPC/src&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Git/SDK/javafx-sdk-17.0.7/lib/javafx.web.jar&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="769ee8bf-fb41-401a-98b8-cce6081c5999" name="Changes" comment="" />
-      <created>1684760965869</created>
+      <changelist id="015a5ca8-03e6-4e98-a79a-3aef7d4ac766" name="Changes" comment="" />
+      <created>1684699801294</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1684760965869</updated>
+      <updated>1684699801294</updated>
     </task>
     <servers />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

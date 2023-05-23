@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,16 +24,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
-import javafxmlapplication.misReservas.FXMLReservasBoxController;
+import javafx.scene.text.TextAlignment;
+import javafxmlapplication.miniTarjeta.MiniTarjetaController;
 import javafxmlapplication.perfil.FXMLPerfilController;
 import javafxmlapplication.pistaCalendario.FXMLpistaBoxController;
 import model.Club;
 import model.ClubDAOException;
+import model.Member;
 
 /**
  * FXML Controller class
@@ -64,8 +66,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Text infoLabel;
     @FXML
-    private VBox ventanaHbox;
-    
+    private VBox ventanaVbox;
+
     /**
      * Initializes the controller class.
      */
@@ -80,7 +82,7 @@ public class FXMLDocumentController implements Initializable {
         ////////////////////////////////////////////////////////////////////////
         try {
             club.setInitialData(); //Resetea la base de datos al iniciar
-            club.addSimpleData();
+            //club.addSimpleData();
             
             club.registerMember("Fernando", "Alonso", "99999999", "0", "0", "", 0, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "papo", "0", "0000000000000000", 000, null); //registra un miembro de prueba
@@ -88,13 +90,14 @@ public class FXMLDocumentController implements Initializable {
             //club.registerMember("Fernando", "Alonso", "99999999", "yiyi", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "jovani", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "skipy", "0", "0000000000000000", 000, null); //registra un miembro de prueba
-            //utilData.setLogin("1");
-            //utilData.setPassword("1");
+            //utilData.setLogin("0");
+            //utilData.setPassword("0");
             
         } catch (ClubDAOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         ////////////////////////////////////////////////////////////////////////
+
         
         mainBorderPane.maxWidthProperty().bind(mainStackPane.widthProperty());
         mainBorderPane.minWidthProperty().bind(mainStackPane.widthProperty());
@@ -132,16 +135,20 @@ public class FXMLDocumentController implements Initializable {
         iButton.setVisible(false);
         dButton.setVisible(true);
         titleLabel.setText(titulo);
-        ventanaHbox.getChildren().clear();
+        ventanaVbox.getChildren().clear();
+        ventanaVbox.setSpacing(0);
+        ventanaVbox.setAlignment(Pos.TOP_CENTER);
     }
     public void setVentanaConfirmar(String titulo){
         iButton.setVisible(true);
         iButton.setVisible(true);
         titleLabel.setText(titulo);
-        ventanaHbox.getChildren().clear();
+        ventanaVbox.getChildren().clear();
+        ventanaVbox.setSpacing(0);
+        ventanaVbox.setAlignment(Pos.TOP_CENTER);
     }
     public void ventanaAddNode(Node nodo){
-        ventanaHbox.getChildren().add(nodo);
+        ventanaVbox.getChildren().add(nodo);
     }
     
     /**ejecuta onPerfilButton como si se hubiera presionado, usado para llamarlo desde otra clase*/
@@ -229,28 +236,27 @@ public class FXMLDocumentController implements Initializable {
                 } catch (ClubDAOException ex) {Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);}
                 pistaController2.updateButtonState();
             break;
-            case 5: // 5: confirmar pagar con la tarjeta
-                System.out.println("aSfgdsfljkahgkdafh");
-                
-                //utilData.getReservasBoxController().cambiarPagarAPagado();
+            case 5: // 5: registrar y confirmar pagar con la tarjeta
+                MiniTarjetaController miniTarjeta = utilData.getMiniTarjetaController();
+                if(miniTarjeta.svcErrorLabelIsVisible() || miniTarjeta.numTarjetaErrorLabelIsVisible() || miniTarjeta.getNumTarjetaField().getText().isBlank() || miniTarjeta.getSvcField().getText().isBlank()){return;}//si hay alguna label no se hace nada, no se cierra la ventana
+                Member memeber = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword());
+                memeber.setCreditCard(utilData.getMiniTarjetaController().getNumTarjetaField().getText().toString());
+                memeber.setSvc(Integer.parseInt(utilData.getMiniTarjetaController().getSvcField().getText()));
+                utilData.getReservasBoxController().reserva.setPaid(true);   //poner esta reserva como pagada
+                utilData.getReservasController().startReservas();   //actualizar
             break;    
-
-                
-                
+            case 6: // 6: confirmar pagar con tajeta
+                utilData.getReservasBoxController().reserva.setPaid(true);
+                utilData.getReservasController().startReservas();   //actualizar
+            break;
+            case 7:
+                try {
+                    club.removeBooking(utilData.getReservasBoxController().reserva); //elimina la reserva
+                    utilData.getReservasController().updateMisReservas();   //actualiza la vista de reservas
+                } catch (ClubDAOException | IOException ex) {} 
+            break;
         }
         showVentana(false);//quita la ventana modal
     }
     
-    public void createTarjetaFormulario(){
-        HBox hbox = new HBox();
-        hbox.setAlignment(Pos.CENTER);
-        hbox.setMaxHeight(20);
-        hbox.setMinHeight(20);
-        hbox.setMaxWidth(100);
-        hbox.setMinWidth(100);
-        hbox.getChildren().add(new Label("Tarjeta"));
-        hbox.getChildren().add(new TextField());
-        ventanaHbox.getChildren().add(hbox);
-        showVentana(true);
-    }
 }

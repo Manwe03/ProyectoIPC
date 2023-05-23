@@ -226,16 +226,18 @@ public class FXMLPerfilController implements Initializable {
             clearErrorLabels(5);
         });
         numTarjetaField.textProperty().addListener((observable,oldVal,newVal)-> { 
-            //Solo permite introducir numeros
-            numTarjetaErrorLabel.setVisible(false);
-                
+            if(newVal.length() < 16 && newVal.length() != 0){
+                numTarjetaErrorLabel.setVisible(true);
+            }else{
+                numTarjetaErrorLabel.setVisible(false);
+            }
             if(!"".equals(newVal)){
                 try{
                     Integer.valueOf(newVal.substring(newVal.length()-1));
                 }catch(NumberFormatException e){
                     numTarjetaField.setText(oldVal);
                 }
-            }  
+            } 
         });
         svcField.textProperty().addListener((observable,oldVal,newVal)-> {
 
