@@ -62,7 +62,7 @@ public class FXMLReservasBoxController implements Initializable {
         this.reserva = MIreserva;
         this.parentController = parentController;
         fechaL.setText(reserva.getMadeForDay().toString());
-        horaL.setText(reserva.getFromTime().toString());
+        horaL.setText(reserva.getFromTime().toString() + " - " + reserva.getFromTime().plusHours(1).toString());
         pista.setText(reserva.getCourt().getName());
     }
     

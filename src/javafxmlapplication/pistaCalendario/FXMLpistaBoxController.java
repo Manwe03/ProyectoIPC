@@ -318,7 +318,7 @@ public class FXMLpistaBoxController implements Initializable {
                             reservable = false;
                         }
                     }else{                      //si esta en el medio miro ambos lados
-                        if((reservaState[numButton-8] == 2 && reservaState[numButton-7] == 2) || (reservaState[numButton-10] == 2 && reservaState[numButton-11] == 2)){   //miro dos por delante [][][0][#][#]
+                        if((reservaState[numButton-8] == 2 && reservaState[numButton-7] == 2) || (reservaState[numButton-8] == 2 && reservaState[numButton-10] == 2) || (reservaState[numButton-10] == 2 && reservaState[numButton-11] == 2)){   //miro dos por delante [][][0][#][#]
                             reservable = false;
                         }
                     }
@@ -326,7 +326,7 @@ public class FXMLpistaBoxController implements Initializable {
                         utilData.ventanaMode = 3;//modo de la ventana para que no haga nada
                         mainController.showVentana(true);//enseña la ventana
                         mainController.setVentanaInfo("Error");
-                        mainController.ventanaAddNode(new Label("No se puede reservar mas de dos horas seguidas una pista"));
+                        mainController.ventanaAddNode(new Label("No se puede reservar más de dos horas seguidas una pista"));
                         break;
                     }
                     //mandarlo a la ventana
@@ -335,7 +335,7 @@ public class FXMLpistaBoxController implements Initializable {
                     mainController.showVentana(true);//enseña la ventana
                     //pone la información de la ventana
                     mainController.setVentanaConfirmar("Reservar pista");
-                    mainController.ventanaAddNode(new Label("¿Estas seguro de reservar una pista?\nLas reservas solo se pueden cancelar con mas de 24H de antelación"));
+                    mainController.ventanaAddNode(new Label("¿Estás seguro de reservar una pista?\nLas reservas solo se pueden cancelar con más de 24H de antelación"));
 
                 }else{//si no estas loggeado -> Notificar
                     utilData.showScene("Login");
@@ -427,7 +427,7 @@ public class FXMLpistaBoxController implements Initializable {
             if(hoveredState[i]){
                 node.setText(miembro.getNickName());  
             }else{
-                node.setText("Ocupado Por: " + miembro.getNickName()); 
+                node.setText("Ocupado por: " + miembro.getNickName()); 
             }
         }else{
             if(hoveredState[i]){

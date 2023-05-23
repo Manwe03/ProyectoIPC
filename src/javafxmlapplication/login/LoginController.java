@@ -102,7 +102,7 @@ public class LoginController  implements Initializable{
         }else if(contraseñaField.getText().isBlank()){
             contraseñaField.setId("defaultInputBoxError");
             temporaryTextField.setId("defaultInputBoxError");
-            contraseñaErrorLabel.setText("Contraseña vacia");
+            contraseñaErrorLabel.setText("Contraseña vacía");
             contraseñaErrorLabel.setVisible(true);    
         }else{
             try {
