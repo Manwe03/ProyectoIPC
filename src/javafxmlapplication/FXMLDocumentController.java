@@ -217,20 +217,18 @@ public class FXMLDocumentController implements Initializable {
                 FXMLpistaBoxController pistaController = utilData.getPistaBoxController();
                 pistaController.safeRegisterBooking(LocalDateTime.now(), utilData.getSelectedDate());
             break;
-            case 3: //3:nada 
+            case 3: // 3:nada 
             break;
-            case 4: //4: cancelar reserva
+            case 4: // 4: cancelar reserva
                 FXMLpistaBoxController pistaController2 = utilData.getPistaBoxController();
                 try {
                     club.removeBooking(pistaController2.reservaCancel);
                 } catch (ClubDAOException ex) {Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);}
                 pistaController2.updateButtonState();
             break;
-            case 5: //5: confirmar pagar con la tarjeta
+            case 5: // 5: confirmar pagar con la tarjeta
                 FXMLReservasBoxController reservasBoxController = utilData.getReservasBoxController();
                 utilData.getReservasBoxController().cambiarPagarAPagado();
-                
-                
             break;    
 
                 

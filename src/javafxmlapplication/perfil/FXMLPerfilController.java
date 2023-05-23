@@ -132,6 +132,8 @@ public class FXMLPerfilController implements Initializable {
     private TextField contraseñaFieldV;
     @FXML
     private ToggleButton mostrarContraseñaButton;
+    @FXML
+    private ImageView ojo;
     
     /**
      * Initializes the controller class.
@@ -146,8 +148,7 @@ public class FXMLPerfilController implements Initializable {
         contraseñaField.textProperty().bindBidirectional(contraseñaFieldV.textProperty());
 
         mostrarContraseñaButton.visibleProperty().bind(contraseñaField.visibleProperty().or(contraseñaFieldV.visibleProperty()));
-        
-        
+                
         //LISTENERS para las animaciones de las labels en MiPerfil
         nombreField.focusedProperty().addListener((observable,oldVal,newVal)-> { nombreLabelUp = moveLabelIntoBorder(nombreLabel,nombreLabelUp);});
         apellidosField.focusedProperty().addListener((observable,oldVal,newVal)-> { apellidosLabelUp = moveLabelIntoBorder(apellidosLabel,apellidosLabelUp);});
@@ -277,7 +278,14 @@ public class FXMLPerfilController implements Initializable {
     public void startPerfil(){//ajusta el tamaño con respecto al dpi
         double dpi = utilData.getDpi();
         perfilBottomPane.setMaxHeight(dpi);
-        perfilBottomPane.setMinHeight(dpi);
+        perfilBottomPane.setMinHeight(dpi);        
+        
+        if(!utilData.isLogged()) {//el botón se pone a registrarse o guardar cambios según isLogged()
+            guardarCambiosButton.setText("Registrarse");
+        } else {
+            guardarCambiosButton.setText("Guardar cambios");
+        }
+        
         
         if(!utilData.isLogged()){//si no esta logueado
             if(utilData.getRegistrarse()){//si quiere registrarse es decir a pasado por la pantalla de login
@@ -573,6 +581,13 @@ public class FXMLPerfilController implements Initializable {
     @FXML
     private void onMostrarContraseñaButton(ActionEvent event) {
         contraseñaField.setVisible(!contraseñaField.isVisible());
-        contraseñaFieldV.setVisible(!contraseñaFieldV.isVisible());
+        contraseñaFieldV.setVisible(!contraseñaFieldV.isVisible());        
+        Image ver = new Image(new File("src/resources/images/ver.png").toURI().toString());
+        Image nover = new Image(new File("src/resources/images/nover.png").toURI().toString());
+        if(mostrarContraseñaButton.isSelected()) {
+            ojo.setImage(ver);
+        } else {
+            ojo.setImage(nover);
+        }
     }
 }

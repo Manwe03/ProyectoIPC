@@ -4,6 +4,7 @@
  */
 package javafxmlapplication.login;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,10 +20,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import javafxmlapplication.UtilData;
 import model.Club;
 import model.ClubDAOException;
+import model.Member;
 
 /**
  * FXML Controller class
@@ -57,6 +61,8 @@ public class LoginController  implements Initializable{
     
     private boolean usuarioLabelR;
     private boolean contraseñaLabelR;
+    @FXML
+    private ImageView ojo;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -97,7 +103,7 @@ public class LoginController  implements Initializable{
         
         if(usuarioField.getText().isBlank()){
             usuarioField.setId("defaultInputBoxError");
-            contraseñaErrorLabel.setText("Usuario vacio");
+            contraseñaErrorLabel.setText("Usuario vacío");
             contraseñaErrorLabel.setVisible(true);
         }else if(contraseñaField.getText().isBlank()){
             contraseñaField.setId("defaultInputBoxError");
@@ -107,8 +113,8 @@ public class LoginController  implements Initializable{
         }else{
             try {
                 //para ver si existe tal miembro y si no da error
-                Club.getInstance().getMemberByCredentials(usuarioField.getText(), contraseñaField.getText()); 
-
+                Member m = Club.getInstance().getMemberByCredentials(usuarioField.getText(), contraseñaField.getText()); m.getPassword(); 
+                
                 login.setVisible(false);
                 usuarioField.setEditable(false);
                 contraseñaField.setEditable(false);
@@ -139,6 +145,13 @@ public class LoginController  implements Initializable{
     private void verContraseña(ActionEvent event) {
         temporaryTextField.setVisible(!temporaryTextField.isVisible());
         contraseñaField.setVisible(!contraseñaField.isVisible());
+        Image ver = new Image(new File("src/resources/images/ver.png").toURI().toString());
+        Image nover = new Image(new File("src/resources/images/nover.png").toURI().toString());
+        if(mostrarButton.isSelected()) {
+            ojo.setImage(ver);
+        } else {
+            ojo.setImage(nover);
+        }
     }
 
     @FXML
