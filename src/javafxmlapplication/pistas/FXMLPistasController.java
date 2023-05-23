@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.SortedSet;
@@ -69,6 +70,8 @@ public class FXMLPistasController implements Initializable {
     private HBox barraPistas;
     @FXML
     private VBox buscadorContainer;
+    @FXML
+    private Label dia;
 
     
     /**
@@ -88,6 +91,7 @@ public class FXMLPistasController implements Initializable {
         
         dpBookingDay.valueProperty().addListener((observable,oldVal,newVal)-> {//on valueProperty changed
             utilData.setSelectedDate(newVal);//actualiza el dia selecionado en UtilData
+            dia.setText(diaEnEspañol(newVal));
             updatePistasView();
         });
         
@@ -197,6 +201,17 @@ public class FXMLPistasController implements Initializable {
             }
         }   
         utilData.getMainController().showVentana(true);
+    }
+    
+    public String diaEnEspañol(LocalDate date) {
+        if(date.getDayOfWeek().toString().equals("MONDAY")) {return "Lunes:";}
+        if(date.getDayOfWeek().toString().equals("TUESDAY")) {return "Martes:";}
+        if(date.getDayOfWeek().toString().equals("WEDNESDAY")) {return "Miércoles:";}
+        if(date.getDayOfWeek().toString().equals("THURSDAY")) {return "Jueves:";}
+        if(date.getDayOfWeek().toString().equals("FRIDAY")) {return "Viernes:";}
+        if(date.getDayOfWeek().toString().equals("SATURDAY")) {return "Sábado:";}
+        if(date.getDayOfWeek().toString().equals("SUNDAY")) {return "Domingo:";}
+        return "";
     }
     
 }

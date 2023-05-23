@@ -64,12 +64,12 @@ public class FXMLReservasController implements Initializable {
         if(utilData.isLogged()){
             try {
                 updateMisReservas();
-                nombreUsuarioReservas.setText("Tus Reservas:");
+                nombreUsuarioReservas.setText("Mis reservas:");
             } catch (ClubDAOException | IOException ex) {
                 Logger.getLogger(FXMLReservasController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }else{
-            nombreUsuarioReservas.setText("Reservas no disponibles, no estas autenticado");
+            nombreUsuarioReservas.setText("Reservas no disponibles, no estás autenticado");
         }
     }
 
