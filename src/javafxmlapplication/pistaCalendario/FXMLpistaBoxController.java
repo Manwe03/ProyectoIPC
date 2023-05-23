@@ -111,14 +111,15 @@ public class FXMLpistaBoxController implements Initializable {
         hourVBox.setSpacing(utilData.getDpi()*0.264);
 
         pressedState = new byte[13]; // 0 posicion normal // 1 animacion activa
-        reservaState = new byte[13]; // 0 libre // 1 reservado // 2 reservado por mi
+        reservaState = new byte[17]; // 0 libre // 1 reservado // 2 reservado por mi // dos vacios al principio y al final
         hoveredState = new boolean[13];
         for(int i = 0; i<13; i++){
             pressedState[i] = 0;
-            reservaState[i] = 0;
             hoveredState[i] = false;
         }
-        
+        for(int i = 0; i<17; i++){
+            reservaState[i] = 0;
+        }
         //inicia el tamaño del label con respecto a la escala
         //pistaLabel.setFont(Font.font("system", FontWeight.NORMAL, FontPosture.REGULAR, utilData.getDpi()*0.2));
         
@@ -208,7 +209,7 @@ public class FXMLpistaBoxController implements Initializable {
     public void updateButtonState(){ 
         //0 = no reservado || 1 = reservado || 2 = reservado por mi
         List<Booking> reservasDelDia = club.getCourtBookings(court.getName(), madeForDay); //obtiene las reservas del dia
-        for(int i = 0; i < 13; i++){
+        for(int i = 0; i < 17; i++){
             reservaState[i] = 0;//ponemos los datos de la columna 0 a 0
         }
         for(Booking reserva: reservasDelDia){ //recorre las reservas
@@ -222,30 +223,30 @@ public class FXMLpistaBoxController implements Initializable {
             if(miembro == null){
                 
             }else if(miembro.equals(yo)){//si la reserva es tuya
-                reservaState[reserva.getFromTime().getHour()-9] = 2;
+                reservaState[reserva.getFromTime().getHour()-7] = 2;
 
             }
             else{ //si la reserva no es tuya
-                reservaState[reserva.getFromTime().getHour()-9] = 1;
+                reservaState[reserva.getFromTime().getHour()-7] = 1;
                 
             }
         }
         updateButtonsStyle();
     }
     private void updateButtonsStyle(){
-        setStyleOnContext(b_09,reservaState[0]);
-        setStyleOnContext(b_10,reservaState[1]);
-        setStyleOnContext(b_11,reservaState[2]);
-        setStyleOnContext(b_12,reservaState[3]);
-        setStyleOnContext(b_13,reservaState[4]);
-        setStyleOnContext(b_14,reservaState[5]);
-        setStyleOnContext(b_15,reservaState[6]);
-        setStyleOnContext(b_16,reservaState[7]);
-        setStyleOnContext(b_17,reservaState[8]);
-        setStyleOnContext(b_18,reservaState[9]);
-        setStyleOnContext(b_19,reservaState[10]);
-        setStyleOnContext(b_20,reservaState[11]);
-        setStyleOnContext(b_21,reservaState[12]);
+        setStyleOnContext(b_09,reservaState[2]);
+        setStyleOnContext(b_10,reservaState[3]);
+        setStyleOnContext(b_11,reservaState[4]);
+        setStyleOnContext(b_12,reservaState[5]);
+        setStyleOnContext(b_13,reservaState[6]);
+        setStyleOnContext(b_14,reservaState[7]);
+        setStyleOnContext(b_15,reservaState[8]);
+        setStyleOnContext(b_16,reservaState[9]);
+        setStyleOnContext(b_17,reservaState[10]);
+        setStyleOnContext(b_18,reservaState[11]);
+        setStyleOnContext(b_19,reservaState[12]);
+        setStyleOnContext(b_20,reservaState[13]);
+        setStyleOnContext(b_21,reservaState[14]);
     }
     private void updateButtonsText(){
         setTextOnContext(b_09,hoveredState,0);
@@ -301,27 +302,23 @@ public class FXMLpistaBoxController implements Initializable {
         utilData.setPistaBoxController(this);
         updateButtonState();
         Member member;
-        switch (reservaState[numButton-9]) {
+        switch (reservaState[numButton-7]) {
             case 0: //si no esta reservada
                 //System.out.println("Libre");
                 if(utilData.isLogged()){//si estas loggeado -> Reservar
                     ////////////////////////////////////////////////////////////
                     //Comprobar que no hay 3 reservas seguidas
                     boolean reservable = true;
-                    if(numButton-9 <= 1){       //esta al principio [ ][ ][0]...
-                        if(reservaState[numButton-8] == 2 && reservaState[numButton-7] == 2){   //miro dos por delante [][][0][#][#]
-                            reservable = false;
-                        }
+                    int num = numButton-7;
+
+                    //0%12= 0 a 12%12= 0
+                    if(reservaState[num-1] == 2 && (reservaState[num-2] == 2 || reservaState[num+1] == 2)){
+                        reservable = false; 
                     }
-                    else if(numButton-9 >= 11){ //esta al final ...[0][ ][ ]
-                        if(reservaState[numButton-10] == 2 && reservaState[numButton-11] == 2){ //miro dos por detras [#][#][0][][]
-                            reservable = false;
-                        }
-                    }else{                      //si esta en el medio miro ambos lados
-                        if((reservaState[numButton-8] == 2 && reservaState[numButton-7] == 2) || (reservaState[numButton-8] == 2 && reservaState[numButton-10] == 2) || (reservaState[numButton-10] == 2 && reservaState[numButton-11] == 2)){   //miro dos por delante [][][0][#][#]
-                            reservable = false;
-                        }
+                    if(reservaState[num+1] == 2 && reservaState[num+2] == 2){
+                        reservable = false; 
                     }
+
                     if(!reservable){//si no es reservable no se reserva informar al usuario
                         utilData.ventanaMode = 3;//modo de la ventana para que no haga nada
                         mainController.showVentana(true);//enseña la ventana
