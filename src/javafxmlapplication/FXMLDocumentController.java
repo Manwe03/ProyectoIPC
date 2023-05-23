@@ -13,11 +13,14 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -79,7 +82,7 @@ public class FXMLDocumentController implements Initializable {
             club.setInitialData(); //Resetea la base de datos al iniciar
             club.addSimpleData();
             
-            club.registerMember("Fernando", "Alonso", "99999999", "pepe", "0", "0000000000000000", 000, null); //registra un miembro de prueba
+            club.registerMember("Fernando", "Alonso", "99999999", "0", "0", "", 0, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "papo", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "antonio", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "yiyi", "0", "0000000000000000", 000, null); //registra un miembro de prueba
@@ -217,25 +220,37 @@ public class FXMLDocumentController implements Initializable {
                 FXMLpistaBoxController pistaController = utilData.getPistaBoxController();
                 pistaController.safeRegisterBooking(LocalDateTime.now(), utilData.getSelectedDate());
             break;
-            case 3: //3:nada 
+            case 3: // 3:nada 
             break;
-            case 4: //4: cancelar reserva
+            case 4: // 4: cancelar reserva
                 FXMLpistaBoxController pistaController2 = utilData.getPistaBoxController();
                 try {
                     club.removeBooking(pistaController2.reservaCancel);
                 } catch (ClubDAOException ex) {Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);}
                 pistaController2.updateButtonState();
             break;
-            case 5: //5: confirmar pagar con la tarjeta
-                FXMLReservasBoxController reservasBoxController = utilData.getReservasBoxController();
-                utilData.getReservasBoxController().cambiarPagarAPagado();
+            case 5: // 5: confirmar pagar con la tarjeta
+                System.out.println("aSfgdsfljkahgkdafh");
                 
-                
+                //utilData.getReservasBoxController().cambiarPagarAPagado();
             break;    
 
                 
                 
         }
         showVentana(false);//quita la ventana modal
+    }
+    
+    public void createTarjetaFormulario(){
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setMaxHeight(20);
+        hbox.setMinHeight(20);
+        hbox.setMaxWidth(100);
+        hbox.setMinWidth(100);
+        hbox.getChildren().add(new Label("Tarjeta"));
+        hbox.getChildren().add(new TextField());
+        ventanaHbox.getChildren().add(hbox);
+        showVentana(true);
     }
 }

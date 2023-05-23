@@ -21,9 +21,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafxmlapplication.FXMLDocumentController;
 import javafxmlapplication.UtilData;
 import model.Booking;
@@ -267,7 +264,11 @@ public class FXMLpistaBoxController implements Initializable {
     /**Hace la reserva. Devuelve true si se puede hacer la reserva false si no.*/
     public boolean safeRegisterBooking(LocalDateTime bookingDate, LocalDate madeForDay){
         Member member = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword());//obtiene el miembro logeado actualmente
-        boolean paid = member.checkHasCreditInfo();
+        boolean paid = false;
+        if(member.checkHasCreditInfo() && !member.getCreditCard().isBlank() && member.getSvc() != 0){
+            paid = true;
+        }
+        
         try {
             List<Booking> reservasDelDia = Club.getInstance().getCourtBookings(court.getName(), madeForDay); //obtiene las reservas del dia
             Boolean reservaDuplicada = false;
@@ -279,7 +280,8 @@ public class FXMLpistaBoxController implements Initializable {
             } //si lo recorre entero sin encontrar ningun duplicado exito
             
             if(!reservaDuplicada){ //si se puede reservar a esa hora es dicir no hay una reserva a la misma hora, hace la reserva
-                Club.getInstance().registerBooking(bookingDate, madeForDay, fromHour, paid, court, member);
+                club.registerBooking(bookingDate, madeForDay, fromHour, false, court, member).setPaid(paid);
+                
                 System.out.println("Reserva Exitosa");
                 updateButtonState();
                 //updateButtonsText();

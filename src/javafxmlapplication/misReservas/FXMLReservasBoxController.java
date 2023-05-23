@@ -65,17 +65,26 @@ public class FXMLReservasBoxController implements Initializable {
         fechaL.setText(reserva.getMadeForDay().toString());
         horaL.setText(reserva.getFromTime().toString() + " - " + reserva.getFromTime().plusHours(1).toString());
         pista.setText(reserva.getCourt().getName());
+        if(MIreserva.getPaid()){
+            pagarB.setDisable(true);
+            pagarB.setText("Pagado");
+        }
     }
     
     @FXML
     private void onPagar(ActionEvent event) throws ClubDAOException, IOException {
         if(Club.getInstance().hasCreditCard(utilData.getLogin())) {            
-            utilData.setReservasBoxController(this);            
+            utilData.setReservasBoxController(this);      
             utilData.getMainController().setVentanaConfirmar("¿Pagar con tarjeta xxxx-xxxx-xxxx-" + Club.getInstance().getMemberByCredentials(utilData.getLogin(), utilData.getPassword()).getCreditCard().substring(12) + "?");
             utilData.getMainController().showVentana(true);
-        } else { //registrar la tarjeta de crédito
             
+        } else { //registrar la tarjeta de crédito
+            utilData.ventanaMode = 5;
+            utilData.getMainController().setVentanaInfo("Añadir tarjeta de crédito");
+            utilData.getMainController().createTarjetaFormulario();
+            utilData.getMainController().showVentana(true);
         }
+
         System.out.println("pagado");
     }
 
@@ -85,9 +94,7 @@ public class FXMLReservasBoxController implements Initializable {
             System.out.println("cancelado");
             Club.getInstance().removeBooking(this.reserva);
             parentController.updateMisReservas();
-        } catch (ClubDAOException ex) {
-            Logger.getLogger(FXMLReservasBoxController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (ClubDAOException | IOException ex) {
             Logger.getLogger(FXMLReservasBoxController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
