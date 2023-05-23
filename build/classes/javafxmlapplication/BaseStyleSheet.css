@@ -6,6 +6,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Created on : 14 may 2023, 17:09:15
     Author     : manub
 */
+
 #ventana{
     -fx-background-color: #dbdbdb;
 
@@ -132,6 +133,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 #defaultLabel{
     -fx-font-family: Monospac821 BT;
+    -fx-font-size: 15;
 }
 
 
@@ -140,6 +142,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-radius: 3;
     -fx-border-color: #aaaaaa;
     -fx-border-radius: 3;
+    -fx-font-size: 15;
 }
 #defaultInputBox:hover{
     -fx-border-color: #222222;

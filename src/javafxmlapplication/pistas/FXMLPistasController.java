@@ -196,7 +196,7 @@ public class FXMLPistasController implements Initializable {
         if(!Club.getInstance().existsLogin(buscadorTextField.getText())) {
             utilData.getMainController().setVentanaInfo("Reservas de hoy de " + buscadorTextField.getText());
             utilData.getMainController().ventanaAddNode(new Label("El usuario " + buscadorTextField.getText() + " no existe"));
-        } else {        
+        } else {
             List<Booking> reservas = club.getUserBookings(buscadorTextField.getText());//obtiene las reservas de una persona
             utilData.getMainController().setVentanaInfo("Reservas de hoy de " + buscadorTextField.getText());
             for(Booking reserva: reservas){

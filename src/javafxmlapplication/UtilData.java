@@ -22,6 +22,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import javafxmlapplication.miniTarjeta.MiniTarjetaController;
 import javafxmlapplication.misReservas.FXMLReservasBoxController;
 import javafxmlapplication.perfil.FXMLPerfilController;
 import javafxmlapplication.pistaCalendario.FXMLpistaBoxController;
@@ -59,9 +60,11 @@ public class UtilData {
     
     private FXMLReservasBoxController reservasBoxController;
     
+    private MiniTarjetaController miniTarjetaController;
+    
     public static HashMap<String,Scene> escenas = new HashMap<>();
     
-    public int ventanaMode; //0:editardatos // 1:registrarse // 2:hacer reserva //3:nada //4: cancelar reserva
+    public int ventanaMode; //0:editardatos // 1:registrarse // 2:hacer reserva //3:nada //4: cancelar reserva // 5: registrar con la tarjeta // 6: confirmar pagar con tajeta // 7: confirmar cancelar reserva
     
     Stage stage;
     
@@ -164,6 +167,7 @@ public class UtilData {
     public FXMLPistasController getPistasController(){return this.pistasController;}
     public FXMLpistaBoxController getPistaBoxController(){return this.pistaBoxController;}
     public FXMLReservasBoxController getReservasBoxController(){return this.reservasBoxController;}
+    public MiniTarjetaController getMiniTarjetaController(){return this.miniTarjetaController;}
     //SET
     public void setDpi(double dpi){this.dpi = dpi;}
     public void setLogin(String login){this.login = login;}
@@ -177,4 +181,5 @@ public class UtilData {
     public void setPistasController(FXMLPistasController pistasController){this.pistasController = pistasController;}
     public void setPistaBoxController(FXMLpistaBoxController pistaBoxController){this.pistaBoxController = pistaBoxController;}
     public void setReservasBoxController(FXMLReservasBoxController reservasBoxController){this.reservasBoxController = reservasBoxController;}
+    public void setMiniTarjetaController(MiniTarjetaController miniTarjetaController){this.miniTarjetaController = miniTarjetaController;}
 }
