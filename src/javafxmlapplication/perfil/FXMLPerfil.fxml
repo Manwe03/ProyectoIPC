@@ -86,7 +86,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField id="defaultInputBox" fx:id="nickField" maxWidth="-Infinity" prefHeight="30.0" prefWidth="158.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+                  <TextField id="defaultInputBox" fx:id="nickField" maxWidth="128.0" minWidth="128.0" prefHeight="30.0" prefWidth="128.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -153,7 +153,7 @@
                         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label fx:id="contraseñaErrorLabel" focusTraversable="false" text="Campo vacío" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP">
+                  <Label fx:id="contraseñaErrorLabel" focusTraversable="false" text="Campo vacío" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                      </GridPane.margin>
