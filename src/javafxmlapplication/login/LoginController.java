@@ -35,8 +35,6 @@ import model.Member;
  */
 public class LoginController  implements Initializable{
     
-    private Club club;
-    private String cssError;
     private UtilData utilData;
     @FXML
     private Button register;
@@ -67,7 +65,6 @@ public class LoginController  implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        try {club = Club.getInstance();} catch (ClubDAOException | IOException ex) {}
         this.utilData = UtilData.getInstance();
         
         usuarioField.focusedProperty().addListener((observable,oldVal,newVal)-> { usuarioLabelR = moveLabelIntoBorder(usuarioLabel,usuarioLabelR);});
@@ -96,6 +93,8 @@ public class LoginController  implements Initializable{
         utilData.setRegistrarse(true);
         utilData.getPerfilController().startPerfil();
         utilData.getMainController().updateButtonText();
+        
+        utilData.getMainController().triggerOnPerfilButton();//clicar el boton de registrarse
     }
 
     @FXML

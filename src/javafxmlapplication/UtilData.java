@@ -9,18 +9,12 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.sun.javafx.util.Utils;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Duration;
 import javafxmlapplication.miniTarjeta.MiniTarjetaController;
 import javafxmlapplication.misReservas.FXMLReservasBoxController;
@@ -137,6 +131,9 @@ public class UtilData {
     }
     /**Mueve un boton como si estuviera presionado
      * El estado: true = esta desplazado ; false = no esta desplazado
+     * @param node
+     * @param estado
+     * @return byte
      */
     public static byte translatePressedButton(Node node, byte estado){
         TranslateTransition translate = new TranslateTransition(Duration.millis(100));
