@@ -79,8 +79,8 @@ public class FXMLDocumentController implements Initializable {
             club.setInitialData(); //Resetea la base de datos al iniciar
             //club.addSimpleData();
             
-            club.registerMember("Fernando", "Alonso", "99999999", "0", "0", "", 0, null); //registra un miembro de prueba
-            //club.registerMember("Fernando", "Alonso", "99999999", "papo", "0", "0000000000000000", 000, null); //registra un miembro de prueba
+            club.registerMember("Fernando", "Alonso", "99999999", "pepe", "0", "", 0, null); //registra un miembro de prueba
+            club.registerMember("Fernando", "Alonso", "99999999", "papo", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "antonio", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "yiyi", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "jovani", "0", "0000000000000000", 000, null); //registra un miembro de prueba

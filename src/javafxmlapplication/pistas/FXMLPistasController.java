@@ -7,7 +7,6 @@ package javafxmlapplication.pistas;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -189,16 +188,23 @@ public class FXMLPistasController implements Initializable {
     @FXML
     private void onBuscarButton(ActionEvent event) throws ClubDAOException, IOException {
         utilData.ventanaMode = 3;//modo nada
+        String user = buscadorTextField.getText();
         //hay que comprobar primero que el nickname existe
-        if(!Club.getInstance().existsLogin(buscadorTextField.getText())) {
-            utilData.getMainController().setVentanaInfo("Reservas de hoy de " + buscadorTextField.getText(),"Aceptar");
-            utilData.getMainController().ventanaAddNode(new Label("El usuario " + buscadorTextField.getText() + " no existe"));
+        if(!Club.getInstance().existsLogin(user)) {
+            utilData.getMainController().setVentanaInfo("Reservas de hoy de " + user,"Aceptar");
+            utilData.getMainController().ventanaAddNode(new Label("El usuario " + user + " no existe"));
         } else {
-            List<Booking> reservas = club.getUserBookings(buscadorTextField.getText());//obtiene las reservas de una persona
-            utilData.getMainController().setVentanaInfo("Reservas de hoy de " + buscadorTextField.getText(),"Aceptar");
-            for(Booking reserva: reservas){
-                if(reserva.getMadeForDay().equals(LocalDate.now())){
-                    utilData.getMainController().ventanaAddNode(new Label(reserva.getCourt().getName() + " reservada a las " + reserva.getFromTime()));//nuevo string con la informacion de la reserva
+            List<Booking> reservas = club.getUserBookings(user);//obtiene las reservas de una persona
+            utilData.getMainController().setVentanaInfo("Reservas de hoy de " + user,"Aceptar");
+            if(reservas.isEmpty()){
+                Label label = new Label("No tiene ninguna reserva para hoy");
+                label.setId("defaultLabel20");//la id para el css
+                utilData.getMainController().ventanaAddNode(label);
+            }else{
+                for(Booking reserva: reservas){
+                    if(reserva.getMadeForDay().equals(LocalDate.now())){
+                        utilData.getMainController().ventanaAddNode(new Label(reserva.getCourt().getName() + " reservada a las " + reserva.getFromTime()));//nuevo string con la informacion de la reserva
+                    }
                 }
             }
         }
