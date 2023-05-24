@@ -15,6 +15,7 @@ import java.util.SortedSet;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -103,9 +104,8 @@ public class FXMLPistasController implements Initializable {
         
         scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
         
-        utilData.setSelectedDate(dpBookingDay.getValue());
-        
-                
+        utilData.setSelectedDate(dpBookingDay.getValue());        
+                        
         startPistas();
     }    
 
@@ -125,6 +125,14 @@ public class FXMLPistasController implements Initializable {
         updateFlowPane();
         updateBuscador();
         utilData.setRegistrarse(false);//Siempre que salga de MiPerfil poner registrarse a false
+        
+        if(!utilData.isLogged()) {
+            posButton.setDisable(true);
+            dpBookingDay.setDisable(true);
+        } else {
+            posButton.setDisable(false);
+            dpBookingDay.setDisable(false);
+        }
     }
             
     private void updateFlowPane(){
