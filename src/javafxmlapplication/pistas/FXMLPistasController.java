@@ -99,7 +99,6 @@ public class FXMLPistasController implements Initializable {
         //buscadorComboBox.getT
         //updateBuscador(String nombreKey)
         
-        
         dpBookingDay.setValue(LocalDate.now());
         
         scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
@@ -202,11 +201,11 @@ public class FXMLPistasController implements Initializable {
         utilData.ventanaMode = 3;//modo nada
         //hay que comprobar primero que el nickname existe
         if(!Club.getInstance().existsLogin(buscadorTextField.getText())) {
-            utilData.getMainController().setVentanaInfo("Reservas de hoy de " + buscadorTextField.getText());
+            utilData.getMainController().setVentanaInfo("Reservas de hoy de " + buscadorTextField.getText(),"Aceptar");
             utilData.getMainController().ventanaAddNode(new Label("El usuario " + buscadorTextField.getText() + " no existe"));
         } else {
             List<Booking> reservas = club.getUserBookings(buscadorTextField.getText());//obtiene las reservas de una persona
-            utilData.getMainController().setVentanaInfo("Reservas de hoy de " + buscadorTextField.getText());
+            utilData.getMainController().setVentanaInfo("Reservas de hoy de " + buscadorTextField.getText(),"Aceptar");
             for(Booking reserva: reservas){
                 if(reserva.getMadeForDay().equals(LocalDate.now())){
                     utilData.getMainController().ventanaAddNode(new Label(reserva.getCourt().getName() + " reservada a las " + reserva.getFromTime()));//nuevo string con la informacion de la reserva

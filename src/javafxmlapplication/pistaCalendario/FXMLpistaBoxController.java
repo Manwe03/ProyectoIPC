@@ -324,7 +324,7 @@ public class FXMLpistaBoxController implements Initializable {
                     if(!reservable){//si no es reservable no se reserva informar al usuario
                         utilData.ventanaMode = 3;//modo de la ventana para que no haga nada
                         mainController.showVentana(true);//enseña la ventana
-                        mainController.setVentanaInfo("Error");
+                        mainController.setVentanaInfo("Error","Aceptar");
                         mainController.ventanaAddNode(new Label("No se puede reservar más de dos horas seguidas una pista"));
                         break;
                     }
@@ -333,7 +333,7 @@ public class FXMLpistaBoxController implements Initializable {
                     utilData.ventanaMode = 2;//modo de la ventana
                     mainController.showVentana(true);//enseña la ventana
                     //pone la información de la ventana
-                    mainController.setVentanaConfirmar("Reservar pista");
+                    mainController.setVentanaConfirmar("Reservar pista","Reservar","Cancelar");
                     mainController.ventanaAddNode(new Label("¿Estás seguro de reservar una pista?\nLas reservas solo se pueden cancelar con más de 24H de antelación"));
 
                 }else{//si no estas loggeado -> Notificar
@@ -356,13 +356,13 @@ public class FXMLpistaBoxController implements Initializable {
                     if(LocalDate.now().equals(madeForDay)){//si se quiere cancelar una reserva para hoy, no se permite
                         utilData.ventanaMode = 3;//nada
                         mainController.showVentana(true);
-                        mainController.setVentanaInfo("No se puede cancelar la Reserva");
+                        mainController.setVentanaInfo("No se puede cancelar la Reserva","Aceptar");
                         mainController.ventanaAddNode(new Label("No se pueden cancelar reservas con menos de 24H de antelación"));
                     }
                     else if(LocalDate.now().plusDays(1).equals(madeForDay) && (fromtime.compareTo(LocalTime.now()) < 0)){//si es para mañana y la reserva tiene una fecha posterior a la hora actual
                         utilData.ventanaMode = 3;//nada
                         mainController.showVentana(true);
-                        mainController.setVentanaInfo("No se puede cancelar la Reserva");
+                        mainController.setVentanaInfo("No se puede cancelar la Reserva","Aceptar");
                         mainController.ventanaAddNode(new Label("No se pueden cancelar reservas con menos de 24H de antelación"));
                         System.out.println("NO se puede cancelar ##########################");
                     }
@@ -373,7 +373,7 @@ public class FXMLpistaBoxController implements Initializable {
 
                                 utilData.ventanaMode = 4;//modo cancelar reserva
                                 mainController.showVentana(true);
-                                mainController.setVentanaConfirmar("Cancelar Reserva");
+                                mainController.setVentanaConfirmar("Cancelar Reserva","Aceptar","Cancelar");
                                 mainController.ventanaAddNode(new Label("¿Estas seguro de que quieres cancelar tu reserva?"));
 
                                 System.out.println("Reserva cancelada");
