@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,14 +18,11 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafxmlapplication.miniTarjeta.MiniTarjetaController;
 import javafxmlapplication.perfil.FXMLPerfilController;
 import javafxmlapplication.pistaCalendario.FXMLpistaBoxController;
@@ -221,7 +216,6 @@ public class FXMLDocumentController implements Initializable {
             case 0: //0:editardatos 
                 FXMLPerfilController controller = utilData.getPerfilController();
                 controller.editarDatos();
-                controller.removeContraseñaField();
             break;
             case 1: // 1:registrarse
                 utilData.showScene("Login");
@@ -243,7 +237,7 @@ public class FXMLDocumentController implements Initializable {
                 MiniTarjetaController miniTarjeta = utilData.getMiniTarjetaController();
                 if(miniTarjeta.svcErrorLabelIsVisible() || miniTarjeta.numTarjetaErrorLabelIsVisible() || miniTarjeta.getNumTarjetaField().getText().isBlank() || miniTarjeta.getSvcField().getText().isBlank()){return;}//si hay alguna label no se hace nada, no se cierra la ventana
                 Member memeber = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword());
-                memeber.setCreditCard(utilData.getMiniTarjetaController().getNumTarjetaField().getText().toString());
+                memeber.setCreditCard(utilData.getMiniTarjetaController().getNumTarjetaField().getText());
                 memeber.setSvc(Integer.parseInt(utilData.getMiniTarjetaController().getSvcField().getText()));
                 utilData.getReservasBoxController().reserva.setPaid(true);   //poner esta reserva como pagada
                 utilData.getReservasController().startReservas();   //actualizar

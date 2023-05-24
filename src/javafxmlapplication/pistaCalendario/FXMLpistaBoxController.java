@@ -261,7 +261,10 @@ public class FXMLpistaBoxController implements Initializable {
         setTextOnContext(b_21,hoveredState,12);
     }
     
-    /**Hace la reserva. Devuelve true si se puede hacer la reserva false si no.*/
+    /** * Hace la reserva.Devuelve true si se puede hacer la reserva false si no.
+     * @param bookingDate
+     * @param madeForDay
+     * @return exito*/
     public boolean safeRegisterBooking(LocalDateTime bookingDate, LocalDate madeForDay){
         Member member = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword());//obtiene el miembro logeado actualmente
         boolean paid = false;
@@ -303,7 +306,6 @@ public class FXMLpistaBoxController implements Initializable {
         //int numButton = Integer.parseInt( button.getId().substring(2, 4));
         utilData.setPistaBoxController(this);
         updateButtonState();
-        Member member;
         switch (reservaState[numButton-7]) {
             case 0: //si no esta reservada
                 //System.out.println("Libre");

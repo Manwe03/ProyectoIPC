@@ -122,9 +122,9 @@ public class FXMLPerfilController implements Initializable {
     private boolean numTarjetaLabelUp = false;
     private boolean svcLabelUp = false;
     
-    private Label[] formularioErrordArray = new Label[6];
+    private final Label[] formularioErrordArray = new Label[6];
     
-    private TextField[] formularioFieldArray = new TextField[6];
+    private final TextField[] formularioFieldArray = new TextField[6];
     
     private Club club;
     private UtilData utilData;
@@ -179,11 +179,11 @@ public class FXMLPerfilController implements Initializable {
         });
         telefonoField.textProperty().addListener((observable,oldVal,newVal)-> { 
             telefonoErrorLabel.setVisible(false);
-            if(newVal != ""){
+            if(!"".equals(newVal)){
                 String lastInput = newVal.substring(newVal.length()-1);
                 if(!lastInput.equals("+") && !lastInput.equals(" ")){
                     try{
-                        Integer.parseInt(lastInput);
+                        Integer.valueOf(lastInput);
                     }catch(NumberFormatException e){
                         telefonoField.setText(oldVal);
                     }
@@ -249,7 +249,7 @@ public class FXMLPerfilController implements Initializable {
             //Solo permite introducir numeros
             if(!"".equals(newVal)){
                 try{
-                    Integer.parseInt(newVal.substring(newVal.length()-1));
+                    Integer.valueOf(newVal.substring(newVal.length()-1));
                 }catch(NumberFormatException e){
                     svcField.setText(oldVal);
                 }
@@ -288,7 +288,7 @@ public class FXMLPerfilController implements Initializable {
             guardarCambiosButton.setText("Guardar cambios");
         }
         
-        
+        hideErrorLabels();
         if(!utilData.isLogged()){//si no esta logueado
             if(utilData.getRegistrarse()){//si quiere registrarse es decir a pasado por la pantalla de login
                 hideErrorLabels();
@@ -332,34 +332,37 @@ public class FXMLPerfilController implements Initializable {
 
     @FXML
     private void onGuardarCambiosButton(ActionEvent event) {
-        if(utilData.isLogged()){    //si esta loguedo, quiere editar
-            comprobarFieldsVacios(6);
-            if(!nombreErrorLabel.isVisible() && !apellidosErrorLabel.isVisible() && !telefonoErrorLabel.isVisible() 
-            && !nickErrorLabel.isVisible() && !contraseñaErrorLabel.isVisible() && !repetirContraseñaErrorLabel.isVisible() 
-            && !numTarjetaErrorLabel.isVisible() && !svcErrorLabel.isVisible()){
+        
+        comprobarFieldsVacios(6);//comprueba si te has dejado algo, en el caso de que todo este vacio esto es en seguro
+        if(!nombreErrorLabel.isVisible() && !apellidosErrorLabel.isVisible() && !telefonoErrorLabel.isVisible() 
+        && !nickErrorLabel.isVisible() && !contraseñaErrorLabel.isVisible() && !repetirContraseñaErrorLabel.isVisible() 
+        && !numTarjetaErrorLabel.isVisible() && !svcErrorLabel.isVisible()){
+            if(utilData.isLogged()){    //si esta loguedo, quiere editar
                 
                 utilData.ventanaMode = 0;//modo editar datos, es necesario para que la ventana modal sepa que hacer
                 utilData.getMainController().showVentana(true);
                 utilData.getMainController().setVentanaConfirmar("Editar","Cambiar","Cancelar");
                 utilData.getMainController().ventanaAddNode(new Label("Estas seguro de que quieres cambiar la información de tu perfil?"));
-            }
-        }else{                      //si NO esta loguedo, quiere registrarse
-            comprobarFieldsVacios(6);
-            if(!nombreErrorLabel.isVisible() && !apellidosErrorLabel.isVisible() && !telefonoErrorLabel.isVisible() 
-            && !nickErrorLabel.isVisible() && !contraseñaErrorLabel.isVisible() && !repetirContraseñaErrorLabel.isVisible() 
-            && !numTarjetaErrorLabel.isVisible() && !svcErrorLabel.isVisible()){
-                comprobarFieldsVacios(6);//comprueba si te has dejado algo, en el caso de que todo este vacio esto es en seguro
-
+            }else{
                 registrarse();
                 contraseñaField.setText("");
-                repetirContraseñaField.setText("");
-
+                repetirContraseñaField.setText("");   
                 utilData.ventanaMode = 1;//modo registrarse, es necesario para que la ventana modal sepa que hacer
                 utilData.getMainController().showVentana(true);
                 utilData.getMainController().setVentanaInfo("Felicidades","Aceptar");
                 utilData.getMainController().ventanaAddNode(new Label("Tu cuenta ha sido creada"));
+                formularioFieldArray[0].setText("");
+                formularioFieldArray[1].setText("");
+                formularioFieldArray[2].setText("");
+                formularioFieldArray[3].setText("");
+                formularioFieldArray[4] .setText("");
+                formularioFieldArray[5].setText("");
             }
-        }  
+            perfilEditMode(false);
+            hideErrorLabels();
+            
+        }
+  
     }
 
     @FXML
@@ -400,9 +403,7 @@ public class FXMLPerfilController implements Initializable {
                 BufferedImage imagenBuf = ImageIO.read(archivoImagen);
                 Image imagen = SwingFXUtils.toFXImage(imagenBuf, null);
                 imagenPerfilRegistro.setImage(imagen);                
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            } catch (IOException e) {}
         }   
     }
     
@@ -519,8 +520,9 @@ public class FXMLPerfilController implements Initializable {
         }
     }
     
-    /**cambia entre modo edición y modo vista normal*/
-    private void perfilEditMode(boolean edit){
+    /**cambia entre modo edición y modo vista norma
+     * @param edit*/
+    public void perfilEditMode(boolean edit){
         contraseñaLabel.setVisible(edit);
         repetirContraseñaLabel.setVisible(edit);
         numTarjetaLabel.setVisible(edit);

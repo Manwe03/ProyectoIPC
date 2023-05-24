@@ -6,6 +6,8 @@ package javafxmlapplication.misReservas;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,8 +19,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafxmlapplication.FXMLDocumentController;
 import javafxmlapplication.UtilData;
 import javafxmlapplication.miniTarjeta.MiniTarjetaController;
+import javafxmlapplication.pistaCalendario.FXMLpistaBoxController;
 import javafxmlapplication.reservas.FXMLReservasController;
 import model.Booking;
 import model.Club;
@@ -34,6 +38,8 @@ public class FXMLReservasBoxController implements Initializable {
     public Booking reserva;
     
     FXMLReservasController parentController;
+    
+    FXMLDocumentController mainController;
     
     @FXML
     private HBox r1;
@@ -64,6 +70,7 @@ public class FXMLReservasBoxController implements Initializable {
     public void setData(Booking MIreserva, FXMLReservasController parentController){
         this.reserva = MIreserva;
         this.parentController = parentController;
+        this.mainController = utilData.getMainController();
         fechaL.setText(reserva.getMadeForDay().toString());
         horaL.setText(reserva.getFromTime().toString() + " - " + reserva.getFromTime().plusHours(1).toString());
         pista.setText(reserva.getCourt().getName());
@@ -100,16 +107,33 @@ public class FXMLReservasBoxController implements Initializable {
 
     @FXML
     private void onCancelar(ActionEvent event) {
+        
+        if(!utilData.isLogged()){return;}//Se verifica que estes logueado por si acaso
         try {
-            utilData.ventanaMode = 7;
-            utilData.getMainController().setVentanaConfirmar("Cancelar Reserva","Aceptar","Cancelar");
-            utilData.getMainController().ventanaAddNode(new Label("¿Seguro que quieres cancelar la reserva?"));
-            utilData.getMainController().showVentana(true);
-            
-            System.out.println("cancelado");
-            parentController.updateMisReservas();
+            if(LocalDate.now().equals(reserva.getMadeForDay())){//si se quiere cancelar una reserva para hoy, no se permite
+                utilData.ventanaMode = 3;//nada
+                mainController.showVentana(true);
+                mainController.setVentanaInfo("No se puede cancelar la Reserva","Aceptar");
+                mainController.ventanaAddNode(new Label("No se pueden cancelar reservas con menos de 24H de antelación"));
+            }
+            else if(LocalDate.now().plusDays(1).equals(reserva.getMadeForDay()) && (reserva.getFromTime().compareTo(LocalTime.now()) < 0)){//si es para mañana y la reserva tiene una fecha posterior a la hora actual
+                utilData.ventanaMode = 3;//nada
+                mainController.showVentana(true);
+                mainController.setVentanaInfo("No se puede cancelar la Reserva","Aceptar");
+                mainController.ventanaAddNode(new Label("No se pueden cancelar reservas con menos de 24H de antelación"));
+                System.out.println("NO se puede cancelar ##########################");
+            }
+            else{
+                utilData.ventanaMode = 7;
+                utilData.getMainController().setVentanaConfirmar("Cancelar Reserva","Aceptar","Cancelar");
+                utilData.getMainController().ventanaAddNode(new Label("¿Seguro que quieres cancelar la reserva?"));
+                utilData.getMainController().showVentana(true);
+
+                System.out.println("cancelado");
+                parentController.updateMisReservas();
+            }
         } catch (ClubDAOException | IOException ex) {
-            Logger.getLogger(FXMLReservasBoxController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLpistaBoxController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
