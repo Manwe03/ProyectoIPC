@@ -1,5 +1,7 @@
 nbproject/private
-build
-lib
+build/
+lib/
 club.db
 /dist/
+*.class
+*.db

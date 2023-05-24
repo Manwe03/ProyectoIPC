@@ -340,7 +340,7 @@ public class FXMLPerfilController implements Initializable {
                 
                 utilData.ventanaMode = 0;//modo editar datos, es necesario para que la ventana modal sepa que hacer
                 utilData.getMainController().showVentana(true);
-                utilData.getMainController().setVentanaConfirmar("Editar");
+                utilData.getMainController().setVentanaConfirmar("Editar","Cambiar","Cancelar");
                 utilData.getMainController().ventanaAddNode(new Label("Estas seguro de que quieres cambiar la información de tu perfil?"));
             }
         }else{                      //si NO esta loguedo, quiere registrarse
@@ -356,7 +356,7 @@ public class FXMLPerfilController implements Initializable {
 
                 utilData.ventanaMode = 1;//modo registrarse, es necesario para que la ventana modal sepa que hacer
                 utilData.getMainController().showVentana(true);
-                utilData.getMainController().setVentanaInfo("Felicidades");
+                utilData.getMainController().setVentanaInfo("Felicidades","Aceptar");
                 utilData.getMainController().ventanaAddNode(new Label("Tu cuenta ha sido creada"));
             }
         }  
@@ -451,8 +451,8 @@ public class FXMLPerfilController implements Initializable {
                 utilData.setRegistrarse(false);
                 perfilEditMode(false);
                 
-                utilData.setPassword(contraseñaField.getText());
-                utilData.setLogin(nickField.getText());
+                //utilData.setPassword(contraseñaField.getText());
+                //utilData.setLogin(nickField.getText());
                 
                 
             } catch (ClubDAOException ex) {

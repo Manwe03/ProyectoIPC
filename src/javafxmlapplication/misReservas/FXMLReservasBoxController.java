@@ -80,13 +80,15 @@ public class FXMLReservasBoxController implements Initializable {
         if(Club.getInstance().hasCreditCard(utilData.getLogin())) {
             utilData.ventanaMode = 6;
             utilData.setReservasBoxController(this);
-            utilData.getMainController().setVentanaConfirmar("¿Pagar con tarjeta xxxx-xxxx-xxxx-" + Club.getInstance().getMemberByCredentials(utilData.getLogin(), utilData.getPassword()).getCreditCard().substring(12) + "?");
+            utilData.getMainController().setVentanaConfirmar(
+                    "¿Pagar con tarjeta xxxx-xxxx-xxxx-" + club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword()).getCreditCard().substring(12) + "?",
+                    "Pagar","Cancelar");
             utilData.getMainController().showVentana(true);
             
         //Si no tiene tarjeta, mandarlo a la ventana -> registrar tarjeta -> pagar reserva
         } else { //registrar la tarjeta de crédito
             utilData.ventanaMode = 5;
-            utilData.getMainController().setVentanaConfirmar("Añadir tarjeta de crédito");
+            utilData.getMainController().setVentanaConfirmar("Añadir tarjeta de crédito","Pagar","Cancelar");
             FXMLLoader loader = new  FXMLLoader(getClass().getResource("/javafxmlapplication/miniTarjeta/miniTarjeta.fxml"));
             BorderPane pistaBox = loader.load();
             MiniTarjetaController controler = loader.getController();
@@ -100,7 +102,7 @@ public class FXMLReservasBoxController implements Initializable {
     private void onCancelar(ActionEvent event) {
         try {
             utilData.ventanaMode = 7;
-            utilData.getMainController().setVentanaConfirmar("Cancelar Reserva");
+            utilData.getMainController().setVentanaConfirmar("Cancelar Reserva","Aceptar","Cancelar");
             utilData.getMainController().ventanaAddNode(new Label("¿Seguro que quieres cancelar la reserva?"));
             utilData.getMainController().showVentana(true);
             

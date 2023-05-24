@@ -131,17 +131,20 @@ public class FXMLDocumentController implements Initializable {
         mainBorderPane.setDisable(show);
         ventanaPane.setDisable(!show);
     }
-    public void setVentanaInfo(String titulo){
+    public void setVentanaInfo(String titulo, String botonAceptar){
         iButton.setVisible(false);
         dButton.setVisible(true);
+        dButton.setText(botonAceptar);
         titleLabel.setText(titulo);
         ventanaVbox.getChildren().clear();
         ventanaVbox.setSpacing(0);
         ventanaVbox.setAlignment(Pos.TOP_CENTER);
     }
-    public void setVentanaConfirmar(String titulo){
+    public void setVentanaConfirmar(String titulo, String botonAceptar, String botonCancelar){
         iButton.setVisible(true);
-        iButton.setVisible(true);
+        iButton.setText(botonCancelar);
+        dButton.setVisible(true);
+        dButton.setText(botonAceptar);
         titleLabel.setText(titulo);
         ventanaVbox.getChildren().clear();
         ventanaVbox.setSpacing(0);
