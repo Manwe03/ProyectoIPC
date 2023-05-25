@@ -52,7 +52,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="nombreField" editable="false" maxWidth="-Infinity" prefHeight="26.0" prefWidth="128.0" text="asdsa" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                        <TextField fx:id="nombreField" maxWidth="-Infinity" prefHeight="26.0" prefWidth="128.0" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                            <font>
                               <Font size="15.0" />
                            </font>
