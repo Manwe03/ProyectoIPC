@@ -79,7 +79,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-opacity: 60%;
     -fx-effect: dropshadow(gaussian, rgb(0, 0, 0), 0, 10, 0, 0);
 }
-
+#perfilButton:disabled{
+    -fx-opacity: 1;
+}
 /*******************************************************************************
  *                                                                             *
  * Grid                                                                        *
@@ -171,6 +173,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .text-field:hover{
     -fx-background-color: #e9f0e9;
 }
+.text-field:disabled{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-opacity: 1;
+}
 .password-field{
     -fx-border-color: #272727, #272727, #272727 ,#272727;
     -fx-border-radius: 5 0 0 0;
@@ -184,6 +191,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 }
 .password-field:hover{
     -fx-background-color: #e9f0e9;
+}
+.password-field:disabled{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-opacity: 1;
 }
 
 #textFieldError{

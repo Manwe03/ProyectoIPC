@@ -85,11 +85,11 @@ public class FXMLDocumentController implements Initializable {
             club.addSimpleData();
             Image imagenDefault = new Image(new FileInputStream("src/resources/images/elNano.png"));
             club.registerMember("Fernando", "Alonso", "99999999", "33", "33", "", 0, imagenDefault); //registra un miembro de prueba
-            //club.registerMember("Fernando", "Alonso", "99999999", "papo", "0", "0000000000000000", 000, null); //registra un miembro de prueba
-            //club.registerMember("Fernando", "Alonso", "99999999", "antonio", "0", "0000000000000000", 000, null); //registra un miembro de prueba
-            //club.registerMember("Fernando", "Alonso", "99999999", "yiyi", "0", "0000000000000000", 000, null); //registra un miembro de prueba
-            //club.registerMember("Fernando", "Alonso", "99999999", "jovani", "0", "0000000000000000", 000, null); //registra un miembro de prueba
-            //club.registerMember("Fernando", "Alonso", "99999999", "skipy", "0", "0000000000000000", 000, null); //registra un miembro de prueba
+            //club.registerMember("Fernando", "Alonso", "99999999", "papo", "0", "0000000000000000", 000, null);
+            //club.registerMember("Fernando", "Alonso", "99999999", "antonio", "0", "0000000000000000", 000, null);
+            //club.registerMember("Fernando", "Alonso", "99999999", "yiyi", "0", "0000000000000000", 000, null);
+            //club.registerMember("Fernando", "Alonso", "99999999", "jovani", "0", "0000000000000000", 000, null);
+            //club.registerMember("Fernando", "Alonso", "99999999", "skipy", "0", "0000000000000000", 000, null);
             //utilData.setLogin("99");
             //utilData.setPassword("99");
             
