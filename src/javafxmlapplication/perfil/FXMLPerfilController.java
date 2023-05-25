@@ -6,6 +6,8 @@ package javafxmlapplication.perfil;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -170,15 +172,18 @@ public class FXMLPerfilController implements Initializable {
         //LISTENERS para las comprobaciones de los textfields de mi perfil
         nombreField.textProperty().addListener((observable,oldVal,newVal)-> { 
             nombreErrorLabel.setVisible(false);
+            nombreField.setId("");
             clearErrorLabels(0);
         });
         apellidosField.textProperty().addListener((observable,oldVal,newVal)-> {
             apellidosErrorLabel.setVisible(false);
+            nombreField.setId("");
             comprobarFieldsVacios(1);
             clearErrorLabels(1);
         });
         telefonoField.textProperty().addListener((observable,oldVal,newVal)-> { 
             telefonoErrorLabel.setVisible(false);
+            telefonoField.setId("");
             if(!"".equals(newVal)){
                 String lastInput = newVal.substring(newVal.length()-1);
                 if(!lastInput.equals("+") && !lastInput.equals(" ")){
@@ -194,6 +199,7 @@ public class FXMLPerfilController implements Initializable {
         });
         nickField.textProperty().addListener((observable,oldVal,newVal)-> {
             nickErrorLabel.setVisible(false);
+            nickField.setId("");
             if(!"".equals(newVal)){
                 String lastInput = newVal.substring(newVal.length()-1);
                 if(lastInput.equals(" ")){
@@ -203,24 +209,29 @@ public class FXMLPerfilController implements Initializable {
             if(club.existsLogin(newVal)){
                 nickErrorLabel.setText("Este usuario ya existe");
                 nickErrorLabel.setVisible(true);
+                nickField.setId("textFieldError");
             }
             comprobarFieldsVacios(3);
             clearErrorLabels(3);
         });
         contraseñaField.textProperty().addListener((observable,oldVal,newVal)-> {
             contraseñaErrorLabel.setVisible(false);
+            contraseñaField.setId("");
             comprobarFieldsVacios(4);
             clearErrorLabels(4);
         });
         repetirContraseñaField.textProperty().addListener((observable,oldVal,newVal)-> {
             repetirContraseñaErrorLabel.setVisible(false);
+            repetirContraseñaField.setId("");
             if(!contraseñaField.getText().equals(repetirContraseñaField.getText())){
                 repetirContraseñaErrorLabel.setText("Contraseña diferente a la anterior");
                 repetirContraseñaErrorLabel.setVisible(true);
+                repetirContraseñaField.setId("textFieldError");
             }
             if("".equals(repetirContraseñaField.getText())){
                 repetirContraseñaErrorLabel.setText("Campo vacío");
                 repetirContraseñaErrorLabel.setVisible(false);
+                repetirContraseñaField.setId("");
             }
             comprobarFieldsVacios(5);
             clearErrorLabels(5);
@@ -228,8 +239,10 @@ public class FXMLPerfilController implements Initializable {
         numTarjetaField.textProperty().addListener((observable,oldVal,newVal)-> { 
             if(newVal.length() < 16 && newVal.length() != 0){
                 numTarjetaErrorLabel.setVisible(true);
+                numTarjetaField.setId("textFieldError");
             }else{
                 numTarjetaErrorLabel.setVisible(false);
+                numTarjetaField.setId("");
             }
             if(!"".equals(newVal)){
                 try{
@@ -243,8 +256,10 @@ public class FXMLPerfilController implements Initializable {
 
             if(newVal.length() < 3 && newVal.length() != 0){
                 svcErrorLabel.setVisible(true);
+                svcField.setId("textFieldError");
             }else{
                 svcErrorLabel.setVisible(false);
+                svcField.setId("");
             }
             //Solo permite introducir numeros
             if(!"".equals(newVal)){
@@ -282,6 +297,7 @@ public class FXMLPerfilController implements Initializable {
         perfilBottomPane.setMaxHeight(dpi);
         perfilBottomPane.setMinHeight(dpi);        
         
+        
         if(!utilData.isLogged()) {//el botón se pone a registrarse o guardar cambios según isLogged()
             guardarCambiosButton.setText("Registrarse");
         } else {
@@ -308,6 +324,16 @@ public class FXMLPerfilController implements Initializable {
             updateMiPerfilLabelsInfo();
             hideErrorLabels();
             perfilEditMode(false);
+            
+            Image imagen = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword()).getImage();
+            try {
+                imagen = new Image(new FileInputStream("src/resources/images/user-128.png"));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(FXMLPerfilController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            imagenPerfilRegistro.imageProperty().setValue(imagen);
+            //imagenPerfilRegistro.setImage(imagen);
+            
             contraseñaField.setVisible(false);
             contraseñaFieldV.setVisible(false);
             perfilEditarButton.setDisable(false);
@@ -402,7 +428,8 @@ public class FXMLPerfilController implements Initializable {
             try {
                 BufferedImage imagenBuf = ImageIO.read(archivoImagen);
                 Image imagen = SwingFXUtils.toFXImage(imagenBuf, null);
-                imagenPerfilRegistro.setImage(imagen);                
+                imagenPerfilRegistro.setImage(imagen);
+                club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword()).setImage(imagen);
             } catch (IOException e) {}
         }   
     }
@@ -410,8 +437,10 @@ public class FXMLPerfilController implements Initializable {
     private void comprobarTarjetaField(){
         if(numTarjetaField.getText().length() == 0 || numTarjetaField.getText().length() == 16){
             numTarjetaErrorLabel.setVisible(false);
+            numTarjetaField.setId("");
         }else{
             numTarjetaErrorLabel.setVisible(true);
+            numTarjetaField.setId("textFieldError");
         }
     }            
     /**Comprueba se hay algun field vacio por encima de la posicion i, si lo hay muestra el error*/
@@ -420,6 +449,7 @@ public class FXMLPerfilController implements Initializable {
             if(formularioFieldArray[j].getText().isBlank()){
                 formularioErrordArray[j].setText("Campo Obligatorio");
                 formularioErrordArray[j].setVisible(true);
+                formularioFieldArray[j].setId("textFieldError");
             }
         }
     }
@@ -431,6 +461,7 @@ public class FXMLPerfilController implements Initializable {
             if(formularioErrordArray[j].getText().contains("Campo Obligatorio")){
                 formularioErrordArray[j].setText("Campo vacío");
                 formularioErrordArray[j].setVisible(false);
+                formularioFieldArray[j].setId("");
             }
         }
     }
@@ -528,6 +559,7 @@ public class FXMLPerfilController implements Initializable {
         numTarjetaLabel.setVisible(edit);
         svcLabel.setVisible(edit);
         
+        subirImagen.setDisable(!edit);
         nombreField.setDisable(!edit);
         apellidosField.setDisable(!edit);
         telefonoField.setDisable(!edit);
@@ -551,6 +583,15 @@ public class FXMLPerfilController implements Initializable {
         repetirContraseñaErrorLabel.setVisible(false);
         numTarjetaErrorLabel.setVisible(false);
         svcErrorLabel.setVisible(false);
+        
+        nombreField.setId("");
+        apellidosField.setId("");
+        telefonoField.setId("");
+        nickField.setId("");
+        contraseñaField.setId("");
+        repetirContraseñaField.setId("");
+        numTarjetaField.setId("");
+        svcField.setId("");
     }
 
     private boolean moveLabelIntoBorder(Node nodo, boolean globalState){ //https://www.youtube.com/watch?v=UdGiuDDi7Rg no me puedo creer que javafx no permita animaciones/transiciones en css :( vaya M, full serio, increible
@@ -559,11 +600,11 @@ public class FXMLPerfilController implements Initializable {
         translateR.setNode(nodo);
         translateR.setDuration(Duration.millis(200));
         if(globalState){
-            translateR.setToX(nombreField.getLayoutY()-23);//Puede que haya que escalarlo con el dpi
+            translateR.setToX(nombreField.getLayoutY()-37);//Puede que haya que escalarlo con el dpi
             state = false;
         }
         else{
-            translateR.setToX(nombreField.getLayoutY()-15);
+            translateR.setToX(nombreField.getLayoutY()-26);
             state = true;
         }
         translateR.play();

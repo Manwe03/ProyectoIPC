@@ -73,15 +73,12 @@ public class LoginController  implements Initializable{
         contraseñaField.textProperty().bindBidirectional(temporaryTextField.textProperty());
         
         usuarioField.textProperty().addListener((observable,oldVal,newVal)-> { 
-            usuarioField.setId("defaultInputBox");
             contraseñaErrorLabel.setVisible(false);
         });
         contraseñaField.textProperty().addListener((observable,oldVal,newVal)-> { 
-            contraseñaField.setId("defaultInputBox"); 
             contraseñaErrorLabel.setVisible(false);
         });
         temporaryTextField.textProperty().addListener((observable,oldVal,newVal)-> { 
-            temporaryTextField.setId("defaultInputBox"); 
             contraseñaErrorLabel.setVisible(false);
         });
         contraseñaErrorLabel.setVisible(false);
@@ -101,12 +98,12 @@ public class LoginController  implements Initializable{
     private void intentoIniciarSesion(ActionEvent event) throws ClubDAOException, IOException, InterruptedException {
         
         if(usuarioField.getText().isBlank()){
-            usuarioField.setId("defaultInputBoxError");
+            usuarioField.setId("textFieldError");
             contraseñaErrorLabel.setText("Usuario vacío");
             contraseñaErrorLabel.setVisible(true);
         }else if(contraseñaField.getText().isBlank()){
-            contraseñaField.setId("defaultInputBoxError");
-            temporaryTextField.setId("defaultInputBoxError");
+            contraseñaField.setId("textFieldError");
+            temporaryTextField.setId("textFieldError");
             contraseñaErrorLabel.setText("Contraseña vacía");
             contraseñaErrorLabel.setVisible(true);    
         }else{
@@ -119,7 +116,6 @@ public class LoginController  implements Initializable{
                 contraseñaField.setEditable(false);
                 menuButton.setDisable(true);
                 login.setDisable(true);
-                //System.out.println("He pasado por login");
                 PauseTransition pause = new PauseTransition(Duration.millis(300));
                 pause.setOnFinished(pauseEvent -> {                
                     utilData.setLogin(usuarioField.getText());
@@ -130,9 +126,9 @@ public class LoginController  implements Initializable{
                 pause.play();
                 ((Button)event.getSource()).getScene().setCursor(Cursor.HAND);
             } catch (NullPointerException ex) {
-                usuarioField.setId("defaultInputBoxError");
-                contraseñaField.setId("defaultInputBoxError");
-                temporaryTextField.setId("defaultInputBoxError");
+                usuarioField.setId("textFieldError");
+                contraseñaField.setId("textFieldError");
+                temporaryTextField.setId("textFieldError");
 
                 contraseñaErrorLabel.setText("Usuario o contraseña incorrectos");
                 contraseñaErrorLabel.setVisible(true);
@@ -152,7 +148,7 @@ public class LoginController  implements Initializable{
             ojo.setImage(nover);
         }
     }
-
+    
     @FXML
     private void onMenuButton(ActionEvent event) {
         utilData.showScene("Main");

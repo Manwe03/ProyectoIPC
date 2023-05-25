@@ -18,6 +18,9 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -40,11 +43,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private BorderPane mainBorderPane;
     @FXML
-    private Button perfilButton;
+    private ToggleButton perfilButton;
     @FXML
-    private Button reservasButton;
+    private ToggleButton reservasButton;
     @FXML
-    private Button pistasButton;
+    private ToggleButton pistasButton;
 
     private Club club;
     private UtilData utilData;
@@ -75,18 +78,19 @@ public class FXMLDocumentController implements Initializable {
         
                         //INICIALIZACIÓN PARA TESTING//
         ////////////////////////////////////////////////////////////////////////
+        
         try {
             club.setInitialData(); //Resetea la base de datos al iniciar
             //club.addSimpleData();
             
-            club.registerMember("Fernando", "Alonso", "99999999", "pepe", "0", "", 0, null); //registra un miembro de prueba
-            club.registerMember("Fernando", "Alonso", "99999999", "papo", "0", "0000000000000000", 000, null); //registra un miembro de prueba
+            club.registerMember("Fernando", "Alonso", "99999999", "33", "33", "", 0, null); //registra un miembro de prueba
+            //club.registerMember("Fernando", "Alonso", "99999999", "papo", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "antonio", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "yiyi", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "jovani", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "skipy", "0", "0000000000000000", 000, null); //registra un miembro de prueba
-            //utilData.setLogin("0");
-            //utilData.setPassword("0");
+            utilData.setLogin("99");
+            utilData.setPassword("99");
             
         } catch (ClubDAOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,7 +103,6 @@ public class FXMLDocumentController implements Initializable {
         
         mainBorderPane.maxHeightProperty().bind(mainStackPane.heightProperty());
         mainBorderPane.minHeightProperty().bind(mainStackPane.heightProperty());
-        
     }    
 
     public void updateButtonText(){
@@ -160,9 +163,6 @@ public class FXMLDocumentController implements Initializable {
         mainBorderPane.setCenter(null);
         mainBorderPane.setCenter(escena.getRoot());
         utilData.getPerfilController().startPerfil();
-        perfilButton.setId("buttonTabSelected");
-        reservasButton.setId("buttonDeault");
-        pistasButton.setId("buttonDeault");
         updateButtonText();
     }
     
@@ -177,9 +177,6 @@ public class FXMLDocumentController implements Initializable {
         mainBorderPane.setCenter(null);
         mainBorderPane.setCenter(escena.getRoot());
         utilData.getReservasController().startReservas();
-        perfilButton.setId("buttonDeault");
-        reservasButton.setId("buttonTabSelected");
-        pistasButton.setId("buttonDeault");
         updateButtonText();
     }
     
@@ -187,6 +184,7 @@ public class FXMLDocumentController implements Initializable {
     public void triggerOnPistasButton(){
         onPistasButton(new ActionEvent(this, pistasButton));
         pistasButton.requestFocus();
+        pistasButton.setSelected(true);
     }
     @FXML
     private void onPistasButton(ActionEvent event) {
@@ -194,9 +192,6 @@ public class FXMLDocumentController implements Initializable {
         mainBorderPane.setCenter(null);
         mainBorderPane.setCenter(escena.getRoot());
         utilData.getPistasController().startPistas();
-        perfilButton.setId("buttonDeault");
-        reservasButton.setId("buttonDeault");
-        pistasButton.setId("buttonTabSelected");
         updateButtonText();
     }
     

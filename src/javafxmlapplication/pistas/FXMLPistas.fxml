@@ -13,7 +13,7 @@
 
 <BorderPane stylesheets="@../BaseStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.pistas.FXMLPistasController">
    <top>
-      <HBox fx:id="barraPistas" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox id="1Ventana" fx:id="barraPistas" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="antButton" mnemonicParsing="false" onAction="#onAntButton" text="Anterior" HBox.hgrow="NEVER">
                <HBox.margin>
@@ -30,7 +30,7 @@
             <HBox alignment="CENTER" maxWidth="174.0" minWidth="174.0" prefWidth="174.0" spacing="10.0" HBox.hgrow="NEVER">
                <children>
                   <VBox fx:id="buscadorContainer" alignment="CENTER" HBox.hgrow="ALWAYS" />
-                  <Button maxWidth="60.0" minWidth="60.0" mnemonicParsing="false" onAction="#onBuscarButton" prefWidth="60.0" text="Buscar" />
+                  <Button maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" onAction="#onBuscarButton" prefWidth="90.0" text="Buscar" />
                </children>
             </HBox>
             <Pane prefHeight="200.0" HBox.hgrow="ALWAYS" />
@@ -48,17 +48,21 @@
       </HBox>
    </top>
    <center>
-      <ScrollPane fx:id="scrollPane" BorderPane.alignment="CENTER">
-         <content>
-            <HBox alignment="TOP_CENTER">
-               <children>
-                  <FlowPane fx:id="flowPane" columnHalignment="CENTER" prefWidth="1915.0" />
-               </children>
-            </HBox>
-         </content>
+      <VBox BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
-      </ScrollPane>
+         <children>
+            <ScrollPane fx:id="scrollPane">
+               <content>
+                  <HBox alignment="TOP_CENTER" style="-fx-background-color: transparent;">
+                     <children>
+                        <FlowPane fx:id="flowPane" columnHalignment="CENTER" prefWidth="1915.0" />
+                     </children>
+                  </HBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
    </center>
 </BorderPane>
