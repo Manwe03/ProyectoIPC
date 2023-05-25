@@ -357,11 +357,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-border-radius: 3;
 }
 #opcionalLabel{
-    -fx-translate-y: 10px;
-    -fx-background-color: #ffffff;
+    -fx-translate-y: 20px;
+    -fx-background-color: transparent;
     -fx-background-radius: 5;
-    -fx-border-color: #ffffff;
-    -fx-border-radius: 0;
+    -fx-border-color: black;
+    -fx-border-style: hidden hidden solid hidden;
     -fx-border-insets: 3;
 }
 

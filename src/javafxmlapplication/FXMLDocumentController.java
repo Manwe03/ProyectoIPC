@@ -4,6 +4,8 @@
  */
 package javafxmlapplication;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -21,6 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -82,8 +85,8 @@ public class FXMLDocumentController implements Initializable {
         try {
             club.setInitialData(); //Resetea la base de datos al iniciar
             //club.addSimpleData();
-            
-            club.registerMember("Fernando", "Alonso", "99999999", "33", "33", "", 0, null); //registra un miembro de prueba
+            Image imagenDefault = new Image(new FileInputStream("src/resources/images/elNano.png"));
+            club.registerMember("Fernando", "Alonso", "99999999", "33", "33", "", 0, imagenDefault); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "papo", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "antonio", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "yiyi", "0", "0000000000000000", 000, null); //registra un miembro de prueba
@@ -93,6 +96,8 @@ public class FXMLDocumentController implements Initializable {
             utilData.setPassword("99");
             
         } catch (ClubDAOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         ////////////////////////////////////////////////////////////////////////
@@ -217,7 +222,7 @@ public class FXMLDocumentController implements Initializable {
             break;
             case 2: // 2:hacer reserva 
                 FXMLpistaBoxController pistaController = utilData.getPistaBoxController();
-                pistaController.safeRegisterBooking(LocalDateTime.now(), utilData.getSelectedDate());
+                pistaController.safeRegisterBooking(LocalDateTime.now(), utilData.getSelectedDate());               
             break;
             case 3: // 3:nada 
             break;
