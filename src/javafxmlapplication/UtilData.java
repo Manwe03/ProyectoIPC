@@ -112,8 +112,6 @@ public class UtilData {
     public boolean isLogged(){
         try {
             Club.getInstance().getMemberByCredentials(this.login, this.password);
-            System.out.println(this.login);
-            System.out.println(this.password);
             return true;
         } catch (NullPointerException elBicho){
             return false;

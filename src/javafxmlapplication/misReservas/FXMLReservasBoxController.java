@@ -121,7 +121,7 @@ public class FXMLReservasBoxController implements Initializable {
                 mainController.showVentana(true);
                 mainController.setVentanaInfo("No se puede cancelar la Reserva","Aceptar");
                 mainController.ventanaAddNode(new Label("No se pueden cancelar reservas con menos de 24H de antelación"));
-                System.out.println("NO se puede cancelar ##########################");
+                
             }
             else{
                 utilData.ventanaMode = 7;
@@ -129,7 +129,7 @@ public class FXMLReservasBoxController implements Initializable {
                 utilData.getMainController().ventanaAddNode(new Label("¿Seguro que quieres cancelar la reserva?"));
                 utilData.getMainController().showVentana(true);
 
-                System.out.println("cancelado");
+                
                 parentController.updateMisReservas();
             }
         } catch (ClubDAOException | IOException ex) {
@@ -141,7 +141,7 @@ public class FXMLReservasBoxController implements Initializable {
         pagarB.setText("Pagado");
         pagarB.setDisable(true);
         this.reserva.setPaid(true);
-        System.out.println("Pagar -> Pagado");
+        
     }
     
 }

@@ -17,13 +17,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane stylesheets="@../BaseStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.login.LoginController">
+<BorderPane id="1Ventana" stylesheets="@../BaseStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.login.LoginController">
    <center>
       <VBox alignment="CENTER">
          <children>
             <HBox alignment="CENTER" VBox.vgrow="NEVER">
                <children>
-                  <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                  <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="grid">
                     <columnConstraints>
                       <ColumnConstraints halignment="RIGHT" hgrow="NEVER" />
                       <ColumnConstraints halignment="LEFT" hgrow="NEVER" />
@@ -38,17 +38,17 @@
                         <RowConstraints minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextField id="defaultInputBox" fx:id="usuarioField" maxHeight="30.0" maxWidth="128.0" minHeight="30.0" minWidth="128.0" prefHeight="30.0" prefWidth="128.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                        <TextField fx:id="usuarioField" maxHeight="30.0" maxWidth="128.0" minHeight="30.0" minWidth="128.0" prefHeight="30.0" prefWidth="128.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </TextField>
-                        <PasswordField id="defaultInputBox" fx:id="contraseñaField" maxHeight="30.0" maxWidth="128.0" minHeight="30.0" minWidth="128.0" prefHeight="30.0" prefWidth="128.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                        <PasswordField fx:id="contraseñaField" maxHeight="30.0" maxWidth="128.0" minHeight="30.0" minWidth="128.0" prefHeight="30.0" prefWidth="128.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </PasswordField>
-                        <TextField id="defaultInputBox" fx:id="temporaryTextField" focusTraversable="false" maxHeight="30.0" maxWidth="128.0" minHeight="30.0" minWidth="128.0" prefHeight="30.0" prefWidth="128.0" stylesheets="@../BaseStyleSheet.css" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                        <TextField fx:id="temporaryTextField" focusTraversable="false" maxHeight="30.0" maxWidth="128.0" minHeight="30.0" minWidth="128.0" prefHeight="30.0" prefWidth="128.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -65,14 +65,14 @@
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="register" mnemonicParsing="false" onAction="#irARegistro" style="-fx-background-color: transparent; -fx-underline: true;" text="Regístrate">
+                              <Button id="registrarseButton" fx:id="register" mnemonicParsing="false" onAction="#irARegistro" text="Regístrate">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Button>
                            </children>
                         </HBox>
-                        <ToggleButton id="buttonDeault" fx:id="mostrarButton" maxHeight="33.0" maxWidth="33.0" minHeight="33.0" minWidth="33.0" mnemonicParsing="false" onAction="#verContraseña" prefHeight="33.0" prefWidth="33.0" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                        <ToggleButton id="eyeButton" fx:id="mostrarButton" maxHeight="20.0" minHeight="20.0" minWidth="30.0" mnemonicParsing="false" onAction="#verContraseña" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                            <GridPane.margin>
                               <Insets bottom="3.0" left="5.0" right="5.0" />
                            </GridPane.margin>

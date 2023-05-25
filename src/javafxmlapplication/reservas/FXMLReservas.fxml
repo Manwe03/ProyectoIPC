@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.reservas.FXMLReservasController">
+<BorderPane id="1Ventana" stylesheets="@../BaseStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.reservas.FXMLReservasController">
    <top>
-      <Label fx:id="nombreUsuarioReservas" alignment="CENTER" contentDisplay="CENTER" prefHeight="63.0" prefWidth="413.0" text="Label" BorderPane.alignment="CENTER" />
+      <Label id="titleLabel" fx:id="nombreUsuarioReservas" alignment="CENTER" contentDisplay="CENTER" maxHeight="63.0" minHeight="40.0" prefHeight="63.0" text="Label" BorderPane.alignment="CENTER" />
    </top>
    <center>
       <ScrollPane fx:id="misReservasScrollPane" BorderPane.alignment="CENTER">
          <content>
-            <VBox fx:id="misReservasContainer" alignment="TOP_CENTER" />
+            <HBox>
+               <children>
+                  <VBox fx:id="misReservasContainer" alignment="TOP_CENTER" maxWidth="800.0" prefWidth="800.0" spacing="10.0" HBox.hgrow="SOMETIMES">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
          </content>
       </ScrollPane>
    </center>

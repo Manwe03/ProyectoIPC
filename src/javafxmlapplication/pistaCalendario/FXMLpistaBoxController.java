@@ -285,7 +285,7 @@ public class FXMLpistaBoxController implements Initializable {
             if(!reservaDuplicada){ //si se puede reservar a esa hora es dicir no hay una reserva a la misma hora, hace la reserva
                 club.registerBooking(bookingDate, madeForDay, fromHour, false, court, member).setPaid(paid);
                 
-                System.out.println("Reserva Exitosa");
+                
                 updateButtonState();
                 //updateButtonsText();
                 return true;//exito
@@ -366,7 +366,7 @@ public class FXMLpistaBoxController implements Initializable {
                         mainController.showVentana(true);
                         mainController.setVentanaInfo("No se puede cancelar la Reserva","Aceptar");
                         mainController.ventanaAddNode(new Label("No se pueden cancelar reservas con menos de 24H de antelación"));
-                        System.out.println("NO se puede cancelar ##########################");
+                        
                     }
                     else{
                         for(int i = 0; i<reservasDelDia.size();i++){
@@ -377,8 +377,6 @@ public class FXMLpistaBoxController implements Initializable {
                                 mainController.showVentana(true);
                                 mainController.setVentanaConfirmar("Cancelar Reserva","Aceptar","Cancelar");
                                 mainController.ventanaAddNode(new Label("¿Estas seguro de que quieres cancelar tu reserva?"));
-
-                                System.out.println("Reserva cancelada");
                                 break;
                             }
                         }
