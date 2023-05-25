@@ -88,7 +88,7 @@ public class FXMLReservasBoxController implements Initializable {
             utilData.ventanaMode = 6;
             utilData.setReservasBoxController(this);
             utilData.getMainController().setVentanaConfirmar(
-                    "¿Pagar con tarjeta xxxx-xxxx-xxxx-" + club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword()).getCreditCard().substring(12) + "?",
+                    "¿Pagar con xxxx-xxxx-xxxx-" + club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword()).getCreditCard().substring(12) + "?",
                     "Pagar","Cancelar");
             utilData.getMainController().showVentana(true);
             
@@ -113,13 +113,13 @@ public class FXMLReservasBoxController implements Initializable {
             if(LocalDate.now().equals(reserva.getMadeForDay())){//si se quiere cancelar una reserva para hoy, no se permite
                 utilData.ventanaMode = 3;//nada
                 mainController.showVentana(true);
-                mainController.setVentanaInfo("No se puede cancelar la Reserva","Aceptar");
+                mainController.setVentanaInfo("No se puede cancelar la reserva","Aceptar");
                 mainController.ventanaAddNode(new Label("No se pueden cancelar reservas con menos de 24H de antelación"));
             }
             else if(LocalDate.now().plusDays(1).equals(reserva.getMadeForDay()) && (reserva.getFromTime().compareTo(LocalTime.now()) < 0)){//si es para mañana y la reserva tiene una fecha posterior a la hora actual
                 utilData.ventanaMode = 3;//nada
                 mainController.showVentana(true);
-                mainController.setVentanaInfo("No se puede cancelar la Reserva","Aceptar");
+                mainController.setVentanaInfo("No se puede cancelar la reserva","Aceptar");
                 mainController.ventanaAddNode(new Label("No se pueden cancelar reservas con menos de 24H de antelación"));
                 
             }

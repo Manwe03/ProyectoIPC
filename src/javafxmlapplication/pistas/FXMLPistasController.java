@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,6 +63,8 @@ public class FXMLPistasController implements Initializable {
     private VBox buscadorContainer;
     @FXML
     private Label dia;
+    @FXML
+    public Button buscarB;
 
     
     /**
@@ -92,7 +95,7 @@ public class FXMLPistasController implements Initializable {
         
         scrollPane.setFitToWidth(true);     //el scroll pane aparece cuando se pasa de altura no de ancho
         
-        utilData.setSelectedDate(dpBookingDay.getValue());        
+        utilData.setSelectedDate(dpBookingDay.getValue());
                         
         startPistas();
     }    

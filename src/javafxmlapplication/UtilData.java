@@ -13,6 +13,7 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -24,6 +25,7 @@ import javafxmlapplication.pistas.FXMLPistasController;
 import javafxmlapplication.reservas.FXMLReservasController;
 import model.Club;
 import model.ClubDAOException;
+import model.Member;
 
 /**
  * No se usa de momento
@@ -111,8 +113,9 @@ public class UtilData {
     
     public boolean isLogged(){
         try {
-            Club.getInstance().getMemberByCredentials(this.login, this.password);
-            return true;
+            Member m = Club.getInstance().getMemberByCredentials(this.login, this.password);
+            if(m!=null) { return true; }            
+            else { return false; }
         } catch (NullPointerException elBicho){
             return false;
         } catch (ClubDAOException | IOException ex) {

@@ -269,7 +269,7 @@ public class FXMLPerfilController implements Initializable {
                     svcField.setText(oldVal);
                 }
             }
-        });
+        });  
         
         //Limitadores de tamaño
         addTextLimiter(svcField,3);
@@ -317,6 +317,13 @@ public class FXMLPerfilController implements Initializable {
                 cancelarCambiosButton.setDisable(true);
                 loginButton.setVisible(true);
                 nickField.setDisable(false);
+                try {
+                    Image imagenDefault = new Image(new FileInputStream("src/resources/images/user-128.png"));
+                    imagenPerfilRegistro.setImage(imagenDefault);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(FXMLPerfilController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             }else{
                 utilData.showScene("Login");
             }
@@ -326,13 +333,7 @@ public class FXMLPerfilController implements Initializable {
             perfilEditMode(false);
             
             Image imagen = club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword()).getImage();
-            try {
-                imagen = new Image(new FileInputStream("src/resources/images/user-128.png"));
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(FXMLPerfilController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            imagenPerfilRegistro.imageProperty().setValue(imagen);
-            //imagenPerfilRegistro.setImage(imagen);
+            imagenPerfilRegistro.setImage(imagen);            
             
             contraseñaField.setVisible(false);
             contraseñaFieldV.setVisible(false);
@@ -375,7 +376,7 @@ public class FXMLPerfilController implements Initializable {
                 repetirContraseñaField.setText("");   
                 utilData.ventanaMode = 1;//modo registrarse, es necesario para que la ventana modal sepa que hacer
                 utilData.getMainController().showVentana(true);
-                utilData.getMainController().setVentanaInfo("Felicidades","Aceptar");
+                utilData.getMainController().setVentanaInfo("¡Felicidades!","Aceptar");
                 utilData.getMainController().ventanaAddNode(new Label("Tu cuenta ha sido creada"));
                 formularioFieldArray[0].setText("");
                 formularioFieldArray[1].setText("");

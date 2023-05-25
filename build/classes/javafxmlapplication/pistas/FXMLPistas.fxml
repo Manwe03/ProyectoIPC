@@ -30,7 +30,7 @@
             <HBox alignment="CENTER" maxWidth="174.0" minWidth="174.0" prefWidth="174.0" spacing="10.0" HBox.hgrow="NEVER">
                <children>
                   <VBox fx:id="buscadorContainer" alignment="CENTER" HBox.hgrow="ALWAYS" />
-                  <Button maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" onAction="#onBuscarButton" prefWidth="90.0" text="Buscar" />
+                  <Button fx:id="buscarB" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" onAction="#onBuscarButton" prefWidth="90.0" text="Buscar" />
                </children>
             </HBox>
             <Pane prefHeight="200.0" HBox.hgrow="ALWAYS" />
