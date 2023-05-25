@@ -35,6 +35,7 @@ public class AutoCompleteTextField extends TextField
     super();
     entries = new TreeSet<>();
     entriesPopup = new ContextMenu();
+    entriesPopup.setId("buscador");
     textProperty().addListener(new ChangeListener<String>()
     {
       @Override

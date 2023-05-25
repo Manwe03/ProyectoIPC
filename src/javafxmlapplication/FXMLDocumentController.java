@@ -20,9 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -84,7 +82,7 @@ public class FXMLDocumentController implements Initializable {
         
         try {
             club.setInitialData(); //Resetea la base de datos al iniciar
-            //club.addSimpleData();
+            club.addSimpleData();
             Image imagenDefault = new Image(new FileInputStream("src/resources/images/elNano.png"));
             club.registerMember("Fernando", "Alonso", "99999999", "33", "33", "", 0, imagenDefault); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "papo", "0", "0000000000000000", 000, null); //registra un miembro de prueba
@@ -92,8 +90,8 @@ public class FXMLDocumentController implements Initializable {
             //club.registerMember("Fernando", "Alonso", "99999999", "yiyi", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "jovani", "0", "0000000000000000", 000, null); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "skipy", "0", "0000000000000000", 000, null); //registra un miembro de prueba
-            utilData.setLogin("99");
-            utilData.setPassword("99");
+            //utilData.setLogin("99");
+            //utilData.setPassword("99");
             
         } catch (ClubDAOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);

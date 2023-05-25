@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -87,6 +86,7 @@ public class FXMLPistasController implements Initializable {
             dia.setText(diaEnEspañol(newVal));
             updatePistasView();
         });
+        
         
         //buscadorComboBox.getT
         //updateBuscador(String nombreKey)
@@ -169,7 +169,7 @@ public class FXMLPistasController implements Initializable {
         buscadorTextField = new AutoCompleteTextField();
         buscadorTextField.maxWidth(113);
         buscadorTextField.minWidth(113);
-        
+        buscarB.disableProperty().bind(buscadorTextField.textProperty().isEmpty());
         buscadorContainer.getChildren().clear();
         buscadorContainer.getChildren().add(buscadorTextField);
         
