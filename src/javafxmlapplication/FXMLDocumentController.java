@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,12 +22,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.image.Image;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafxmlapplication.miniTarjeta.MiniTarjetaController;
 import javafxmlapplication.perfil.FXMLPerfilController;
 import javafxmlapplication.pistaCalendario.FXMLpistaBoxController;
@@ -63,9 +63,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button dButton;
     @FXML
-    private Text infoLabel;
+    private Label infoLabel;
     @FXML
     private VBox ventanaVbox;
+    @FXML
+    private ToggleGroup menu;
 
     /**
      * Initializes the controller class.
@@ -79,7 +81,7 @@ public class FXMLDocumentController implements Initializable {
         
                         //INICIALIZACIÓN PARA TESTING//
         ////////////////////////////////////////////////////////////////////////
-        
+        /*
         try {
             club.setInitialData(); //Resetea la base de datos al iniciar
             club.addSimpleData();
@@ -98,8 +100,13 @@ public class FXMLDocumentController implements Initializable {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
         ////////////////////////////////////////////////////////////////////////
-
+        
+        if(LocalTime.now().isAfter(LocalTime.of(20, 0))){
+            infoLabel.setText("No se puede reservar ninguna pista para hoy, tienes que iniciar sesión para ver las pistas de mañana");
+            infoLabel.setVisible(true);
+        }
         
         mainBorderPane.maxWidthProperty().bind(mainStackPane.widthProperty());
         mainBorderPane.minWidthProperty().bind(mainStackPane.widthProperty());

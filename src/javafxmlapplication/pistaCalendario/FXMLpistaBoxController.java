@@ -105,7 +105,7 @@ public class FXMLpistaBoxController implements Initializable {
         
         utilData.setSize_DPI(offsetPane,0.2,0.15);
         utilData.setSize_DPI(gridPane,3.7,7);
-        hourVBox.setSpacing(utilData.getDpi()*0.264);
+        hourVBox.setSpacing(utilData.getDpi()*0.28);
 
         pressedState = new byte[13]; // 0 posicion normal // 1 animacion activa
         reservaState = new byte[17]; // 0 libre // 1 reservado // 2 reservado por mi // dos vacios al principio y al final

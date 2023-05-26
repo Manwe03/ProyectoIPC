@@ -13,7 +13,6 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -114,8 +113,7 @@ public class UtilData {
     public boolean isLogged(){
         try {
             Member m = Club.getInstance().getMemberByCredentials(this.login, this.password);
-            if(m!=null) { return true; }            
-            else { return false; }
+            return m!=null;
         } catch (NullPointerException elBicho){
             return false;
         } catch (ClubDAOException | IOException ex) {
