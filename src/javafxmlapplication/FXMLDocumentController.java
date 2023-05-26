@@ -78,7 +78,6 @@ public class FXMLDocumentController implements Initializable {
         utilData = UtilData.getInstance();
         utilData.setMainController(this);
         
-        
                         //INICIALIZACIÓN PARA TESTING//
         ////////////////////////////////////////////////////////////////////////
         /*
