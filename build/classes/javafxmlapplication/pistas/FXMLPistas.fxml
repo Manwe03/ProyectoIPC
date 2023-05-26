@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane stylesheets="@../BaseStyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxmlapplication.pistas.FXMLPistasController">
    <top>
@@ -20,19 +21,37 @@
                   <Insets />
                </HBox.margin></Button>
             <Pane prefHeight="200.0" HBox.hgrow="ALWAYS" />
-            <Label fx:id="dia" text="Día">
+            <Label fx:id="dia" alignment="CENTER_RIGHT" minWidth="80.0" text="Día">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
+               <font>
+                  <Font size="14.0" />
+               </font>
             </Label>
             <DatePicker fx:id="dpBookingDay" />
             <Pane maxWidth="100.0" minWidth="50.0" prefWidth="100.0" HBox.hgrow="NEVER" />
-            <HBox alignment="CENTER" maxWidth="174.0" minWidth="174.0" prefWidth="174.0" spacing="10.0" HBox.hgrow="NEVER">
+            <VBox alignment="BOTTOM_CENTER" HBox.hgrow="NEVER">
                <children>
-                  <VBox fx:id="buscadorContainer" alignment="CENTER" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="buscarB" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" onAction="#onBuscarButton" prefWidth="90.0" text="Buscar" />
+                  <Label text="Reservas de otros Usuarios">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <HBox alignment="CENTER" maxWidth="174.0" minWidth="174.0" prefWidth="174.0" spacing="10.0">
+                     <children>
+                        <VBox fx:id="buscadorContainer" alignment="CENTER" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="buscarB" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" onAction="#onBuscarButton" prefWidth="90.0" text="Buscar" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+               <padding>
+                  <Insets bottom="30.0" />
+               </padding>
+            </VBox>
             <Pane prefHeight="200.0" HBox.hgrow="ALWAYS" />
             <Button fx:id="posButton" mnemonicParsing="false" onAction="#onPosButton" text="Siguiente" HBox.hgrow="NEVER">
                <HBox.margin>

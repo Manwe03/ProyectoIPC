@@ -31,6 +31,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafxmlapplication.FXMLDocumentController;
 import javafxmlapplication.UtilData;
@@ -418,21 +420,26 @@ public class FXMLPerfilController implements Initializable {
     }
 
     @FXML
-    private void onSubirImagen(ActionEvent event) {
-        JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de imagen", "jpg", "jpeg", "png");
-        fileChooser.setFileFilter(filter);
+    private void onSubirImagen(ActionEvent event) { //http://acodigo.blogspot.com/2014/12/file-chooser-javafx-abrir-archivos.html#:~:text=File%20Chooser%20es%20un%20control,un%20determinado%20tipo%20de%20archivo.
+        Stage stage = (Stage) subirImagen.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Buscar Imagen");
 
-        int resultado = fileChooser.showOpenDialog(null);
-        if (resultado == JFileChooser.APPROVE_OPTION) {
-            File archivoImagen = fileChooser.getSelectedFile();
-            try {
-                BufferedImage imagenBuf = ImageIO.read(archivoImagen);
-                Image imagen = SwingFXUtils.toFXImage(imagenBuf, null);
-                imagenPerfilRegistro.setImage(imagen);
-                club.getMemberByCredentials(utilData.getLogin(), utilData.getPassword()).setImage(imagen);
-            } catch (IOException e) {}
-        }   
+        // Agregar filtros para facilitar la busqueda
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("All Images", "*.*"),
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+
+        // Obtener la imagen seleccionada
+        File imgFile = fileChooser.showOpenDialog(stage);
+
+        // Mostar la imagen
+        if (imgFile != null) {
+            Image image = new Image("file:" + imgFile.getAbsolutePath());
+            imagenPerfilRegistro.setImage(image);
+        }  
     }
     
     private void comprobarTarjetaField(){
