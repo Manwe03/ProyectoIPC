@@ -167,8 +167,6 @@ public class FXMLPistasController implements Initializable {
     private void updateBuscador(){
         //buscadorComboBox.getItems().clear(); //elimina los elemnetos de la combobox
         buscadorTextField = new AutoCompleteTextField();
-        buscadorTextField.maxWidth(113);
-        buscadorTextField.minWidth(113);
         buscarB.disableProperty().bind(buscadorTextField.textProperty().isEmpty());
         buscadorContainer.getChildren().clear();
         buscadorContainer.getChildren().add(buscadorTextField);
