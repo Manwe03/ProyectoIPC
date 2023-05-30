@@ -63,7 +63,7 @@ public class FXMLReservasController implements Initializable {
         if(utilData.isLogged()){
             try {
                 updateMisReservas();
-                nombreUsuarioReservas.setText("Tus reservas:");
+                nombreUsuarioReservas.setText("Tus Reservas:");
             } catch (ClubDAOException | IOException ex) {
                 Logger.getLogger(FXMLReservasController.class.getName()).log(Level.SEVERE, null, ex);
             }
