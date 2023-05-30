@@ -4,6 +4,8 @@
  */
 package javafxmlapplication;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -13,6 +15,7 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -105,6 +108,14 @@ public class UtilData {
         stage.setMinHeight(dpi*6);
         stage.setMinWidth(dpi*7);
         stage.setTitle("GreenBall");
+        stage.getIcons().clear();
+        Image icono = null;
+        try {
+            icono = new Image(new FileInputStream("src/resources/images/tenis.png"));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(UtilData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        stage.getIcons().add(icono);
         stage.show();
         
         //stage.centerOnScreen();

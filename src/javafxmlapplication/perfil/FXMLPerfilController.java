@@ -319,6 +319,7 @@ public class FXMLPerfilController implements Initializable {
                 cancelarCambiosButton.setDisable(true);
                 loginButton.setVisible(true);
                 nickField.setDisable(false);
+                
                 try {
                     Image imagenDefault = new Image(new FileInputStream("src/resources/images/user-128.png"));
                     imagenPerfilRegistro.setImage(imagenDefault);
@@ -384,7 +385,7 @@ public class FXMLPerfilController implements Initializable {
                 formularioFieldArray[1].setText("");
                 formularioFieldArray[2].setText("");
                 formularioFieldArray[3].setText("");
-                formularioFieldArray[4] .setText("");
+                formularioFieldArray[4].setText("");
                 formularioFieldArray[5].setText("");
             }
             perfilEditMode(false);
@@ -514,6 +515,8 @@ public class FXMLPerfilController implements Initializable {
             miembro.setSurname(apellidosField.getText());
             miembro.setTelephone(telefonoField.getText());
             miembro.setPassword(contraseñaField.getText());
+            miembro.setImage(imagenPerfilRegistro.getImage());
+            
             if(numTarjetaField.getText().isBlank() || svcField.getText().isBlank()){
                 
             }else{
