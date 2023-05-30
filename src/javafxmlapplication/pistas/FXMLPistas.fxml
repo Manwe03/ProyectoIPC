@@ -29,7 +29,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <DatePicker fx:id="dpBookingDay" />
+            <DatePicker fx:id="dpBookingDay" prefWidth="130.0" />
             <Pane maxWidth="50.0" minWidth="20.0" prefWidth="50.0" HBox.hgrow="NEVER" />
             <VBox alignment="BOTTOM_CENTER" HBox.hgrow="NEVER">
                <children>
