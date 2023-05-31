@@ -125,8 +125,6 @@ public class UtilData {
         try {
             Member m = Club.getInstance().getMemberByCredentials(this.login, this.password);
             return m!=null;
-        } catch (NullPointerException elBicho){
-            return false;
         } catch (ClubDAOException | IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
             return false;

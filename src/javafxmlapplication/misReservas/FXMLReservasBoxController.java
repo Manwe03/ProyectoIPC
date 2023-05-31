@@ -142,7 +142,5 @@ public class FXMLReservasBoxController implements Initializable {
         pagarB.setText("Pagado");
         pagarB.setDisable(true);
         this.reserva.setPaid(true);
-        
     }
-    
 }
