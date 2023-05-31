@@ -66,6 +66,8 @@ public class FXMLDocumentController implements Initializable {
     private VBox ventanaVbox;
     @FXML
     private ToggleGroup menu;
+    @FXML
+    private Button cerrarSesionButton;
 
     /**
      * Initializes the controller class.
@@ -256,6 +258,13 @@ public class FXMLDocumentController implements Initializable {
             break;
         }
         showVentana(false);//quita la ventana modal
+    }
+
+    @FXML
+    private void onCerrarSesionButton(ActionEvent event) {
+        utilData.setLogin("");
+        utilData.setPassword("");
+        triggerOnPistasButton();
     }
     
 }

@@ -109,7 +109,7 @@
                               <Font size="15.0" />
                            </font>
                         </PasswordField>
-                        <TextField id="defaultInputBox" fx:id="contraseñaFieldV" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="158.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                        <TextField fx:id="contraseñaFieldV" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="33.0" prefWidth="158.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -197,7 +197,7 @@
                            <graphic>
                               <ImageView fx:id="imagenPerfilRegistro" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../build/classes/user-128.png" />
+                                    <Image url="@../../resources/images/user-128.png" />
                                  </image>
                               </ImageView>
                            </graphic>

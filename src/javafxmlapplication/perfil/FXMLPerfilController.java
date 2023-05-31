@@ -217,8 +217,17 @@ public class FXMLPerfilController implements Initializable {
             clearErrorLabels(3);
         });
         contraseñaField.textProperty().addListener((observable,oldVal,newVal)-> {
-            contraseñaErrorLabel.setVisible(false);
-            contraseñaField.setId("");
+            if(newVal.length() < 7 && newVal.length() != 0){
+                contraseñaErrorLabel.setVisible(true);
+                contraseñaErrorLabel.setText("Debe contener más de 6 caracteres");
+                contraseñaField.setId("textFieldError");
+            }else{
+                contraseñaErrorLabel.setVisible(false);
+                contraseñaErrorLabel.setText("Campo vacío");
+                contraseñaField.setId("");
+            }
+            //contraseñaErrorLabel.setVisible(false);
+            //contraseñaField.setId("");
             comprobarFieldsVacios(4);
             clearErrorLabels(4);
         });
