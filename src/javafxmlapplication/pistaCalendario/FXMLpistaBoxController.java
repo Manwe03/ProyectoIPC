@@ -19,8 +19,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafxmlapplication.FXMLDocumentController;
 import javafxmlapplication.UtilData;
 import model.Booking;
@@ -82,16 +80,11 @@ public class FXMLpistaBoxController implements Initializable {
     FXMLDocumentController mainController;
     
     public Booking reservaCancel;//reserva a cancelar
-    
-    @FXML
-    private VBox hourVBox;
+
     @FXML
     private GridPane gridPane;
-    @FXML
-    private Pane offsetPane;
-   
-    
-    
+
+  
     /**
      * Initializes the controller class.
      */
@@ -103,9 +96,7 @@ public class FXMLpistaBoxController implements Initializable {
         
         mainController = utilData.getMainController();
         
-        utilData.setSize_DPI(offsetPane,0.2,0.15);
         utilData.setSize_DPI(gridPane,3.7,7);
-        hourVBox.setSpacing(29);
 
         pressedState = new byte[13]; // 0 posicion normal // 1 animacion activa
         reservaState = new byte[17]; // 0 libre // 1 reservado // 2 reservado por mi // dos vacios al principio y al final
