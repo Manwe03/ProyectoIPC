@@ -383,7 +383,7 @@ public class FXMLPerfilController implements Initializable {
                 utilData.ventanaMode = 0;//modo editar datos, es necesario para que la ventana modal sepa que hacer
                 utilData.getMainController().showVentana(true);
                 utilData.getMainController().setVentanaConfirmar("Editar","Cambiar","Cancelar");
-                utilData.getMainController().ventanaAddNode(new Label("Estas seguro de que quieres cambiar la información de tu perfil?"));
+                utilData.getMainController().ventanaAddNode(new Label("¿Estás seguro de que quieres cambiar la información de tu perfil?"));
             }else{
                 registrarse();
                 contraseñaField.setText("");
