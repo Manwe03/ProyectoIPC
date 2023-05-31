@@ -16,7 +16,7 @@
    <top>
       <HBox id="1Ventana" fx:id="barraPistas" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="antButton" mnemonicParsing="false" onAction="#onAntButton" style="-fx-font-size: 15;" text="Dia Anterior" textOverrun="CLIP" HBox.hgrow="NEVER">
+            <Button fx:id="antButton" mnemonicParsing="false" onAction="#onAntButton" style="-fx-font-size: 15;" text="Día Anterior" HBox.hgrow="NEVER">
                <HBox.margin>
                   <Insets />
                </HBox.margin></Button>
@@ -35,15 +35,26 @@
                <children>
                   <Label maxWidth="80.0" minWidth="80.0" prefWidth="80.0" text="Reservas de:" HBox.hgrow="NEVER">
                      <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets right="10.0" />
                      </padding>
                   </Label>
-                  <VBox fx:id="buscadorContainer" alignment="CENTER" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="buscarB" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" onAction="#onBuscarButton" prefWidth="90.0" style="-fx-font-size: 15;" text="Buscar" HBox.hgrow="NEVER" />
                </children>
             </HBox>
-            <Pane minWidth="5.0" prefHeight="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="posButton" mnemonicParsing="false" onAction="#onPosButton" style="-fx-font-size: 15;" text="Dia Siguiente" textOverrun="CLIP" HBox.hgrow="NEVER">
+            <VBox alignment="BOTTOM_CENTER" HBox.hgrow="NEVER">
+               <children>
+                  <HBox alignment="CENTER" maxWidth="174.0" minWidth="174.0" prefWidth="174.0" spacing="10.0">
+                     <children>
+                        <VBox fx:id="buscadorContainer" alignment="CENTER" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="buscarB" maxWidth="90.0" minWidth="90.0" mnemonicParsing="false" onAction="#onBuscarButton" prefWidth="90.0" style="-fx-font-size: 15;" text="Buscar" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="32.0" />
+               </padding>
+            </VBox>
+            <Pane minWidth="20.0" prefHeight="200.0" HBox.hgrow="ALWAYS" />
+            <Button fx:id="posButton" mnemonicParsing="false" onAction="#onPosButton" style="-fx-font-size: 15;" text="Día Siguiente" HBox.hgrow="NEVER">
                <HBox.margin>
                   <Insets />
                </HBox.margin></Button>
