@@ -20,7 +20,7 @@
                <HBox.margin>
                   <Insets />
                </HBox.margin></Button>
-            <Pane prefHeight="200.0" HBox.hgrow="ALWAYS" />
+            <Pane minWidth="5.0" prefHeight="200.0" HBox.hgrow="ALWAYS" />
             <Label fx:id="dia" alignment="CENTER_RIGHT" minWidth="80.0" text="Día">
                <HBox.margin>
                   <Insets right="10.0" />

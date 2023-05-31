@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="769ee8bf-fb41-401a-98b8-cce6081c5999" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../club.db" beforeDir="false" afterPath="$PROJECT_DIR$/../club.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../club.db-journal" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/javafxmlapplication/misReservas/FXMLReservasBoxController.java" beforeDir="false" afterPath="$PROJECT_DIR$/javafxmlapplication/misReservas/FXMLReservasBoxController.java" afterDir="false" />
-    </list>
+    <list default="true" id="769ee8bf-fb41-401a-98b8-cce6081c5999" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,7 +27,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/manub/Documents/GitHub/ProyectoIPC/src",
+    "last_opened_file_path": "W:/DistributedChatRMI",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
