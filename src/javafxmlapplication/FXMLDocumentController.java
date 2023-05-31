@@ -101,7 +101,7 @@ public class FXMLDocumentController implements Initializable {
         //}
         
         ////////////////////////////////////////////////////////////////////////
-        
+        infoLabel.setVisible(false);
         if(LocalTime.now().isAfter(LocalTime.of(21, 0))){
             infoLabel.setText("No se puede reservar ninguna pista para hoy, tienes que iniciar sesión para ver las pistas de mañana");
             infoLabel.setVisible(true);
