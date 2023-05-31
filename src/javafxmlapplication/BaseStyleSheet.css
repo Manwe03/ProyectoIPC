@@ -6,7 +6,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     Created on : 14 may 2023, 17:09:15
     Author     : manub
 */
-
+#horaLabel{
+    -fx-translate-Y: -0.8em;
+}
 #ventana{
     -fx-background-color: #FEFEE3;
     -fx-background-radius: 20;
