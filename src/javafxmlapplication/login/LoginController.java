@@ -82,6 +82,17 @@ public class LoginController  implements Initializable{
             contraseñaErrorLabel.setVisible(false);
         });
         contraseñaErrorLabel.setVisible(false);
+        
+        utilData.setLoginController(this);
+    }
+    
+    public void startLoggin(){
+        contraseñaErrorLabel.setVisible(false);
+        login.setVisible(true);
+        usuarioField.setEditable(true);
+        contraseñaField.setEditable(true);
+        menuButton.setDisable(false);
+        login.setDisable(false);
     }
 
     @FXML
@@ -125,6 +136,7 @@ public class LoginController  implements Initializable{
                 });
                 pause.play();
                 ((Button)event.getSource()).getScene().setCursor(Cursor.HAND);
+                utilData.getMainController().cerrarSesionButton.setVisible(true);
             } catch (NullPointerException ex) {
                 usuarioField.setId("textFieldError");
                 contraseñaField.setId("textFieldError");

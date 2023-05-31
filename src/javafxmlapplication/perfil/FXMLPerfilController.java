@@ -338,6 +338,7 @@ public class FXMLPerfilController implements Initializable {
                 
             }else{
                 utilData.showScene("Login");
+                utilData.getLoginController().startLoggin();
             }
         }else{//si esta logueado
             updateMiPerfilLabelsInfo();
@@ -367,6 +368,7 @@ public class FXMLPerfilController implements Initializable {
     private void onButtonLogin(ActionEvent event) {
         utilData.setRegistrarse(false);
         utilData.showScene("Login");
+        utilData.getLoginController().startLoggin();
     }
 
     @FXML

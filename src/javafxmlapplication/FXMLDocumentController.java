@@ -67,7 +67,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ToggleGroup menu;
     @FXML
-    private Button cerrarSesionButton;
+    public Button cerrarSesionButton;
 
     /**
      * Initializes the controller class.
@@ -80,12 +80,12 @@ public class FXMLDocumentController implements Initializable {
         
                         //INICIALIZACIÓN PARA TESTING//
         ////////////////////////////////////////////////////////////////////////
-        /*
-        try {
-            club.setInitialData(); //Resetea la base de datos al iniciar
-            club.addSimpleData();
-            Image imagenDefault = new Image(new FileInputStream("src/resources/images/elNano.png"));
-            club.registerMember("Fernando", "Alonso", "99999999", "33", "33", "", 0, imagenDefault); //registra un miembro de prueba
+        
+        //try {
+            //club.setInitialData(); //Resetea la base de datos al iniciar
+            //club.addSimpleData();
+            //Image imagenDefault = new Image(new FileInputStream("src/resources/images/elNano.png"));
+            //club.registerMember("Fernando", "Alonso", "99999999", "33", "33", "", 0, imagenDefault); //registra un miembro de prueba
             //club.registerMember("Fernando", "Alonso", "99999999", "papo", "0", "0000000000000000", 000, null);
             //club.registerMember("Fernando", "Alonso", "99999999", "antonio", "0", "0000000000000000", 000, null);
             //club.registerMember("Fernando", "Alonso", "99999999", "yiyi", "0", "0000000000000000", 000, null);
@@ -94,12 +94,12 @@ public class FXMLDocumentController implements Initializable {
             //utilData.setLogin("99");
             //utilData.setPassword("99");
             
-        } catch (ClubDAOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
+        //} catch (ClubDAOException ex) {
+        //    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        //} catch (FileNotFoundException ex) {
+        //    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        //}
+        
         ////////////////////////////////////////////////////////////////////////
         
         if(LocalTime.now().isAfter(LocalTime.of(20, 0))){
@@ -223,6 +223,7 @@ public class FXMLDocumentController implements Initializable {
             break;
             case 1: // 1:registrarse
                 utilData.showScene("Login");
+                utilData.getLoginController().startLoggin();
             break;
             case 2: // 2:hacer reserva 
                 FXMLpistaBoxController pistaController = utilData.getPistaBoxController();
@@ -264,6 +265,7 @@ public class FXMLDocumentController implements Initializable {
     private void onCerrarSesionButton(ActionEvent event) {
         utilData.setLogin("");
         utilData.setPassword("");
+        cerrarSesionButton.setVisible(false);
         triggerOnPistasButton();
     }
     

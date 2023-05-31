@@ -340,6 +340,7 @@ public class FXMLpistaBoxController implements Initializable {
                     
                 }else{//si no estas loggeado -> Notificar
                     utilData.showScene("Login");
+                    utilData.getLoginController().startLoggin();
                 }
             break;
             case 1: //si esta reservada por otro

@@ -76,7 +76,7 @@
                      </HBox.margin>
                   </Label>
                   <Pane HBox.hgrow="ALWAYS" />
-                  <Button fx:id="cerrarSesionButton" mnemonicParsing="false" onAction="#onCerrarSesionButton" text="Cerrar Sesion" />
+                  <Button fx:id="cerrarSesionButton" maxHeight="50.0" minHeight="50.0" mnemonicParsing="false" onAction="#onCerrarSesionButton" prefHeight="50.0" text="Cerrar Sesion" visible="false" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

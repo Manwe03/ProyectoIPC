@@ -60,6 +60,7 @@ public class FXMLReservasController implements Initializable {
     public void startReservas(){
         numReservas = 0;
         utilData.setRegistrarse(false);//Siempre que salga de MiPerfil poner registrarse a false
+        misReservasContainer.getChildren().clear();
         if(utilData.isLogged()){
             try {
                 updateMisReservas();

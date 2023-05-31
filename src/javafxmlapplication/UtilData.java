@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafxmlapplication.login.LoginController;
 import javafxmlapplication.miniTarjeta.MiniTarjetaController;
 import javafxmlapplication.misReservas.FXMLReservasBoxController;
 import javafxmlapplication.perfil.FXMLPerfilController;
@@ -59,6 +60,8 @@ public class UtilData {
     private FXMLReservasBoxController reservasBoxController;
     
     private MiniTarjetaController miniTarjetaController;
+    
+    private LoginController loginController;
     
     public static HashMap<String,Scene> escenas = new HashMap<>();
     
@@ -175,6 +178,9 @@ public class UtilData {
     public FXMLpistaBoxController getPistaBoxController(){return this.pistaBoxController;}
     public FXMLReservasBoxController getReservasBoxController(){return this.reservasBoxController;}
     public MiniTarjetaController getMiniTarjetaController(){return this.miniTarjetaController;}
+    public LoginController getLoginController(){return loginController; }
+
+    
     //SET
     public void setDpi(double dpi){this.dpi = dpi;}
     public void setLogin(String login){this.login = login;}
@@ -189,4 +195,6 @@ public class UtilData {
     public void setPistaBoxController(FXMLpistaBoxController pistaBoxController){this.pistaBoxController = pistaBoxController;}
     public void setReservasBoxController(FXMLReservasBoxController reservasBoxController){this.reservasBoxController = reservasBoxController;}
     public void setMiniTarjetaController(MiniTarjetaController miniTarjetaController){this.miniTarjetaController = miniTarjetaController;}
+    public void setLoginController(LoginController loginController) {this.loginController = loginController;}
+    
 }
